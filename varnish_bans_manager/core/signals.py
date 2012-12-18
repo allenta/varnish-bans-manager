@@ -7,11 +7,3 @@
 
 from __future__ import absolute_import
 from django.dispatch import Signal
-
-# Arguments:
-#   - sender: HttpRequest()
-#   - type: int() (@see varnish_bans_manager.core.models.redirection.TYPE)
-#   - name: None | str()
-#   - code: None | varnish_bans_manager.core.code.models.Code()
-#   - asset: None | varnish_bans_manager.core.code.models.Asset()
-redirection = Signal(providing_args=['type', 'name', 'code', 'asset'])
