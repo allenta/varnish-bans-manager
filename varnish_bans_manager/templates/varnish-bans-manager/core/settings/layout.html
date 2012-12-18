@@ -1,0 +1,34 @@
+{% extends request.is_ajax|yesno:"ajax.html,authenticated.html" %}
+{% load i18n %}
+{% load url from future %}
+{% load vbm_base_helpers %}
+
+{% block content %}
+  {% capture section %}{% block sidebar_section %}{% endblock %}{% endcapture %}
+  <div class="with-sidebar">
+    <div class="sidebar">
+      <ul class="nav nav-tabs nav-stacked">
+        <!-- General -->
+        <li class="{% active section "^general$" %}">
+          <a href="{% url 'settings-general' %}" class="navigation">
+            <div class="icon settings"></div>
+            <div class="title">{% trans 'General' %}</div>
+          </a>
+        </li>
+        <!-- More -->
+        <li>
+          <a href="#" class="btn-more">
+            <div class="icon more"></div>
+            <div class="title">{% trans 'More' %}</div>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="container">
+      <div class="inner-container">
+        {% block sidebar_content %}{% endblock %}
+        {% include "varnish-bans-manager/partials/_authenticated_footer.html" %}
+      </div>
+    </div>
+  </div>
+{% endblock %}

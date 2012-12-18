@@ -1,0 +1,37 @@
+msgid ""
+msgstr ""
+"Last-Translator: dot2code Technologies <info@dot2code.com>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
+
+msgid "We are sorry, but the request couldn't be processed. Please, try again later."
+msgstr "Lo sentimos pero no ha sido posible procesar la petición. Por favor, vuelve a intentarlo en un rato."
+
+msgid "Please, be patient. <strong>Do not close or reload the page!</strong>"
+msgstr "Por favor, se paciente. <strong>¡No cierres ni recargues la página!</strong>"
+
+msgid "Abort"
+msgstr "Abortar"
+
+msgid "Are you sure?"
+msgstr "¿Estás seguro?"
+
+msgid "This action can't be undone."
+msgstr "Esta acción no se puede deshacer."
+
+msgid "Cancel"
+msgstr "Cancelar"
+
+msgid "Yes"
+msgstr "Sí"
+
+msgid "Upgrade your browser"
+msgstr "Actualiza tu navegador"
+
+msgid "Your browser is outdated! Please, download an updated version now and improve your user experience."
+msgstr "¡Tu navegador está obsoleto! Por favor, descarga una versión actual ahora y mejora tu experiencia de usuario."
+
+msgid "Choose your new browser"
+msgstr "Elije tu nuevo navegador"

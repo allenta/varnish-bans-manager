@@ -1,0 +1,41 @@
+{% extends request.is_ajax|yesno:"ajax.html,authenticated.html" %}
+{% load i18n %}
+{% load url from future %}
+{% load vbm_base_helpers %}
+
+{% block content %}
+  {% capture section %}{% block sidebar_section %}{% endblock %}{% endcapture %}
+  <div class="with-sidebar">
+    <div class="sidebar">
+      <ul class="nav nav-tabs nav-stacked">
+        <!-- Profile -->
+        <li class="{% active section "^preferences$" %}">
+          <a href="{% url 'user-profile' %}" class="navigation">
+            <div class="icon settings"></div>
+            <div class="title">{% trans 'Preferences' %}</div>
+          </a>
+        </li>
+        <!-- Password -->
+        <li class="{% active section "^password$" %}">
+          <a href="{% url 'user-password' %}" class="navigation">
+            <div class="icon lock"></div>
+            <div class="title">{% trans 'Password' %}</div>
+          </a>
+        </li>
+        <!-- More -->
+        <li>
+          <a href="#" class="btn-more">
+            <div class="icon more"></div>
+            <div class="title">{% trans 'More' %}</div>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="container">
+      <div class="inner-container">
+        {% block sidebar_content %}{% endblock %}
+        {% include "varnish-bans-manager/partials/_authenticated_footer.html" %}
+      </div>
+    </div>
+  </div>
+{% endblock %}

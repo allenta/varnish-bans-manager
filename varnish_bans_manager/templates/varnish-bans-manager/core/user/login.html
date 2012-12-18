@@ -1,0 +1,41 @@
+{% extends request.is_ajax|yesno:"ajax.html,anonymous.html" %}
+{% load i18n %}
+{% load url from future %}
+{% load vbm_form_helpers %}
+{% load vbm_widget_helpers %}
+
+{% block title %}{% trans 'Login' %}{% endblock %}
+
+{% block content %}
+  <div class="row">
+    <div class="login-form">
+      <h2>{% trans 'Login' %}</h2>
+      {% form_errors form %}
+      <form class="ajax" data-url="{% url 'user-login' %}">
+        {{ form.destination }}
+        <fieldset>
+          <div class="row-fluid">
+            {% form_cgroup form.email 'clearfix' %}
+              <div class="input-prepend">
+                <span class="add-on"><i class="font-awesome font-awesome-envelope"></i></span>{{ form.email|add_class:"span12" }}
+              </div>
+              {% form_ferrors form.email 'inline' %}
+            {% endform_cgroup %}
+
+            {% form_cgroup form.password 'clearfix' %}
+              <div class="input-prepend">
+                <span class="add-on"><i class="font-awesome font-awesome-lock"></i></span>{{ form.password|add_class:"span12" }}
+              </div>
+              {% form_ferrors form.password 'inline' %}
+            {% endform_cgroup %}
+
+            <div class="clearfix actions pull-right">
+              <a href="{% url 'user-password-reset' %}" class="navigation btn"><i class="icon-envelope"></i> {% trans 'Forgot password?' %}</a>
+              <button class="btn btn-primary " type="submit"><i class="icon-ok icon-white"></i> {% trans 'Sign in' %}</button>
+            </div>
+          </div>
+        </fieldset>
+      </form>
+    </div>
+  </div>
+{% endblock %}

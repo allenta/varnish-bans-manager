@@ -1,0 +1,70 @@
+{% extends request.is_ajax|yesno:"ajax.html,authenticated.html" %}
+{% load i18n %}
+{% load url from future %}
+{% load vbm_base_helpers %}
+
+{% block content %}
+  {% capture section %}{% block sidebar_section %}{% endblock %}{% endcapture %}
+  <div class="with-sidebar">
+    <div class="sidebar">
+      <ul class="nav nav-tabs nav-stacked">
+        <!-- Basic -->
+        <li class="{% active section "^basic$" %}">
+          <a href="{% url 'bans-basic' %}" class="navigation">
+            <div class="icon settings"></div>
+            <div class="title">{% trans 'Basic' %}</div>
+          </a>
+        </li>
+        {% if perms.core.can_access_advanced_ban_submission %}
+          <!-- Advanced -->
+          <li class="{% active section "^advanced$" %}">
+            <a href="{% url 'bans-advanced' %}" class="navigation">
+              <div class="icon settings"></div>
+              <div class="title">{% trans 'Advanced' %}</div>
+            </a>
+          </li>
+        {% endif %}
+        {% if perms.core.can_access_expert_ban_submission %}
+          <!-- Expert -->
+          <li class="{% active section "^expert$" %}">
+            <a href="{% url 'bans-expert' %}" class="navigation">
+              <div class="icon settings"></div>
+              <div class="title">{% trans 'Expert' %}</div>
+            </a>
+          </li>
+        {% endif %}
+        {% if perms.core.can_access_bans_submissions %}
+          <!-- Status -->
+          <li class="{% active section "^submissions$" %}">
+            <a href="{% url 'bans-submissions' %}" class="navigation">
+              <div class="icon calendar"></div>
+              <div class="title">{% trans 'Submissions' %}</div>
+            </a>
+          </li>
+        {% endif %}
+        {% if perms.core.can_access_bans_status %}
+          <!-- Status -->
+          <li class="{% active section "^status$" %}">
+            <a href="{% url 'bans-status' %}" class="navigation">
+              <div class="icon stats"></div>
+              <div class="title">{% trans 'Status' %}</div>
+            </a>
+          </li>
+        {% endif %}
+        <!-- More -->
+        <li>
+          <a href="#" class="btn-more">
+            <div class="icon more"></div>
+            <div class="title">{% trans 'More' %}</div>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="container">
+      <div class="inner-container">
+        {% block sidebar_content %}{% endblock %}
+        {% include "varnish-bans-manager/partials/_authenticated_footer.html" %}
+      </div>
+    </div>
+  </div>
+{% endblock %}

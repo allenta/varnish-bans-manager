@@ -1,0 +1,159 @@
+{% extends "varnish-bans-manager/core/users/layout.html" %}
+{% load i18n %}
+{% load l10n %}
+{% load url from future %}
+{% load media %}
+{% load vbm_base_helpers %}
+{% load vbm_widget_helpers %}
+{% load vbm_form_helpers %}
+{% load humanize %}
+
+{% block title %}{% trans 'Settings' %} > {% trans 'Users' %}{% endblock %}
+
+{% block sidebar_section %}browse{% endblock %}
+
+{% block sidebar_content %}
+  <div class="users-browser">
+    <div class="page-header">
+      <h1>
+        {% trans 'Browse users' %}
+        <small>{% trans 'Find and manage authorized users and their permissions' %}</small>
+      </h1>
+    </div>
+
+    <div id="breadcrumb">
+      <i class="font-awesome font-awesome-home"></i>
+      <span class="item">{% trans 'Users' %}</span>
+      <a href="{% url 'users-browse' %}" class="navigation current">{% trans 'Browse' %}</a>
+    </div>
+
+    <div class="collection-filter">
+      <div class="row-fluid">
+        <form action="#">
+          <div class="control-group span4">
+            <div class="controls">
+              <div class="input-prepend">
+                <span class="add-on">@</span>
+                {{ form.email|add_class:"span12" }}
+              </div>
+            </div>
+          </div>
+          <div class="control-group span3">
+            <div class="controls">
+              {{ form.first_name|add_class:"span12" }}
+            </div>
+          </div>
+          <div class="control-group span3">
+            <div class="controls">
+              {{ form.last_name|add_class:"span12" }}
+            </div>
+          </div>
+          <div class="control-group span2">
+            <button type="submit" class="btn btn-primary span12"><i class="icon-search icon-white"></i> {% trans 'Search' %}</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="btn-toolbar pull-right">
+      <div class="btn-group collection-sort">
+        <button class="btn dropdown-toggle" data-toggle="dropdown"><i class="font-awesome font-awesome-sort"></i> Sort by <span class="caret"></span></button>
+        <ul class="dropdown-menu">
+          {% for id, name in form.SORT_CRITERIA_CHOICES %}
+            {% with sort_criteria=form.cleaned_data.sort_criteria sort_direction=form.cleaned_data.sort_direction %}
+              <li data-sort-criteria="{{ id }}" data-sort-direction="{% if id == sort_criteria %}{{ sort_direction }}{% else %}asc{% endif %}" class="{% if id == sort_criteria %}active{% endif %}">
+                <a href="#"><i class="{% if id == sort_criteria %}icon-sort-direction-{{ sort_direction }}{% else %}icon-empty{% endif %}"></i> {{ name }}</a>
+              </li>
+            {% endwith %}
+          {% endfor %}
+        </ul>
+      </div>
+      <div class="btn-group collection-bulk">
+        <button class="btn dropdown-toggle disabled" data-toggle="dropdown"><i class="font-awesome font-awesome-cog"></i> {% trans 'Action' %} <span class="caret"></span></button>
+        <ul class="dropdown-menu">
+          {% for id, name in form.OP_CHOICES %}
+            <li data-op="{{ id }}"><a href="#"><i class="icon-{{ id|classify }}"></i> {{ name }}</a></li>
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+
+    {% if form.paginator.current_page.object_list %}
+      <table class="table table-striped users">
+        <thead>
+          <tr>
+            <th class="collection-selector"><input type="checkbox" data-id="all"/></th>
+            <th colspan="4">
+              {% blocktrans count rows=form.paginator.count %}
+                Select the row
+              {% plural %}
+                Select all {{ rows }} rows in all pages
+              {% endblocktrans %}
+            </th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for user in form.paginator.current_page.object_list %}
+            <tr>
+              <td class="collection-selector"><input type="checkbox" data-id="{{ user.id|unlocalize }}"/></td>
+              <td class="photo"><div class="thumbnail"><img src="{% if user.get_profile.photo %}{{ user.get_profile.photo.url }}{% else %}{% media_url 'varnish-bans-manager/images/default-user-photo-128.png' %}{% endif %}"></a></td>
+              <td class="name">
+                <a href="{% url 'users-update' user.id %}" class="navigation"><strong>{{ user.human_name }}</strong><br/></a>
+                {% if user.is_superuser %}
+                  <span class="label label-important">ADMINISTRATOR</span>
+                {% else %}
+                  {% for label in user.get_profile.editable_user_permission_labels %}
+                    <span class="label label-info">{{ label }}</span>
+                  {% endfor %}
+                {% endif %}
+                <div class="description"><span class="tip" title="{% trans 'Sign up date' %}"><i class="font-awesome font-awesome-time"></i> {{ user.date_joined|naturaltime }}</span></div>
+              </td>
+              <td class="email">{{ user.email }}</td>
+              <td class="actions">
+                <div class="btn-group pull-right">
+                  <button class="btn btn-link dropdown-toggle" data-toggle="dropdown"><i class="font-awesome font-awesome-cog"></i> {% trans 'Action' %} <span class="caret"></span></button>
+                  <ul class="dropdown-menu">
+                    <li><a href="{% url 'users-update' user.id %}" class="navigation"><i class="icon-edit"></i> {% trans 'Edit' %}</a></li>
+                    <li><a href="#" class="ajax confirm submit" data-type="post" data-url="{% url 'users-delete' user.id %}"><i class="icon-delete"></i> {% trans 'Delete' %}</a></li>
+                  </ul>
+                </div>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <div class="btn-group dropup pull-left collection-items-per-page">
+        <button class="btn dropdown-toggle" data-toggle="dropdown">{% trans 'Items per page' %} <span class="caret"></span></button>
+        <ul class="dropdown-menu">
+          {% for items in form.ITEMS_PER_PAGE_CHOICES %}
+            <li data-collection-items-per-page="{{ items }}" class="{% if items == form.cleaned_data.items_per_page %}active{% endif %}">
+              <a href="#">{{ items }}</a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <div class="pagination pagination-right collection-pager">
+        <ul>
+          <li class="{% if not form.paginator.current_page.has_previous %}disabled{% endif %}" data-page="{% if form.paginator.current_page.has_previous %}{{ form.paginator.current_page.previous_page_number }}{% endif %}">
+            <a href="#">«</a>
+          </li>
+          {% for page in form.paginator.page_range_slice %}
+            <li data-page="{{ page }}" class="{% if page == form.cleaned_data.page %}active{% endif %}"><a href="#">{{ page }}</a></li>
+          {% endfor %}
+          <li class="{% if not form.paginator.current_page.has_next %}disabled{% endif %}" data-page="{% if form.paginator.current_page.has_next %}{{ form.paginator.current_page.next_page_number }}{% endif %}">
+            <a href="#">»</a>
+          </li>
+        </ul>
+      </div>
+    {% endif %}
+  </div>
+
+  <script type="text/javascript">
+    vbm.partials.ready('users-browse-page', {
+      browse_url: '{% url 'users-browse' %}',
+      bulk_url: '{% url 'users-bulk' %}',
+    });
+  </script>
+{% endblock %}

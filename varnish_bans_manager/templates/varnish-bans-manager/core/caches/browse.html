@@ -1,0 +1,24 @@
+{% extends "varnish-bans-manager/core/caches/layout.html" %}
+{% load i18n %}
+{% load url from future %}
+
+{% block title %}{% trans 'Caches' %} > {% trans 'Browse' %}{% endblock %}
+
+{% block sidebar_section %}browse{% endblock %}
+
+{% block sidebar_content %}
+  <div class="page-header">
+    <h1>
+      {% trans 'Browse caches & groups' %}
+      <small>{% trans 'Browse & organize caching nodes in groups' %}</small>
+    </h1>
+  </div>
+
+  <div id="breadcrumb">
+    <i class="font-awesome font-awesome-home"></i>
+    <span class="item">{% trans 'Caches' %}</span>
+    <a href="{% url 'caches-browse' %}" class="navigation current">{% trans 'Browse' %}</a>
+  </div>
+
+  <p><span class="label label-info"><i class="font-awesome font-awesome-exclamation-sign"></i> {% trans 'Coming soon...' %}</span></p>
+{% endblock %}

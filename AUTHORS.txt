@@ -1,0 +1,15 @@
+Varnish Bans Manager (VBM) developers are:
+
+    - Carlos Abalde <cabalde@dot2code.com>
+
+    - David Fuentes <davidfb@dot2code.com>
+
+
+VBM is sponsored by dot2code Technologies (http://dot2code.com) and
+Allenta Consulting (http://allenta.com).
+
+    - For general inquiries, please, contact us directly at
+    info@dot2code.com.
+
+    - For bug reports and feature suggestions, please, use GitHub's
+    issue tracker at https://github.com/dot2code/varnish-bans-manager/issues.

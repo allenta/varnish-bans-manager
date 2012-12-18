@@ -1,0 +1,6 @@
+{% extends "error.html" %}
+{% load i18n %}
+
+{% block code %}404{% endblock %}
+{% block headline %}{% trans "The page you were looking for doesn't exist." %}{% endblock %}
+{% block message %}{% trans "You may have mistyped the address or the page may have been moved." %}{% endblock %}

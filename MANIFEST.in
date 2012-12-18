@@ -1,0 +1,6 @@
+include *.txt
+include *.rst
+recursive-include varnish_bans_manager/assets *
+recursive-include varnish_bans_manager/templates *
+recursive-include varnish_bans_manager/locale *
+global-exclude *~

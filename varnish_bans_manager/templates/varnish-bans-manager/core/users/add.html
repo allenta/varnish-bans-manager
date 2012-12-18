@@ -1,0 +1,27 @@
+{% extends "varnish-bans-manager/core/users/layout.html" %}
+{% load i18n %}
+{% load url from future %}
+
+{% block title %}{% trans 'Settings' %} > {% trans 'Users' %} > {% trans 'Add' %}{% endblock %}
+
+{% block sidebar_section %}add{% endblock %}
+
+{% block sidebar_content %}
+  <div class="page-header">
+    <h1>
+      {% trans 'Add new user' %}
+    </h1>
+  </div>
+
+  <div id="breadcrumb">
+    <i class="font-awesome font-awesome-home"></i>
+    <span class="item">{% trans 'Users' %}</span>
+    <a href="{% url 'users-add' %}" class="navigation current">{% trans 'Add' %}</a>
+  </div>
+
+  <div class="row-fluid">
+    <form class="ajax offset1 span10" data-url="{% url 'users-add' %}" enctype="multipart/form-data">
+      {% include 'varnish-bans-manager/core/users/_edit_form.html' %}
+    </form>
+  </div>
+{% endblock %}

@@ -1,0 +1,109 @@
+#!/bin/bash
+
+### BEGIN INIT INFO
+# Provides:          varnish-bans-manager-celerybeat
+# Required-Start:    $network $local_fs
+# Required-Stop:     $network $local_fs
+# Default-Start:     2 3 4 5
+# Default-Stop:      0 1 6
+# Short-Description: Varnish Bans Manager (VBM) Celery periodic task scheduler
+### END INIT INFO
+
+##
+## Configuration.
+##
+VIRTUALENV="/var/www/varnish-bans-manager"
+CELERYBEAT="varnish-bans-manager celerybeat"
+CELERYBEAT_PID_FILE="/var/run/varnish-bans-manager/celerybeat.pid"
+CELERYBEAT_LOG_FILE="/var/log/varnish-bans-manager/celerybeat.log"
+CELERYBEAT_LOG_LEVEL="WARNING"
+CELERYBEAT_SCHEDULE="/var/www/varnish-bans-manager/celerybeat-schedule"
+CELERYBEAT_DAEMON_OPTS="\
+    --pidfile="$CELERYBEAT_PID_FILE" \
+    --logfile="$CELERYD_LOG_FILE" \
+    --loglevel="$CELERYD_LOG_LEVEL" \
+    --schedule="$CELERYBEAT_SCHEDULE" \
+    --uid www-data \
+    --gid www-data \
+    --detach"
+
+##
+##
+##
+wait_pid () {
+    pid=$1
+    forever=1
+    i=0
+    while [ $forever -gt 0 ]; do
+        kill -0 $pid 1>/dev/null 2>&1
+        if [ $? -eq 1 ]; then
+            echo "OK"
+            forever=0
+        else
+            kill -TERM "$pid"
+            i=$((i + 1))
+            if [ $i -gt 60 ]; then
+                echo "ERROR" 1>&2
+                echo "Timed out while stopping (30s)" 1>&2
+                forever=0
+            else
+                sleep 0.5
+            fi
+        fi
+    done
+}
+
+##
+##
+##
+start_beat () {
+    echo "Starting celerybeat..."
+    $CELERYBEAT $CELERYBEAT_DAEMON_OPTS
+}
+
+##
+##
+##
+stop_beat () {
+    echo -n "Stopping celerybeat... "
+    if [ -f "$CELERYBEAT_PID_FILE" ]; then
+        wait_pid $(cat "$CELERYBEAT_PID_FILE")
+    else
+        echo "NOT RUNNING" 1>&2
+    fi
+}
+
+##
+##
+##
+source "$VIRTUALENV/bin/activate"
+
+##
+##
+##
+case "$1" in
+    start)
+        start_beat
+    ;;
+    stop)
+        stop_beat
+    ;;
+    reload|force-reload)
+        echo "Use start+stop"
+    ;;
+    restart)
+        echo "Restarting celery periodic task scheduler"
+        stop_beat
+        start_beat
+    ;;
+    *)
+        echo "Usage: $0 {start|stop|restart}" 1>&2
+        exit 64  # EX_USAGE
+    ;;
+esac
+
+##
+## Done!
+##
+deactivate
+exit 0

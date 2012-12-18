@@ -1,0 +1,240 @@
+/**
+ * See http://fortawesome.github.com/Font-Awesome/
+ */
+
+.font-awesome {
+  font-family: FontAwesome;
+  font-weight: normal;
+  font-style: normal;
+  display: inline-block;
+  text-decoration: inherit;
+}
+
+/*  Font Awesome uses the Unicode Private Use Area (PUA) to ensure screen
+    readers do not read off random characters that represent icons */
+.font-awesome-glass:before                { content: "\f000"; }
+.font-awesome-music:before                { content: "\f001"; }
+.font-awesome-search:before               { content: "\f002"; }
+.font-awesome-envelope:before             { content: "\f003"; }
+.font-awesome-heart:before                { content: "\f004"; }
+.font-awesome-star:before                 { content: "\f005"; }
+.font-awesome-star-empty:before           { content: "\f006"; }
+.font-awesome-user:before                 { content: "\f007"; }
+.font-awesome-film:before                 { content: "\f008"; }
+.font-awesome-th-large:before             { content: "\f009"; }
+.font-awesome-th:before                   { content: "\f00a"; }
+.font-awesome-th-list:before              { content: "\f00b"; }
+.font-awesome-ok:before                   { content: "\f00c"; }
+.font-awesome-remove:before               { content: "\f00d"; }
+.font-awesome-zoom-in:before              { content: "\f00e"; }
+
+.font-awesome-zoom-out:before             { content: "\f010"; }
+.font-awesome-off:before                  { content: "\f011"; }
+.font-awesome-signal:before               { content: "\f012"; }
+.font-awesome-cog:before                  { content: "\f013"; }
+.font-awesome-trash:before                { content: "\f014"; }
+.font-awesome-home:before                 { content: "\f015"; }
+.font-awesome-file:before                 { content: "\f016"; }
+.font-awesome-time:before                 { content: "\f017"; }
+.font-awesome-road:before                 { content: "\f018"; }
+.font-awesome-download-alt:before         { content: "\f019"; }
+.font-awesome-download:before             { content: "\f01a"; }
+.font-awesome-upload:before               { content: "\f01b"; }
+.font-awesome-inbox:before                { content: "\f01c"; }
+.font-awesome-play-circle:before          { content: "\f01d"; }
+.font-awesome-repeat:before               { content: "\f01e"; }
+
+/* \f020 doesn't work in Safari. all shifted one down */
+.font-awesome-refresh:before              { content: "\f021"; }
+.font-awesome-list-alt:before             { content: "\f022"; }
+.font-awesome-lock:before                 { content: "\f023"; }
+.font-awesome-flag:before                 { content: "\f024"; }
+.font-awesome-headphones:before           { content: "\f025"; }
+.font-awesome-volume-off:before           { content: "\f026"; }
+.font-awesome-volume-down:before          { content: "\f027"; }
+.font-awesome-volume-up:before            { content: "\f028"; }
+.font-awesome-qrcode:before               { content: "\f029"; }
+.font-awesome-barcode:before              { content: "\f02a"; }
+.font-awesome-tag:before                  { content: "\f02b"; }
+.font-awesome-tags:before                 { content: "\f02c"; }
+.font-awesome-book:before                 { content: "\f02d"; }
+.font-awesome-bookmark:before             { content: "\f02e"; }
+.font-awesome-print:before                { content: "\f02f"; }
+
+.font-awesome-camera:before               { content: "\f030"; }
+.font-awesome-font:before                 { content: "\f031"; }
+.font-awesome-bold:before                 { content: "\f032"; }
+.font-awesome-italic:before               { content: "\f033"; }
+.font-awesome-text-height:before          { content: "\f034"; }
+.font-awesome-text-width:before           { content: "\f035"; }
+.font-awesome-align-left:before           { content: "\f036"; }
+.font-awesome-align-center:before         { content: "\f037"; }
+.font-awesome-align-right:before          { content: "\f038"; }
+.font-awesome-align-justify:before        { content: "\f039"; }
+.font-awesome-list:before                 { content: "\f03a"; }
+.font-awesome-indent-left:before          { content: "\f03b"; }
+.font-awesome-indent-right:before         { content: "\f03c"; }
+.font-awesome-facetime-video:before       { content: "\f03d"; }
+.font-awesome-picture:before              { content: "\f03e"; }
+
+.font-awesome-pencil:before               { content: "\f040"; }
+.font-awesome-map-marker:before           { content: "\f041"; }
+.font-awesome-adjust:before               { content: "\f042"; }
+.font-awesome-tint:before                 { content: "\f043"; }
+.font-awesome-edit:before                 { content: "\f044"; }
+.font-awesome-share:before                { content: "\f045"; }
+.font-awesome-check:before                { content: "\f046"; }
+.font-awesome-move:before                 { content: "\f047"; }
+.font-awesome-step-backward:before        { content: "\f048"; }
+.font-awesome-fast-backward:before        { content: "\f049"; }
+.font-awesome-backward:before             { content: "\f04a"; }
+.font-awesome-play:before                 { content: "\f04b"; }
+.font-awesome-pause:before                { content: "\f04c"; }
+.font-awesome-stop:before                 { content: "\f04d"; }
+.font-awesome-forward:before              { content: "\f04e"; }
+
+.font-awesome-fast-forward:before         { content: "\f050"; }
+.font-awesome-step-forward:before         { content: "\f051"; }
+.font-awesome-eject:before                { content: "\f052"; }
+.font-awesome-chevron-left:before         { content: "\f053"; }
+.font-awesome-chevron-right:before        { content: "\f054"; }
+.font-awesome-plus-sign:before            { content: "\f055"; }
+.font-awesome-minus-sign:before           { content: "\f056"; }
+.font-awesome-remove-sign:before          { content: "\f057"; }
+.font-awesome-ok-sign:before              { content: "\f058"; }
+.font-awesome-question-sign:before        { content: "\f059"; }
+.font-awesome-info-sign:before            { content: "\f05a"; }
+.font-awesome-screenshot:before           { content: "\f05b"; }
+.font-awesome-remove-circle:before        { content: "\f05c"; }
+.font-awesome-ok-circle:before            { content: "\f05d"; }
+.font-awesome-ban-circle:before           { content: "\f05e"; }
+
+.font-awesome-arrow-left:before           { content: "\f060"; }
+.font-awesome-arrow-right:before          { content: "\f061"; }
+.font-awesome-arrow-up:before             { content: "\f062"; }
+.font-awesome-arrow-down:before           { content: "\f063"; }
+.font-awesome-share-alt:before            { content: "\f064"; }
+.font-awesome-resize-full:before          { content: "\f065"; }
+.font-awesome-resize-small:before         { content: "\f066"; }
+.font-awesome-plus:before                 { content: "\f067"; }
+.font-awesome-minus:before                { content: "\f068"; }
+.font-awesome-asterisk:before             { content: "\f069"; }
+.font-awesome-exclamation-sign:before     { content: "\f06a"; }
+.font-awesome-gift:before                 { content: "\f06b"; }
+.font-awesome-leaf:before                 { content: "\f06c"; }
+.font-awesome-fire:before                 { content: "\f06d"; }
+.font-awesome-eye-open:before             { content: "\f06e"; }
+
+.font-awesome-eye-close:before            { content: "\f070"; }
+.font-awesome-warning-sign:before         { content: "\f071"; }
+.font-awesome-plane:before                { content: "\f072"; }
+.font-awesome-calendar:before             { content: "\f073"; }
+.font-awesome-random:before               { content: "\f074"; }
+.font-awesome-comment:before              { content: "\f075"; }
+.font-awesome-magnet:before               { content: "\f076"; }
+.font-awesome-chevron-up:before           { content: "\f077"; }
+.font-awesome-chevron-down:before         { content: "\f078"; }
+.font-awesome-retweet:before              { content: "\f079"; }
+.font-awesome-shopping-cart:before        { content: "\f07a"; }
+.font-awesome-folder-close:before         { content: "\f07b"; }
+.font-awesome-folder-open:before          { content: "\f07c"; }
+.font-awesome-resize-vertical:before      { content: "\f07d"; }
+.font-awesome-resize-horizontal:before    { content: "\f07e"; }
+
+.font-awesome-bar-chart:before            { content: "\f080"; }
+.font-awesome-twitter-sign:before         { content: "\f081"; }
+.font-awesome-facebook-sign:before        { content: "\f082"; }
+.font-awesome-camera-retro:before         { content: "\f083"; }
+.font-awesome-key:before                  { content: "\f084"; }
+.font-awesome-cogs:before                 { content: "\f085"; }
+.font-awesome-comments:before             { content: "\f086"; }
+.font-awesome-thumbs-up:before            { content: "\f087"; }
+.font-awesome-thumbs-down:before          { content: "\f088"; }
+.font-awesome-star-half:before            { content: "\f089"; }
+.font-awesome-heart-empty:before          { content: "\f08a"; }
+.font-awesome-signout:before              { content: "\f08b"; }
+.font-awesome-linkedin-sign:before        { content: "\f08c"; }
+.font-awesome-pushpin:before              { content: "\f08d"; }
+.font-awesome-external-link:before        { content: "\f08e"; }
+
+.font-awesome-signin:before               { content: "\f090"; }
+.font-awesome-trophy:before               { content: "\f091"; }
+.font-awesome-github-sign:before          { content: "\f092"; }
+.font-awesome-upload-alt:before           { content: "\f093"; }
+.font-awesome-lemon:before                { content: "\f094"; }
+.font-awesome-phone:before                { content: "\f095"; }
+.font-awesome-check-empty:before          { content: "\f096"; }
+.font-awesome-bookmark-empty:before       { content: "\f097"; }
+.font-awesome-phone-sign:before           { content: "\f098"; }
+.font-awesome-twitter:before              { content: "\f099"; }
+.font-awesome-facebook:before             { content: "\f09a"; }
+.font-awesome-github:before               { content: "\f09b"; }
+.font-awesome-unlock:before               { content: "\f09c"; }
+.font-awesome-credit-card:before          { content: "\f09d"; }
+.font-awesome-rss:before                  { content: "\f09e"; }
+
+.font-awesome-hdd:before                  { content: "\f0a0"; }
+.font-awesome-bullhorn:before             { content: "\f0a1"; }
+.font-awesome-bell:before                 { content: "\f0a2"; }
+.font-awesome-certificate:before          { content: "\f0a3"; }
+.font-awesome-hand-right:before           { content: "\f0a4"; }
+.font-awesome-hand-left:before            { content: "\f0a5"; }
+.font-awesome-hand-up:before              { content: "\f0a6"; }
+.font-awesome-hand-down:before            { content: "\f0a7"; }
+.font-awesome-circle-arrow-left:before    { content: "\f0a8"; }
+.font-awesome-circle-arrow-right:before   { content: "\f0a9"; }
+.font-awesome-circle-arrow-up:before      { content: "\f0aa"; }
+.font-awesome-circle-arrow-down:before    { content: "\f0ab"; }
+.font-awesome-globe:before                { content: "\f0ac"; }
+.font-awesome-wrench:before               { content: "\f0ad"; }
+.font-awesome-tasks:before                { content: "\f0ae"; }
+
+.font-awesome-filter:before               { content: "\f0b0"; }
+.font-awesome-briefcase:before            { content: "\f0b1"; }
+.font-awesome-fullscreen:before           { content: "\f0b2"; }
+
+.font-awesome-group:before                { content: "\f0c0"; }
+.font-awesome-link:before                 { content: "\f0c1"; }
+.font-awesome-cloud:before                { content: "\f0c2"; }
+.font-awesome-beaker:before               { content: "\f0c3"; }
+.font-awesome-cut:before                  { content: "\f0c4"; }
+.font-awesome-copy:before                 { content: "\f0c5"; }
+.font-awesome-paper-clip:before           { content: "\f0c6"; }
+.font-awesome-save:before                 { content: "\f0c7"; }
+.font-awesome-sign-blank:before           { content: "\f0c8"; }
+.font-awesome-reorder:before              { content: "\f0c9"; }
+.font-awesome-list-ul:before              { content: "\f0ca"; }
+.font-awesome-list-ol:before              { content: "\f0cb"; }
+.font-awesome-strikethrough:before        { content: "\f0cc"; }
+.font-awesome-underline:before            { content: "\f0cd"; }
+.font-awesome-table:before                { content: "\f0ce"; }
+
+.font-awesome-magic:before                { content: "\f0d0"; }
+.font-awesome-truck:before                { content: "\f0d1"; }
+.font-awesome-pinterest:before            { content: "\f0d2"; }
+.font-awesome-pinterest-sign:before       { content: "\f0d3"; }
+.font-awesome-google-plus-sign:before     { content: "\f0d4"; }
+.font-awesome-google-plus:before          { content: "\f0d5"; }
+.font-awesome-money:before                { content: "\f0d6"; }
+.font-awesome-caret-down:before           { content: "\f0d7"; }
+.font-awesome-caret-up:before             { content: "\f0d8"; }
+.font-awesome-caret-left:before           { content: "\f0d9"; }
+.font-awesome-caret-right:before          { content: "\f0da"; }
+.font-awesome-columns:before              { content: "\f0db"; }
+.font-awesome-sort:before                 { content: "\f0dc"; }
+.font-awesome-sort-down:before            { content: "\f0dd"; }
+.font-awesome-sort-up:before              { content: "\f0de"; }
+
+.font-awesome-envelope-alt:before         { content: "\f0e0"; }
+.font-awesome-linkedin:before             { content: "\f0e1"; }
+.font-awesome-undo:before                 { content: "\f0e2"; }
+.font-awesome-legal:before                { content: "\f0e3"; }
+.font-awesome-dashboard:before            { content: "\f0e4"; }
+.font-awesome-comment-alt:before          { content: "\f0e5"; }
+.font-awesome-comments-alt:before         { content: "\f0e6"; }
+.font-awesome-bolt:before                 { content: "\f0e7"; }
+.font-awesome-sitemap:before              { content: "\f0e8"; }
+.font-awesome-umbrella:before             { content: "\f0e9"; }
+.font-awesome-paste:before                { content: "\f0ea"; }
+
+.font-awesome-user-md:before              { content: "\f200"; }

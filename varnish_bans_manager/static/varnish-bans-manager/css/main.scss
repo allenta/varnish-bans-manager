@@ -1,0 +1,959 @@
+// Twitter boostrap reference: http://twitter.github.com/bootstrap/index.html.
+// Twitter bootstrap sass source: https://github.com/jlong/sass-twitter-bootstrap.
+
+/******************************************************************************
+ * Twitter bootstrap.
+ ******************************************************************************/
+
+// Core variables and mixins
+@import "bootstrap/variables";
+@import "bootstrap/mixins";
+
+// CSS Reset
+@import "bootstrap/reset";
+
+// Grid system and page structure
+@import "bootstrap/scaffolding";
+@import "bootstrap/grid";
+@import "bootstrap/layouts";
+
+// Base CSS
+@import "bootstrap/type";
+@import "bootstrap/code";
+@import "bootstrap/forms";
+@import "bootstrap/tables";
+
+// Components: common
+@import "bootstrap/sprites";
+@import "bootstrap/dropdowns";
+@import "bootstrap/wells";
+@import "bootstrap/component-animations";
+@import "bootstrap/close";
+
+// Components: Buttons & Alerts
+@import "bootstrap/buttons";
+@import "bootstrap/button-groups";
+@import "bootstrap/alerts"; // Note: alerts share common CSS with buttons and thus have styles in buttons
+
+// Components: Nav
+@import "bootstrap/navs";
+@import "bootstrap/navbar";
+@import "bootstrap/breadcrumbs";
+@import "bootstrap/pagination";
+@import "bootstrap/pager";
+
+// Components: Popovers
+@import "bootstrap/modals";
+@import "bootstrap/tooltip";
+@import "bootstrap/popovers";
+
+// Components: Misc
+@import "bootstrap/thumbnails";
+@import "bootstrap/media";
+@import "bootstrap/labels-badges";
+@import "bootstrap/progress-bars";
+@import "bootstrap/accordion";
+@import "bootstrap/carousel";
+@import "bootstrap/hero-unit";
+
+// Utility classes
+@import "bootstrap/utilities"; // Has to be last to override when necessary
+
+// Responsive classes
+@import "bootstrap/responsive-utilities";
+
+/******************************************************************************
+ * Top level.
+ ******************************************************************************/
+
+@import "mixins";
+@import "variables";
+@import "font-awesome";
+
+body {
+  font: 14px 'UbuntuRegular', Verdana, Arial, sans-serif;
+  line-height: 20px;
+  overflow-y: auto;
+  &.anonymous-layout {
+    background-color: white;
+    background-image: url('varnish-bans-manager/images/background.jpg');
+    background-repeat: repeat-x;
+    > .container {
+      position: relative;
+      top: 150px;
+    }
+  }
+  &.authenticated-layout {
+    background-color: #F7F7F7;
+    background-position: 0px 57px;
+    > .container {
+      position: absolute;
+      top: 41px;
+      right: 0;
+      bottom: 0;
+      left: 0;
+    }
+    #primary-navbar {
+      a.brand {
+        background: url('varnish-bans-manager/images/header-logo.png') 0 0 no-repeat;
+        padding: 0px;
+        width: 136px;
+        height: 37px;
+        margin: 2px 5px 0px 0px;
+      }
+    }
+  }
+}
+
+.modal form {
+  margin: 0px;
+}
+
+.help-popover {
+  cursor: help;
+  i.icon-question-sign {
+    vertical-align: top;
+    display: inline-block;
+  }
+}
+
+.thumbnail.popup {
+  cursor: pointer;
+}
+
+.description {
+  color: #666666;
+  font-size: 11px;
+}
+
+.nopadding {
+  padding: 0 !important;
+}
+
+.nomargin {
+  margin: 0 !important;
+}
+
+h1.section {
+  @extend legend
+}
+
+p, li {
+  text-align: justify;
+}
+
+/******************************************************************************
+ * Forms.
+ ******************************************************************************/
+
+// Tweaks.
+form {
+  .help-block,
+  .help-inline {
+    color: #888;
+    font-size: 85%;
+  }
+
+  // Default value (5px) causes alignment problems between inputs
+  // and prepend/appends in Chrome (OSX only).
+  label {
+    margin-bottom: 4px;
+  }
+
+  fieldset {
+    margin-bottom: 20px;
+  }
+
+  legend {
+    margin-bottom: 0;
+    + * {
+      margin-top: 20px;
+      -webkit-margin-top-collapse: separate;
+    }
+  }
+
+  .help-block {
+    text-align: justify;
+  }
+
+  .control-group.checkbox-select-multiple {
+    ul {
+      list-style: none;
+      overflow: hidden;
+      label {
+        @extend .checkbox;
+      }
+    }
+  }
+
+  .control-group.radio-select {
+    ul {
+      list-style: none;
+      li {
+        margin-bottom: 15px;
+        label {
+          margin-bottom: 10px;
+        }
+      }
+    }
+  }
+
+  .form-actions {
+    border-top: none;
+    background-color: transparent;
+    padding-right: 0px;
+  }
+
+  // Append / prepend with proper margin-bottom.
+  .input-append, .input-prepend {
+    margin-bottom: 0;
+    input {
+      margin-bottom: 9px;
+    }
+  }
+
+  // Appends not summing space to input.
+  .input-prepend {
+    overflow: hidden;
+    &.input-decoration-processed {
+      .add-on {
+        float: left;
+      }
+      .input-decoration-wrapper {
+        overflow: hidden;
+      }
+    }
+  }
+
+  // Image file inputs.
+  .image-file-input {
+    margin-bottom: 9px;
+    .image-file-input-preview li {
+      position: relative;
+      margin-bottom: 0px;
+      margin-left: 0;
+      .thumbnail {
+        padding-right: 22px;
+        img {
+          max-width: 100px;
+          max-height: 100px;
+        }
+      }
+      .image-file-input-delete {
+        position: absolute;
+        top: 0;
+        right: 5px;
+      }
+    }
+  }
+}
+
+/******************************************************************************
+ * Footer.
+ ******************************************************************************/
+
+body footer {
+  overflow: hidden;
+  left: 0px;
+  bottom: 0px;
+}
+
+body.anonymous-layout footer {
+  position: fixed;
+  padding: 10px;
+}
+
+body.authenticated-layout footer {
+  position: absolute;
+  padding-top: 10px;
+  padding-bottom: 10px;
+  clear: both;
+  font-size: 90%;
+  width: $gridRowWidth;
+}
+
+body.authenticated-layout .with-sidebar footer {
+  width: $gridRowWidth - $sidebarWidth - 40;
+  padding: 10px 20px;
+}
+
+/******************************************************************************
+ * Sidebar.
+ ******************************************************************************/
+
+html, body,
+body.authenticated-layout #content,
+body.authenticated-layout .with-sidebar,
+body.authenticated-layout .with-sidebar > .sidebar {
+  height: 100%;
+  min-height: 100%;
+}
+
+body.authenticated-layout .with-sidebar > .container {
+  min-height: 100%;
+}
+
+#content > .with-sidebar {
+  padding-left: $sidebarWidth;
+  > .sidebar {
+    position: absolute; // JS behavior will change this to fixed and calculate required padding-left.
+    top: 0px;
+    left: 0px;
+    width: $sidebarWidth - 1;
+    border-right: 1px solid #E5E5E5;
+    background-color: #F7F7F7;
+    ul.nav.nav-stacked {
+      margin-top: 0px;
+      margin-bottom: 0;
+      position: relative;
+      right: -1px;
+      li {
+        width: 100%;
+        .btn-more {
+          display: none;
+        }
+      }
+      li > a {
+        position: relative;
+        border: none;
+        @include border-radius(none);
+        text-align: center;
+        font-size: 11px;
+        height: 60px;
+        display: block;
+        color: #555;
+      }
+      li:first-child > a,
+      li:last-child > a {
+        border-radius: 0 !important;
+        -webkit-border-radius: none !important;
+        -moz-border-radius: none !important;
+      }
+
+      li.active {
+        background-image: url(varnish-bans-manager/images/sidebar-active-item.png);
+        background-position: right;
+        background-repeat: no-repeat;
+      }
+    }
+  }
+
+  > .collapsed {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    ul.nav.nav-pills {
+      background-color: white;
+      border: 1px solid #E5E5E5;
+      @include border-radius(4px);
+      li > a {
+        background-color: white !important;
+        text-align: center;
+        color: #555;
+      }
+    }
+    .arrow {
+      background: transparent url(varnish-bans-manager/images/sidebar-active-item.png) 0px 0px no-repeat;
+      height: 22px;
+      width: 12px;
+      position: absolute;
+      top: 30px;
+      left: -11px;
+    }
+  }
+
+  > .sidebar,
+  > .collapsed {
+    .nav {
+      .icon {
+        width: 45px;
+        height: 45px;
+        background-image: url("varnish-bans-manager/images/sidebar-icons.png");
+        background-repeat: no-repeat;
+        margin: auto;
+        &.more          { background-position: 0px    0px; }
+        &.users         { background-position: -45px  0px; }
+        &.settings      { background-position: -90px  0px; }
+        &.stats         { background-position: -135px 0px; }
+        &.home          { background-position: -180px 0px; }
+        &.notifications { background-position: -225px 0px; }
+        &.help          { background-position: -270px 0px; }
+        &.media         { background-position: -315px 0px; }
+        &.money         { background-position: -360px 0px; }
+        &.add           { background-position: -405px 0px; }
+        &.lock          { background-position: 0px    -45px; }
+        &.globe         { background-position: -45px  -45px; }
+        &.qrcode        { background-position: -90px  -45px; }
+        &.search        { background-position: -135px -45px; }
+        &.calendar      { background-position: -180px -45px; }
+        &.dashboard     { background-position: -225px -45px; }
+        &.upload        { background-position: -270px -45px; }
+      }
+      li > a:hover,
+      li.active > a {
+        background: none;
+        color: #08C !important;
+      }
+      li.active .icon,
+      li > a:hover .icon {
+        @include opacity(100);
+      }
+      li > a .icon {
+        @include opacity(50);
+      }
+    }
+  }
+
+  > .container {
+    position: relative;
+    width: auto;
+    border-right: 1px solid #E5E5E5;
+    background-color: white;
+    background-image: url('varnish-bans-manager/images/background.jpg');
+    background-repeat: repeat-x;
+    background-position: 0 -20px;
+    > .inner-container {
+      padding-top: 20px;
+      padding-left: 20px;
+      padding-right: 20px;
+      margin-bottom: 40px;
+      .page-header {
+        padding: 0px;
+        margin: -15px 0px 15px 0px;
+        border-bottom: none;
+        h1 {
+          font-size: 25px;
+          line-height: 35px;
+          small {
+            font-size: 14px;
+          }
+        }
+      }
+      #breadcrumb {
+        background-color: #f7f7f7;
+        box-shadow: 0 0 1px #ffffff;
+        border-top: 1px solid #E5E5E5;
+        border-bottom: 1px solid #E5E5E5;
+        padding-left: 20px;
+        margin-left: -20px;
+        margin-right: -20px;
+        margin-bottom: 30px;
+        a, .item {
+          padding: 8px 20px 8px 10px;
+          display: inline-block;
+          background-image: url('varnish-bans-manager/images/breadcrumb.png');
+          background-position: center right;
+          background-repeat: no-repeat;
+          font-size: 11px;
+          color: #666666;
+        }
+        a:hover {
+          color: #333333;
+        }
+        a:last-child {
+          background-image:none;
+        }
+        a.current {
+          font-weight: bold;
+          color: #444444;
+        }
+      }
+    }
+  }
+}
+
+/******************************************************************************
+ * Icons.
+ ******************************************************************************/
+
+.icon-sort-direction-asc {
+  @extend .icon-chevron-up;
+}
+
+.icon-sort-direction-desc {
+  @extend .icon-chevron-down;
+}
+
+.icon-download-csv {
+  @extend .icon-download-alt;
+}
+
+.icon-delete {
+  @extend .icon-remove;
+}
+
+/******************************************************************************
+ * Throbbers.
+ ******************************************************************************/
+
+.throbber-global {
+  visibility: hidden;
+  position: fixed;
+  right: 4px;
+  top: 4px;
+  z-index: 5000;
+  background: transparent url('varnish-bans-manager/images/throbber-global.gif') no-repeat;
+  height: 32px;
+  width: 32px;
+}
+body.ajaxing .throbber-global {
+  visibility: visible;
+}
+
+.btn.ajaxing i {
+  background-image: url('varnish-bans-manager/images/throbber-button.gif') !important;
+  background-position: 0 0;
+}
+
+/******************************************************************************
+ * Box.
+ ******************************************************************************/
+
+.box {
+  border: 1px solid #E5E5E5;
+  @include border-radius(4px);
+  padding: 5px;
+  margin-bottom: 20px;
+  position: relative;
+  .box-header {
+    padding: 5px;
+    h3 {
+      border-bottom: 1px solid #E5E5E5;
+      font-size: 21px;
+      line-height: 30px;
+      font-weight: normal;
+      margin: 0px;
+    }
+  }
+  .box-stamp {
+    position: absolute;
+    top: 8px;
+    right: 4px;
+    .font-awesome {
+      font-size: 21px;
+      color: $blue;
+    }
+  }
+  .box-body{
+    padding: 5px;
+  }
+}
+
+/******************************************************************************
+ * Widget box (see http://wbpreview.com/previews/WB0F35928/index.html).
+ ******************************************************************************/
+
+.widget-box {
+  background: none repeat scroll 0 0 #F9F9F9;
+  border: 1px solid #CDCDCD;
+  clear: both;
+  margin-top: 16px;
+  margin-bottom: 16px;
+  position: relative;
+  &.widget-plain {
+    background: transparent;
+    border: none;
+    margin-top: 0;
+    margin-bottom: 0;
+  }
+  .widget-title {
+    @include gradient-vertical(#fdfdfd, #eaeaea);
+    border-bottom: 1px solid #CDCDCD;
+    height: 32px;
+    span.icon {
+      border-right: 1px solid #cdcdcd;
+      padding: 9px 9px 9px 9px;
+      float: left;
+      opacity: .7;
+    }
+    h3 {
+      color: #666666;
+      text-shadow: 0 1px 0 #ffffff;
+      float: left;
+      font-size: 12px;
+      line-height: 12px;
+      font-weight: bold;
+      padding: 11px 11px 7px;
+      margin: 0px;
+      text-transform: uppercase;
+    }
+    .buttons {
+      margin: 6px 5px 0 0;
+      i {
+        margin-top: -2px;
+      }
+    }
+    .label {
+      padding: 3px 5px 2px;
+      margin: 8px 15px 0 0;
+      box-shadow: 0 1px 2px rgba(0,0,0,0.3) inset, 0 1px 0 #ffffff;
+    }
+    .nav-tabs {
+      border-bottom: 0 none;
+      margin: 0px;
+      display: inline;
+      li {
+        a {
+          border-bottom: medium none !important;
+          border-left: 1px solid #DDDDDD;
+          border-radius: 0 0 0 0;
+          border-right: 1px solid #DDDDDD;
+          border-top: medium none;
+          color: #999999;
+          margin: 0;
+          outline: medium none;
+          line-height: 12px;
+          padding: 11px 10px 10px;
+          font-weight: bold;
+          text-shadow: 0 1px 0 #FFFFFF;
+          &:hover {
+            background-color: transparent !important;
+            border-color: #D6D6D6;
+            border-width: 0 1px;
+            color: #666666;
+          }
+        }
+        &.active a {
+          background-color: #F9F9F9 !important;
+          color: #444444;
+        }
+      }
+      &.pull-left {
+        li:first-child a {
+          border-left: medium none !important;
+        }
+      }
+      &.pull-right {
+        li:last-child a {
+          border-right: medium none !important;
+        }
+      }
+    }
+  }
+  .widget-content {
+    padding: 12px 15px;
+    overflow: hidden;
+    &.collapse {
+      display: none;
+    }
+    &.collapse.in {
+      display: block;
+    }
+    .simple-list {
+      list-style: none outside none;
+      margin: 0;
+      li {
+        border-bottom: 1px solid #EEEEEE;
+        display: block;
+        &:last-child {
+            border-bottom: medium none;
+        }
+        a {
+          color: #888888;
+          display: block;
+          padding: 7px 10px;
+          &:hover {
+            background-color: #FBFBFB;
+          }
+          i {
+            margin-right: 10px;
+            opacity: 0.6;
+            vertical-align: middle;
+          }
+        }
+      }
+    }
+  }
+  table.widget-content {
+    margin-bottom: 0;
+    tr:first-child {
+      td {
+        border-top: none;
+      }
+    }
+    &.table-striped {
+      tbody tr:nth-child(odd) td,
+      tbody tr:nth-child(odd) th {
+        background-color: white;
+      }
+    }
+  }
+  &.widget-plain .widget-content {
+    padding: 12px 0 0;
+  }
+}
+
+/******************************************************************************
+ * Stats.
+ ******************************************************************************/
+
+.stats-item {
+  padding: 15px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+  background-color: $blue;
+  color: white;
+}
+
+.stats-val {
+  display: block;
+  font-size: 16pt;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+/******************************************************************************
+ * Search box.
+ ******************************************************************************/
+
+.collection-filter {
+  padding: 20px 20px 0px 20px;
+  margin-bottom: 20px;
+  @include gradient-vertical($navbarBackgroundHighlight, $navbarBackground);
+  border: 1px solid $navbarBorder;
+  @include border-radius(4px);
+  @include box-shadow(0 1px 4px rgba(0,0,0,.065));
+  @include clearfix();
+}
+
+/******************************************************************************
+ * Notifications (common stuff).
+ ******************************************************************************/
+
+ .notification {
+  -webkit-background-size: 40px 40px;
+  -moz-background-size: 40px 40px;
+  background-size: 40px 40px;
+  background-image: -webkit-gradient(linear, left top, right bottom,
+              color-stop(.25, rgba(255, 255, 255, .05)), color-stop(.25, transparent),
+              color-stop(.5, transparent), color-stop(.5, rgba(255, 255, 255, .05)),
+              color-stop(.75, rgba(255, 255, 255, .05)), color-stop(.75, transparent),
+              to(transparent));
+  background-image: -webkit-linear-gradient(135deg, rgba(255, 255, 255, .05) 25%, transparent 25%,
+            transparent 50%, rgba(255, 255, 255, .05) 50%, rgba(255, 255, 255, .05) 75%,
+            transparent 75%, transparent);
+  background-image: -moz-linear-gradient(135deg, rgba(255, 255, 255, .05) 25%, transparent 25%,
+            transparent 50%, rgba(255, 255, 255, .05) 50%, rgba(255, 255, 255, .05) 75%,
+            transparent 75%, transparent);
+  background-image: -ms-linear-gradient(135deg, rgba(255, 255, 255, .05) 25%, transparent 25%,
+            transparent 50%, rgba(255, 255, 255, .05) 50%, rgba(255, 255, 255, .05) 75%,
+            transparent 75%, transparent);
+  background-image: -o-linear-gradient(135deg, rgba(255, 255, 255, .05) 25%, transparent 25%,
+            transparent 50%, rgba(255, 255, 255, .05) 50%, rgba(255, 255, 255, .05) 75%,
+            transparent 75%, transparent);
+  background-image: linear-gradient(135deg, rgba(255, 255, 255, .05) 25%, transparent 25%,
+            transparent 50%, rgba(255, 255, 255, .05) 50%, rgba(255, 255, 255, .05) 75%,
+            transparent 75%, transparent);
+   -moz-box-shadow: inset 0 -1px 0 rgba(255,255,255,.4);
+   -webkit-box-shadow: inset 0 -1px 0 rgba(255,255,255,.4);
+   box-shadow: inset 0 -1px 0 rgba(255,255,255,.4);
+   color: #fff;
+   padding: 15px;
+   text-shadow: 0 1px 0 rgba(0,0,0,.5);
+  &.success {
+     background-color: #61b832;
+     border-color: #55a12c;
+  }
+  &.error {
+     background-color: #C02822;
+     border-color: #c43d3d;
+  }
+  &.warning {
+     background-color: #eaaf51;
+     border-color: #d99a36;
+  }
+  &.info {
+     background-color: #4ea5cd;
+     border-color: #3b8eb5;
+  }
+  p a,
+  p a:link,
+  p a:visited,
+  p a:active,
+  p a:hover {
+    color: #FFF;
+    border-bottom: 1px dotted #FFF;
+  }
+}
+
+/******************************************************************************
+ * Inline notifications.
+ ******************************************************************************/
+
+.inline-notification {
+  @include border-radius(5px);
+  -webkit-box-shadow: 0px 1px 5px 0px #4a4a4a;
+  -moz-box-shadow: 0px 1px 5px 0px #4a4a4a;
+  box-shadow: 0px 1px 5px 0px #4a4a4a;
+  font-size: 15px;
+  line-height: 20px;
+  margin-bottom: 10px;
+  p {
+     margin: 0;
+  }
+  a.close {
+    margin-top: -10px;
+    margin-right: -6px;
+  }
+}
+
+/******************************************************************************
+ * Cool notifications.
+ ******************************************************************************/
+
+.cool-notification {
+   width: 100%;
+  -webkit-box-sizing: border-box;
+  -moz-box-sizing: border-box;
+  box-sizing: border-box;
+  position: fixed;
+   _position: absolute;
+   z-index: 2000;
+  h3 {
+    margin: 0 0 5px 0;
+    font-size: 16px;
+  }
+  p {
+     margin: 0;
+     font-size: 15px;
+     line-height: 20px;
+  }
+}
+
+/******************************************************************************
+ * Floating notifications (jQuery Notify UI Widget).
+ ******************************************************************************/
+
+.ui-notify {
+  width: 500px;
+  position: fixed;
+  bottom: 10px;
+  right: 10px;
+  z-index: 2000;
+}
+.ui-notify-message {
+  margin-top: 15px;
+}
+.floating-notification {
+  @include border-radius(5px);
+  -webkit-box-shadow: 0px 1px 5px 0px #4a4a4a;
+  -moz-box-shadow: 0px 1px 5px 0px #4a4a4a;
+  box-shadow: 0px 1px 5px 0px #4a4a4a;
+  .ui-notify-contents p {
+     margin: 0;
+     font-size: 15px;
+     line-height: 20px;
+  }
+  .ui-notify-click {
+    cursor: pointer;
+  }
+  a.close {
+    margin-top: -10px;
+    margin-right: -6px;
+  }
+}
+
+/******************************************************************************
+ * DEBUG.
+ ******************************************************************************/
+
+html > body #debug-toolbar {
+  position: fixed;
+  z-index: 10000;
+}
+
+#debug-toolbar {
+  display: none;
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  height: 25px;
+  line-height: 25px;
+  background: #EEE;
+  border-top: 1px solid #CCC;
+  border-right: 1px solid #CCC;
+  border-left: 1px solid #CCC;
+  overflow: hidden;
+  .items {
+    ul {
+      margin: 0;
+      padding: 0;
+      display: inline;
+      height: 25px;
+      li {
+        border-left: 1px solid #FFF;
+        border-right: 1px solid #CCC;
+        float: left;
+        list-style-type: none;
+        padding: 0 1em 0 1em;
+        height: 25px;
+        line-height: 25px;
+        &:first-child {
+          border-left: none;
+        }
+        &:last-child {
+          border-right: none;
+        }
+        a {
+          color: #333;
+          text-decoration: none;
+          cursor: pointer;
+        }
+        &:hover,
+        a:hover {
+          background: #FFF;
+        }
+      }
+    }
+  }
+  .log {
+    display: none;
+    position: fixed;
+    top: 4px;
+    left: 4px;
+    background: white;
+    overflow: scroll;
+    padding: 15px;
+    border: 1px solid $navbarBorder;
+    @include border-radius(4px);
+    @include box-shadow(0 1px 4px rgba(0,0,0,.065));
+    @include gradient-vertical($navbarBackgroundHighlight, $navbarBackground);
+    .summary {
+      font-weight: bold;
+    }
+    .tabbable {
+      padding-top: 10px;
+    }
+    .tab-pane {
+      padding: 0px 10px 10px 10px;
+    }
+    .widget table {
+      margin-bottom: 0px;
+    }
+    table {
+      td {
+        @include font-family-monospace;
+        word-wrap: break-word;
+        font-size: 80%;
+        padding-left: 8px;
+        padding-right: 8px;
+        pre {
+          border: none;
+          background: none;
+          padding: 0px;
+          margin: 0px;
+          font-size: inherit;
+        }
+      }
+      .main {
+        width: 100%;
+      }
+    }
+  }
+}
+
+/******************************************************************************
+ * Pages.
+ ******************************************************************************/
+
+@import "pages";

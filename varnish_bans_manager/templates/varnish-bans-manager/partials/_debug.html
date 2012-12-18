@@ -1,0 +1,244 @@
+<a class="close pull-right" href="#" onclick="vbm.dev.toggle_debug_log(); return false;">&times;</a>
+
+<div class="row-fluid">
+  <div class="tabbable">
+    <ul class="nav nav-tabs">
+      <li><a href="#debug-request" data-toggle="tab">REQUEST</a></li>
+      <li class="active"><a href="#debug-mysql" data-toggle="tab">MYSQL / <span>{{ mysql.log|length }}</span></a></li>
+    </ul>
+    <div class="tab-content">
+
+      <div class="tab-pane" id="debug-request">
+        <div class="widget-box">
+          <div class="widget-title">
+            <h3><i class="font-awesome font-awesome-cog"></i> VIEW</h3>
+          </div>
+          <div class="widget-content">
+            <table class="table table-condensed">
+              <thead>
+                <tr>
+                  <th>Variable</th>
+                  <th class="main">Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>Path</td>
+                  <td class="main"><pre>{{ req.path }}</pre></td>
+                </tr>
+                <tr>
+                  <td>Function</td>
+                  <td class="main"><pre>{{ req.view.func }}</pre></td>
+                </tr>
+                <tr>
+                  <td>URL</td>
+                  <td class="main"><pre>{{ req.view.url }}</pre></td>
+                </tr>
+                <tr>
+                  <td>args</td>
+                  <td class="main"><pre>{{ req.view.args|default:"None" }}</pre></td>
+                </tr>
+                <tr>
+                  <td>kwargs</td>
+                  <td class="main">
+                    {% if req.view.kwargs.items %}
+                      {% for k, v in view_kwargs.items %}
+                        <pre>{{ k }}={{ v }}{% if not forloop.last %}, {% endif %}</pre>
+                      {% endfor %}
+                    {% else %}
+                      <pre>None</pre>
+                    {% endif %}
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="widget-box">
+          <div class="widget-title">
+            <h3><i class="font-awesome font-awesome-cog"></i> COOKIES</h3>
+          </div>
+          <div class="widget-content">
+            {% if req.cookies %}
+              <table class="table table-condensed table-striped">
+                <thead>
+                  <tr>
+                    <th>Variable</th>
+                    <th class="main">Value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for key, value in req.cookies %}
+                    <tr>
+                      <td>{{ key|escape }}</td>
+                      <td class="main"><pre>{{ value|escape }}</pre></td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            {% else %}
+              <p>No COOKIE data</p>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="widget-box">
+          <div class="widget-title">
+            <h3><i class="font-awesome font-awesome-cog"></i> SESSION</h3>
+          </div>
+          <div class="widget-content">
+            {% if req.session %}
+              <table class="table table-condensed table-striped">
+                <thead>
+                  <tr>
+                    <th>Variable</th>
+                    <th class="main">Value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for key, value in req.session %}
+                    <tr>
+                      <td>{{ key|escape }}</td>
+                      <td class="main"><pre>{{ value|escape }}</pre></td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            {% else %}
+              <p>No SESSION data</p>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="widget-box">
+          <div class="widget-title">
+            <h3><i class="font-awesome font-awesome-cog"></i> GET</h3>
+          </div>
+          <div class="widget-content">
+            {% if req.get %}
+              <table class="table table-condensed table-striped">
+                <thead>
+                  <tr>
+                    <th>Variable</th>
+                    <th class="main">Value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for key, value in req.get %}
+                    <tr>
+                      <td>{{ key|escape }}</td>
+                      <td class="main"><pre>{{ value|join:", "|escape }}</pre></td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            {% else %}
+              <p>No GET data</p>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="widget-box">
+          <div class="widget-title">
+            <h3><i class="font-awesome font-awesome-cog"></i> POST</h3>
+          </div>
+          <div class="widget-content">
+            {% if req.post %}
+              <table class="table table-condensed table-striped">
+                <thead>
+                  <tr>
+                    <th>Variable</th>
+                    <th class="main">Value</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {% for key, value in req.post %}
+                    <tr>
+                      <td>{{ key|escape }}</td>
+                      <td class="main"><pre>{{ value|join:", "|escape }}</pre></td>
+                    </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+            {% else %}
+              <p>No POST data</p>
+            {% endif %}
+          </div>
+        </div>
+
+        <div class="widget-box">
+          <div class="widget-title">
+            <h3><i class="font-awesome font-awesome-cog"></i> HEADERS</h3>
+          </div>
+          <div class="widget-content">
+            <table class="table table-condensed table-striped">
+              <thead>
+                <tr>
+                  <th>Key</th>
+                  <th class="main">Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for key, value in req.headers.iteritems %}
+                  <tr>
+                    <td>{{ key|escape }}</td>
+                    <td class="main"><pre>{{ value|escape }}</pre></td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div class="widget-box">
+          <div class="widget-title">
+            <h3><i class="font-awesome font-awesome-cog"></i> SETTINGS</h3>
+          </div>
+          <div class="widget-content">
+            <table class="table table-condensed table-striped">
+              <thead>
+                <tr>
+                  <th>Variable</th>
+                  <th class="main">Value</th>
+                </tr>
+              </thead>
+              <tbody>
+                {% for name, value in req.settings.items %}
+                  <tr>
+                    <td>{{ name }}</td>
+                    <td class="main"><pre>{{ value|pprint }}</pre></td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-pane active" id="debug-mysql">
+        <p class="summary">{{ mysql.log|length }} queries executed in {{ mysql.time }}s</p>
+        {% if mysql.log %}
+          <table class="table table-condensed">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>Time</th>
+                <th class="main">Query</th>
+              </tr>
+            </thead>
+            <tbody>
+              {% for query in mysql.log %}
+                <tr>
+                  <td>{{ forloop.counter }}</td>
+                  <td>{{ query.time }}s</td>
+                  <td class="main">{{ query.sql }}</td>
+                </tr>
+              {% endfor %}
+            </tbody>
+          </table>
+        {% endif %}
+      </div>
+    </div>
+  </div>
+</div>

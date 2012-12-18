@@ -1,0 +1,7 @@
+=> SQL: {{ mysql.log|length }} queries executed in {{ mysql.time }}s
+{% if mysql.log|length > 0 %}
+  {% for query in mysql.log %}
+    [{{ forloop.counter }}] ({{ query.time }}s) {{ query.sql }}
+  {% endfor %}
+{% endif %}
+----

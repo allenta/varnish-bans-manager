@@ -1,0 +1,48 @@
+{% extends "modal.html" %}
+{% load i18n %}
+{% load url from future %}
+{% load vbm_base_helpers %}
+
+{% block title %}{% trans 'Ban submission report' %}{% endblock %}
+
+{% block body %}
+  <p><pre>{{ expression }}</pre></p>
+
+  {% if submissions > 0 %}
+    <p>
+      <span class="badge badge-success">{{ submissions }}</span>
+      {% blocktrans %}caches have properly processed your ban.{% endblocktrans %}
+    </p>
+  {% endif %}
+
+  {% if misses > 0 %}
+    <p>
+      <span class="badge badge-important">{{ misses }}</span>
+      {% blocktrans %}caches are no longer available.{% endblocktrans %}
+    </p>
+  {% endif %}
+
+  {% if errors %}
+    <p>
+      <span class="badge badge-important">{{ errors|length }}</span>
+      {% trans 'caches have been unable to process your ban:' %}
+    </p>
+    <div class="row-fluid">
+      <div class="offset1">
+        {% for error in errors %}
+          <p><code>{{ error.name }}</code> {{ error.message }}</p>
+        {% endfor %}
+      </div>
+    </div>
+  {% endif %}
+
+  <script type="text/javascript">
+    vbm.partials.ready('bans-submit-errors-modal', {
+      destination: '{{ destination }}',
+    });
+  </script>
+{% endblock %}
+
+{% block footer %}
+  <a href="#" class="btn btn-primary" data-dismiss="modal" ><i class="icon-ok icon-white"></i> {% trans 'Accept' %}</a>
+{% endblock %}

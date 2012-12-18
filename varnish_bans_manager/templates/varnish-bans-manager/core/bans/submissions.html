@@ -1,0 +1,26 @@
+{% extends "varnish-bans-manager/core/bans/layout.html" %}
+{% load i18n %}
+{% load url from future %}
+{% load vbm_widget_helpers %}
+{% load vbm_form_helpers %}
+
+{% block title %}{% trans 'Bans' %} > {% trans 'Submissions' %}{% endblock %}
+
+{% block sidebar_section %}submissions{% endblock %}
+
+{% block sidebar_content %}
+  <div class="page-header">
+    <h1>
+      {% trans 'Recent submissions' %}
+      <small>{% trans 'Browse recently submited bans' %}</small>
+    </h1>
+  </div>
+
+  <div id="breadcrumb">
+    <i class="font-awesome font-awesome-home"></i>
+    <span class="item">{% trans 'Bans' %}</span>
+    <a href="{% url 'bans-submissions' %}" class="navigation current">{% trans 'Submissions' %}</a>
+  </div>
+
+  <p><span class="label label-info"><i class="font-awesome font-awesome-exclamation-sign"></i> {% trans 'Coming soon...' %}</span></p>
+{% endblock %}

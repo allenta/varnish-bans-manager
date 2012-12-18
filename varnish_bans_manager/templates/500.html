@@ -1,0 +1,6 @@
+{% extends "error.html" %}
+{% load i18n %}
+
+{% block code %}500{% endblock %}
+{% block headline %}{% trans "Your request couldn't be processed." %}{% endblock %}
+{% block message %}{% trans "Please, try again later." %}{% endblock %}

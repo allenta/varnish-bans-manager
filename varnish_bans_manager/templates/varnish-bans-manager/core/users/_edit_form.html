@@ -1,0 +1,86 @@
+{% load i18n %}
+{% load vbm_widget_helpers %}
+{% load url from future %}
+{% load vbm_form_helpers %}
+
+{% form_errors form.profile %}
+{% form_errors form.user %}
+{{ form.profile.revision }}
+<fieldset>
+  <legend>{% trans 'Access' %}</legend>
+  <div class="row-fluid">
+    {% form_cgroup form.user.email 'span6' %}
+      <label class="control-label">{{ form.user.email.field.label }}</label>
+      <div class="controls">
+        <div class="input-prepend">
+          <span class="add-on">@</span>
+          {{ form.user.email|add_class:"span12" }}
+        </div>
+      </div>
+      {% form_ferrors form.user.email 'block' %}
+    {% endform_cgroup %}
+
+    {% form_cgroup form.user.password1 form.user.password2 'span6' %}
+      <label class="control-label">{% trans 'Password' %}</label>
+      <div class="controls">
+        <div class="span6">
+          <div class="input-prepend">
+            <span class="add-on"><i class="font-awesome font-awesome-lock"></i></span>
+            {{ form.user.password1|add_class:"span12" }}
+          </div>
+          {% form_ferrors form.user.password1 'block' %}
+        </div>
+        <div class="span6">
+          <div class="input-prepend">
+            <span class="add-on"><i class="font-awesome font-awesome-lock"></i></span>
+            {{ form.user.password2|add_class:"span12" }}
+          </div>
+          {% form_ferrors form.user.password2 'block' %}
+        </div>
+      </div>
+    {% endform_cgroup %}
+  </div>
+</fieldset>
+
+<fieldset>
+  <legend>{% trans 'Personal info' %}</legend>
+  {{ form.profile.secret }}
+  <div class="row-fluid">
+    {% form_cgroup form.user.first_name form.user.last_name 'span6' %}
+      <label class="control-label">{% trans 'Name' %}</label>
+      <div class="controls">
+        <div class="span4">
+          {{ form.user.first_name|add_class:"span12" }}
+          {% form_ferrors form.user.first_name 'block' %}
+        </div>
+        <div class="span8">
+          {{ form.user.last_name|add_class:"span12" }}
+          {% form_ferrors form.user.last_name 'block' %}
+        </div>
+      </div>
+    {% endform_cgroup %}
+
+    {% form_cgroup form.profile.photo 'span6' %}
+      <label class="control-label">{{ form.profile.photo.field.label }}</label>
+      <div class="controls">
+        {{ form.profile.photo|add_class:"span12" }}
+        {% form_ferrors form.profile.photo 'block' %}
+      </div>
+    {% endform_cgroup %}
+</fieldset>
+
+{% if not instance or not instance.is_superuser %}
+  <fieldset>
+    <legend>{% trans 'Permissions' %}</legend>
+    {% form_cgroup form.user.permissions 'checkbox-select-multiple' %}
+      {{ form.user.permissions }}
+    {% endform_cgroup %}
+  </fieldset>
+{% endif %}
+
+<div class="form-actions pull-right">
+  {% if instance %}
+    <a href="#" class="btn btn-danger ajax confirm" data-type="post" data-url="{% url 'users-delete' instance.id %}"><i class="icon-remove icon-white"></i> {% trans 'Delete' %}</a>
+  {% endif %}
+  <button class="btn btn-primary" type="submit"><i class="icon-ok icon-white"></i> {% trans 'Save' %}</button>
+</div>

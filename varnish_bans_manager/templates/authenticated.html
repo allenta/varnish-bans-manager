@@ -1,0 +1,58 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load media %}
+{% load vbm_base_helpers %}
+{% load url from future %}
+
+{% block layout_name %}authenticated{% endblock %}
+
+{% block layout %}
+  <div id="navbar">
+    <div id="primary-navbar" class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a href="{% url 'home' %}" class="brand navigation"></a>
+
+          <ul class="nav">
+            <li class="{% active request "^(/bans/|/home/)" %}" data-path="/bans/">
+              <a href="{% url 'bans-basic' %}" class="navigation">{% trans 'Bans' %}</a>
+            </li>
+            {% if perms.core.can_access_caches_management %}
+              <li class="{% active request "^/caches/" %}" data-path="/caches/">
+                <a href="{% url 'caches-browse' %}" class="navigation">{% trans 'Caches' %}</a>
+              </li>
+            {% endif %}
+            {% if perms.core.can_access_users_management %}
+              <li class="{% active request "^/users/" %}" data-path="/users/">
+                <a href="{% url 'users-browse' %}" class="navigation">{% trans 'Users' %}</a>
+              </li>
+            {% endif %}
+            {% if perms.core.can_access_settings %}
+              <li class="{% active request "^/settings/" %}" data-path="/settings/">
+                <a href="{% url 'settings-general' %}" class="navigation">{% trans 'Settings' %}</a>
+              </li>
+            {% endif %}
+          </ul>
+
+          <div class="btn-group pull-right">
+            <a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+              <i class="icon-user"></i> {{ request.user.email|slice:'30' }}{% if request.user.email|length > 30 %}...{% endif %}
+              <span class="caret"></span>
+            </a>
+            <ul class="dropdown-menu">
+              <li><a href="{% url 'user-profile' %}" class="navigation"><i class="icon-wrench"></i> {% trans 'Profile' %}</a></li>
+              <li class="divider"></li>
+              <li><a href="{% url 'user-logout' %}"><i class="icon-off"></i> {% trans 'Disconnect' %}</a></li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="container">
+    <div class="throbber-global"></div>
+    <div id="content">
+      {% block content %}{% endblock %}
+    </div>
+  </div>
+{% endblock %}
