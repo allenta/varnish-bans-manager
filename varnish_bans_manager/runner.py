@@ -19,7 +19,7 @@ def default_config():
 # (http://docs.gunicorn.org/en/latest/configure.html) for further
 # details and for a full list of options. Note that 'debug' and
 # 'secure_scheme_headers' Gunicorn settings will always be overriden
-# by VBN internal settings.
+# by VBM internal settings.
 [http]
 bind: 0.0.0.0:9000
 worker_class: eventlet
