@@ -11,7 +11,7 @@ cached contents. Using the web interface you and your users will be able to:
 
 VBM implements a subset of the functionality provided by the
 `Varnish Administration Console <https://www.varnish-software.com/vac>`_ (VAC).
-If you are alreday using VAC, you are probably not interested in using
+If you are already using VAC, you are probably not interested in using
 VBM. However, VAC is part of the Varnish enterprise subscriptions services
 and it's not available as standalone software for free. Unlike VAC:
 

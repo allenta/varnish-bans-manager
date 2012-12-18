@@ -2,10 +2,9 @@
 ## This sample reverse proxy configuration assumes the following
 ## VBM settings:
 ##
-##   "files": {
-##       "root": "/var/www/varnish-bans-manager/files/",
-##       "sendfile": "varnish_bans_manager.filesystem.sendfile_backends.nginx"
-##   },
+##   [filesystem]
+##   root: /var/www/varnish-bans-manager/files/
+##   sendfile: varnish_bans_manager.filesystem.sendfile_backends.nginx
 ##
 ## VBM virtualenv is assumed to be installed in '/var/www/varnish-bans-manager'.
 ##
