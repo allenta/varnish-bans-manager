@@ -5,14 +5,14 @@ Next you can find some general Varnish Bans Manager (VBM) development
 tips. These are only useful for developers when setting up their
 development environment.
 
-- Check out setup.py and install all required dependencies.
+- Check out ``setup.py`` and install all required dependencies.
 
 - Use ``VARNISH_BANS_MANAGER_CONF`` environment variable to point to
-  your personal settings file. Also remember to:
+  your personal configuration file. Also remember to:
 
-    - Set ``development`` to true in your personal settings file.
+    - Set ``development`` to ``true`` in your personal configuration.
 
-    - Disable ``http > daemon`` in your personal settings file if
+    - Disable ``http > daemon`` in your personal configuration if
       developing using Gunicorn::
 
         $ python varnish_bans_manager/runner.py start
@@ -44,7 +44,7 @@ Source Distribution Package
 ===========================
 
 VBM sources require a build step previous to the generation of the Python
-source distribution Package. During this phase SASS sources are compiled
+source distribution package. During this phase SASS sources are compiled
 to CSS, some Javascript and CSS bundles are created, static contents are
 versioned, translation files are compiled, etc.
 
@@ -69,4 +69,9 @@ Note that the site building phase has some extra system requirements:
 TODO
 ====
 
+- Ban notifications.
+- Bans & groups management.
+- List of recent ban submissions.
+- Access to current status of bans.
+- Ban templates.
 - Refactor ``varnish_bans_manager.filesystem.models``.

@@ -2,7 +2,7 @@ VBM_ROOT=.
 
 sdist: build
 	@echo
-	@echo "> Creating Python source distribution..."
+	@echo "> Creating Python source distribution package..."
 	cd $(VBM_ROOT)/build; python setup.py sdist
 
 	@echo
@@ -23,8 +23,7 @@ build: clone
 	rm -rf "$(VBM_ROOT)/build/varnish_bans_manager/static"
 	find "$(VBM_ROOT)/build" \
 		-name "*.pyc" -o \
-		-name "*.po" -o \
-		-name ".svn" | xargs rm -f
+		-name "*.po" -o | xargs rm -f
 
 clone: clean
 	@echo

@@ -4,8 +4,8 @@ deployments where non-technical users need to be able to invalidate
 cached contents. Using the web interface you and your users will be able to:
 
 - Define Varnish caching nodes.
-- Organize caches in clusters to ease bulk operations.
-- Manage per-node and per-cluster bans. Basic, advanced and expert modes are available.
+- Organize caches in groups to ease bulk operations.
+- Manage per-node and per-group bans. Basic, advanced and expert modes are available.
 - Restrict who can ban what using user permissions and predefined ban templates.
 - Monitor current bans and check past ban submissions.
 

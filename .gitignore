@@ -1,2 +1,6 @@
 .DS_Store
 *.pyc
+*.mo
+/vbm.sublime-project
+/vbm.sublime-workspace
+/sftp-config.json
