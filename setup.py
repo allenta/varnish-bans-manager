@@ -17,7 +17,7 @@ from __future__ import absolute_import
 from setuptools import setup, find_packages
 
 setup(
-    name='varnish_bans_manager',
+    name='varnish-bans-manager',
     version='0.1',
     author='dot2code Technologies',
     author_email='info@dot2code.com',
