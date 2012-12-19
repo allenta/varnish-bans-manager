@@ -53,10 +53,31 @@ Prepare the environment
    VBM, but some OS packages need to be installed previously. For example,
    for Ubuntu::
 
-    www-data:~$ sudo apt-get install libjpeg8 libjpeg62-dev libfreetype6 libfreetype6-dev
+    www-data:~$ sudo apt-get install libjpeg8 libjpeg62-dev libfreetype6 libfreetype6-dev zlib1g-dev
+
+   Note that on Ubuntu 64 bits some symbolic links need to be created manually.
+   If not, when installing PIL, it will not include JPEG, ZLIB and FREETYPE2
+   support.
+
+    sudo ln -s /usr/lib/x86_64-linux-gnu/libjpeg.so /usr/lib
+    sudo ln -s /usr/lib/x86_64-linux-gnu/libfreetype.so /usr/lib
+    sudo ln -s /usr/lib/x86_64-linux-gnu/libz.so /usr/lib
 
 5. Create an empty database in your preferred RDBM and grant access to
    some existing or new user. You'll need it during VBM configuration.
+   For example, for MySQL::
+
+    mysql> CREATE DATABASE varnish_bans_manager;
+    Query OK, 1 row affected (0.00 sec)
+
+    mysql> CREATE USER 'bob'@'localhost' IDENTIFIED BY 's3cr3t';
+    Query OK, 0 rows affected (0.00 sec)
+
+    mysql> GRANT ALL PRIVILEGES ON varnish_bans_manager.* TO 'bob'@'localhost';
+    Query OK, 0 rows affected (0.00 sec)
+
+    mysql> QUIT
+    Bye
 
 Install, configure & test VBM
 -----------------------------
@@ -104,6 +125,11 @@ created virtualenv active.
     www-data:~$ source /var/www/varnish-bans-manager/bin/activate
     www-data:~$ varnish-bans-manager celery worker --beat -s /tmp/varnish-bans-manager-celerybeat-schedule --loglevel=info
 
+  Certain Celery versions include a bug that breaks execution of the previous
+  command. If so, you can use the following alternative command::
+
+    www-data:~$ python -mvarnish_bans_manager.runner celery worker --beat -s /tmp/varnish-bans-manager-celerybeat-schedule --loglevel=info
+
 6. If not changed in the configuration, VBM's server runs on port 9000.
    If locally installed, you should now be able to test the service by
    visiting ``http://localhost:9000``.
@@ -113,11 +139,25 @@ created virtualenv active.
 
     www-data:~$ varnish-bans-manager users --add --administrator --email "bob@domain.com" --password "s3cr3t" --firstname "Bob" --lastname "Brown"
 
+8. Adding/removing caches and groups is not yet supported in the web UI. Meanwhile,
+   you can add your caches and groups using the command line::
+
+    www-data:~$ varnish-bans-manager groups --add --name "production"
+    www-data:~$ varnish-bans-manager groups --add --name "development"
+
+    www-data:~$ varnish-bans-manager groups --list
+    1, production
+    2, development
+
+    www-data:~$ varnish-bans-manager caches --add --host "192.168.1.100" --port 6082 --secret-file /etc/varnish/secret --group 1
+    www-data:~$ varnish-bans-manager caches --add --host "192.168.1.101" --port 6082 --secret-file /etc/varnish/secret --group 1
+    www-data:~$ varnish-bans-manager caches --add --host "192.168.1.102" --port 6082 --secret-file /etc/varnish/secret --group 1
+
 Final touches
 -------------
 
 1. If you want to bind VBM's HTTP frontend to port 80, simply set up
-   a reverse proxy using your prefered web server. Always avoid running
+   a reverse proxy using your preferred web server. Always avoid running
    VBM as a privileged user for this! Check out the sample configuration
    files in ``extras/proxies/`` for extra information.
 
@@ -187,6 +227,9 @@ of a sample VBM configuration::
     [email]
     host: 127.0.0.1
     port: 25
+    user:
+    password:
+    tls: false
     from: noreply@varnish-bans-manager.domain.com
     subject_prefix: [VBM]
     contact: info@varnish-bans-manager.domain.com

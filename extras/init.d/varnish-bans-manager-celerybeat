@@ -20,8 +20,8 @@ CELERYBEAT_LOG_LEVEL="WARNING"
 CELERYBEAT_SCHEDULE="/var/www/varnish-bans-manager/celerybeat-schedule"
 CELERYBEAT_DAEMON_OPTS="\
     --pidfile="$CELERYBEAT_PID_FILE" \
-    --logfile="$CELERYD_LOG_FILE" \
-    --loglevel="$CELERYD_LOG_LEVEL" \
+    --logfile="$CELERYBEAT_LOG_FILE" \
+    --loglevel="$CELERYBEAT_LOG_LEVEL" \
     --schedule="$CELERYBEAT_SCHEDULE" \
     --uid www-data \
     --gid www-data \

@@ -16,7 +16,7 @@ VIRTUALENV="/var/www/varnish-bans-manager"
 HTTP="varnish-bans-manager start"
 HTTP_PID_FILE="/var/run/varnish-bans-manager/http.pid"
 HTTP_DAEMON_OPTS="\
-    --pidfile="$HTTP_PID_FILE" \
+    --pid "$HTTP_PID_FILE" \
     --user www-data \
     --group www-data \
     --daemon"

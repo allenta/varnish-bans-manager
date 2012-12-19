@@ -440,6 +440,9 @@ LANGUAGES = (
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 EMAIL_HOST = _config.get('email', 'host')
 EMAIL_PORT = _config.getint('email', 'port')
+EMAIL_HOST_USER = _config.get('email', 'user')
+EMAIL_HOST_PASSWORD = _config.get('email', 'password')
+EMAIL_USE_TLS = _config.getboolean('email', 'tls')
 
 DEFAULT_FROM_EMAIL = _config.get('email', 'from')
 DEFAULT_BCC_EMAILS = []

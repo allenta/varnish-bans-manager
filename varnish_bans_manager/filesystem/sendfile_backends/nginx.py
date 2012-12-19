@@ -9,11 +9,12 @@ from __future__ import absolute_import
 import os.path
 from django.conf import settings
 from django.http import HttpResponse
+from varnish_bans_manager.filesystem import secure_join
 
 
 def _convert_file_to_url(filename):
     relpath = os.path.relpath(filename, settings.MEDIA_ROOT)
-    return settings.FILESYSTEM_SENDFILE_URL + relpath
+    return secure_join(settings.FILESYSTEM_SENDFILE_URL, relpath)
 
 
 def sendfile(request, filename, **kwargs):

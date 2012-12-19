@@ -168,6 +168,7 @@ urlpatterns = i18n_patterns('',
 ) + patterns('',
     url(r'^%s/(?P<path>.*)$' % settings.PRODUCTION_MEDIA_URL.lstrip('/').rstrip('/'),
         filesystem_views.StaticDownload.as_view(),
+        {'login_required': False},
         name="filesystem-static.download"),
     url(r'^files/', include(filesystem_patterns)),
 )

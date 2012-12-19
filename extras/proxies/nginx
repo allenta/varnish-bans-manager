@@ -21,7 +21,7 @@ server {
         add_header Cache-Control 'public, max-age=31104000';
         add_header Last-Modified 'Sat, 01 Jan 2000 00:00:00 GMT';
         add_header Expires 'Thu, 31 Dec 2037 23:55:55 GMT';
-        alias /var/www/varnish-bans-manager/lib/python2.6/site-packages/varnish_bans_manager/assets/;
+        alias /var/www/varnish-bans-manager/lib/python2.7/site-packages/varnish_bans_manager/assets/;
     }
 
     location /files/public/ {

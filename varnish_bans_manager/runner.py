@@ -68,6 +68,9 @@ sendfile: varnish_bans_manager.filesystem.sendfile_backends.stream
 [email]
 host: 127.0.0.1
 port: 25
+user:
+password:
+tls: false
 from: noreply@varnish-bans-manager.domain.com
 subject_prefix: [VBM]
 contact: info@varnish-bans-manager.domain.com
