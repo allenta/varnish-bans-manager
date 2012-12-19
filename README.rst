@@ -57,7 +57,7 @@ Prepare the environment
 
    Note that on Ubuntu 64 bits some symbolic links need to be created manually.
    If not, when installing PIL, it will not include JPEG, ZLIB and FREETYPE2
-   support.
+   support::
 
     sudo ln -s /usr/lib/x86_64-linux-gnu/libjpeg.so /usr/lib
     sudo ln -s /usr/lib/x86_64-linux-gnu/libfreetype.so /usr/lib
@@ -125,8 +125,8 @@ created virtualenv active.
     www-data:~$ source /var/www/varnish-bans-manager/bin/activate
     www-data:~$ varnish-bans-manager celery worker --beat -s /tmp/varnish-bans-manager-celerybeat-schedule --loglevel=info
 
-  Certain Celery versions include a bug that breaks execution of the previous
-  command. If so, you can use the following alternative command::
+   Certain Celery versions include a bug that breaks execution of the previous
+   command. If so, you can use the following alternative command::
 
     www-data:~$ python -mvarnish_bans_manager.runner celery worker --beat -s /tmp/varnish-bans-manager-celerybeat-schedule --loglevel=info
 
