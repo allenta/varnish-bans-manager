@@ -21,9 +21,14 @@ class Command(BaseCommand):
         make_option('--user', dest='user', default=settings.VBM_HTTP.get('user', None)),
         make_option('--group', dest='group', default=settings.VBM_HTTP.get('group', None)),
     )
-    help = 'Launches Varnish Bans Mananger HTTP frontend.'
+    help = 'Launches Varnish Bans Manager HTTP frontend.'
 
     def handle(self, *args, **options):
+        # Do any necessary upgrades in the DB.
+        print "Doing any required upgrades before service startup..."
+        call_command('upgrade')
+
+        # Run!
         opts = settings.VBM_HTTP
         opts.update(options)
         opts['debug'] = settings.DEBUG

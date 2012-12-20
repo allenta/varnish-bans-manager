@@ -129,12 +129,7 @@ created virtualenv active.
    Check out the next section for a detailed description of all available
    configuration options.
 
-4. Once everything is configured, the schema of the relational database
-   should be created::
-
-    www-data:~$ varnish-bans-manager syncdb
-
-5. VBM provides a built-in webserver (note configuration is assumed to
+4. VBM provides a built-in webserver (note configuration is assumed to
    be located in ``/etc/varnish-bans-manager.conf``. If not, use the
    ``VARNISH_BANS_MANAGER_CONF`` environment variable to set its location).
    Lauch it using the following command::
@@ -154,16 +149,16 @@ created virtualenv active.
 
     www-data:~$ python -mvarnish_bans_manager.runner celery worker --beat -s /tmp/varnish-bans-manager-celerybeat-schedule --loglevel=info
 
-6. If not changed in the configuration, VBM's server runs on port 9000.
+5. If not changed in the configuration, VBM's server runs on port 9000.
    If locally installed, you should now be able to test the service by
    visiting ``http://localhost:9000``.
 
-7. If not created yet, use the VBM CLI to create the first VBM administrator.
+6. If not created yet, use the VBM CLI to create the first VBM administrator.
    You'll be able to add extra users later using the web UI::
 
     www-data:~$ varnish-bans-manager users --add --administrator --email "bob@domain.com" --password "s3cr3t" --firstname "Bob" --lastname "Brown"
 
-8. Adding/removing caches and groups is not yet supported in the web UI. Meanwhile,
+7. Adding/removing caches and groups is not yet supported in the web UI. Meanwhile,
    you can add your caches and groups using the command line::
 
     www-data:~$ varnish-bans-manager groups --add --name "production"
