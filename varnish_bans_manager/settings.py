@@ -278,6 +278,7 @@ FILE_UPLOAD_PERMISSIONS = 0644
 
 # Filesystem sendfile implementation.
 FILESYSTEM_SENDFILE_BACKEND = _config.get('filesystem', 'sendfile')
+FILESYSTEM_SENDFILE_URL = '/sendfile'
 
 ###############################################################################
 ## MEDIAGENERATOR (http://www.allbuttonspressed.com/projects/django-mediagenerator).
