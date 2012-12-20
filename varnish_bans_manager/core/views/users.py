@@ -120,7 +120,7 @@ class Bulk(Base):
                 'Failed to export %(count)d users.',
                 result['errors']) % {'count': result['errors']}) + ' ' + instructions)
         return [
-            commands.redirect(result['url']),
+            commands.download(result['url']),
         ]
 
 

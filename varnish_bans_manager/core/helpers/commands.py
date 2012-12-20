@@ -67,6 +67,14 @@ def set_content(contents):
     }
 
 
+def download(url):
+    return {
+        'cmd': 'download',
+        'args': [url],
+        'weight': DEFAULT_WEIGHT,
+    }
+
+
 def alert(message):
     return {
         'cmd': 'alert',
