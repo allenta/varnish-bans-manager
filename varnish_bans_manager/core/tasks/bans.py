@@ -11,7 +11,7 @@ from varnish_bans_manager.core.tasks.base import MonitoredTask
 
 
 class Submit(MonitoredTask):
-    def irun(self, expression, cache_ids):
+    def irun(self, type, expression, cache_ids):
         submissions = 0
         misses = 0
         errors = []

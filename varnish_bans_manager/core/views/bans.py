@@ -21,6 +21,7 @@ from varnish_bans_manager.core.helpers.views import ajaxify
 from varnish_bans_manager.core.helpers.http import HttpResponseAjax
 from varnish_bans_manager.core.forms.bans import BasicForm, AdvancedForm, ExpertForm
 from varnish_bans_manager.core.tasks.bans import Submit as SubmitTask
+from varnish_bans_manager.core.models import BanSubmission
 
 
 class Base(View):
@@ -50,6 +51,7 @@ class Submit(Base):
             token = tasks.enqueue(
                 request,
                 SubmitTask(),
+                self.type,
                 form.expression,
                 [cache.id for cache in form.cleaned_data.get('target')],
                 callback={
@@ -98,6 +100,7 @@ class Submit(Base):
 
 class Basic(Submit):
     permission = None
+    type = BanSubmission.BASIC_TYPE
     template = 'varnish-bans-manager/core/bans/basic.html'
     destination = 'bans-basic'
 
@@ -107,6 +110,7 @@ class Basic(Submit):
 
 class Advanced(Submit):
     permission = 'core.can_access_advanced_ban_submission'
+    type = BanSubmission.ADVANCED_TYPE
     template = 'varnish-bans-manager/core/bans/advanced.html'
     destination = 'bans-advanced'
 
@@ -116,6 +120,7 @@ class Advanced(Submit):
 
 class Expert(Submit):
     permission = 'core.can_access_expert_ban_submission'
+    type = BanSubmission.EXPERT_TYPE
     template = 'varnish-bans-manager/core/bans/expert.html'
     destination = 'bans-expert'
 
