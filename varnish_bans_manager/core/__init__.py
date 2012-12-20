@@ -9,10 +9,10 @@ from __future__ import absolute_import
 
 
 def initialize():
-    __initialize_umask()
+    _initialize_umask()
 
 
-def __initialize_umask():
+def _initialize_umask():
     # Set permissions for created folders.
     import os
     os.umask(0022)

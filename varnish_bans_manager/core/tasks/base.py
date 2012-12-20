@@ -80,7 +80,7 @@ class SingleInstanceTask(Task):
         super(SingleInstanceTask, self).__init__(*args, **kwargs)
 
     def run(self, *args, **kwargs):
-        if self.__acquire_lock():
+        if self._acquire_lock():
             return self.irun(*args, **kwargs)
         else:
             raise SingleInstanceTaskLocked()
@@ -89,19 +89,19 @@ class SingleInstanceTask(Task):
         raise NotImplementedError('Please implement this method')
 
     def on_success(self, retval, task_id, *args, **kwargs):
-        self.__release_lock()
+        self._release_lock()
 
     def on_failure(self, exc, task_id, *args, **kwargs):
         if not isinstance(exc, SingleInstanceTaskLocked):
-            self.__release_lock()
+            self._release_lock()
 
-    def __acquire_lock(self):
-        return cache.add(self.__lock_id(), 1, self.soft_time_limit)
+    def _acquire_lock(self):
+        return cache.add(self._lock_id(), 1, self.soft_time_limit)
 
-    def __release_lock(self):
-        return cache.delete(self.__lock_id())
+    def _release_lock(self):
+        return cache.delete(self._lock_id())
 
-    def __lock_id(self):
+    def _lock_id(self):
         return "celery-single-instance:lock:%s" % self.name
 
 

@@ -23,7 +23,7 @@ class GenerateFileField(Task):
         # Check if the task is already enqueued/running. Celery does
         # not provide any general support to check if a task id has
         # already been enqueued => use cache to implement that.
-        if cache.add(cls.__cache_key(task_id), 1, timeout=timeout):
+        if cache.add(cls._cache_key(task_id), 1, timeout=timeout):
             cls().apply_async(
                 args=[app_label, model_name, object_id, field_name],
                 task_id=task_id)
@@ -48,13 +48,13 @@ class GenerateFileField(Task):
                 pass
 
     def on_success(self, retval, task_id, *args, **kwargs):
-        cache.delete(GenerateFileField.__cache_key(task_id))
+        cache.delete(GenerateFileField._cache_key(task_id))
 
     def on_failure(self, exc, task_id, *args, **kwargs):
-        cache.delete(GenerateFileField.__cache_key(task_id))
+        cache.delete(GenerateFileField._cache_key(task_id))
 
     @classmethod
-    def __cache_key(cls, task_id):
+    def _cache_key(cls, task_id):
         return 'celery:' + task_id
 
 

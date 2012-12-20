@@ -94,11 +94,11 @@ class Options(object):
     """
     Custom meta options class for our models.
     """
-    __valid_options = ('trackable_field_names',)
+    _valid_options = ('trackable_field_names',)
 
     def __init__(self, cls, meta):
         # Extract values for all options.
-        for attr_name in self.__valid_options:
+        for attr_name in self._valid_options:
             setattr(self, attr_name, meta.__dict__.get(attr_name, getattr(meta, attr_name)))
 
         # Autocomplete trackable fields option with all
@@ -169,7 +169,7 @@ class Model(models.Model):
     def __init__(self, *args, **kwargs):
         super(Model, self).__init__(*args, **kwargs)
         # Initialize old fields.
-        self.__refresh_old_fields()
+        self._refresh_old_fields()
 
     def get_previous(self, field):
         return self._old_fields.get(field, None)
@@ -183,7 +183,7 @@ class Model(models.Model):
             if old_file and old_file != new_file:
                 old_file.delete(save=False)
         # Refresh old fields.
-        self.__refresh_old_fields()
+        self._refresh_old_fields()
 
     def _reduced_state_black_list(self):
         # Define which custom attributes will not be used when pickling
@@ -193,7 +193,13 @@ class Model(models.Model):
     def _complete_state(self):
         # Reassign values for those attributes that were not pickled for
         # being in the reduced_state_black_list.
-        self.__refresh_old_fields()
+        self._refresh_old_fields()
+
+    def _refresh_old_fields(self):
+        self._old_fields = {}
+        if self.id:
+            for field in self._vbm_meta.trackable_field_names:
+                self._old_fields[field] = getattr(self, field)
 
     def __reduce__(self):
         # Django doesn't call __getstate__ under certain circumstances (e.g.
@@ -211,12 +217,6 @@ class Model(models.Model):
     def __setstate__(self, state):
         self.__dict__.update(state)
         self._complete_state()
-
-    def __refresh_old_fields(self):
-        self._old_fields = {}
-        if self.id:
-            for field in self._vbm_meta.trackable_field_names:
-                self._old_fields[field] = getattr(self, field)
 
     class Meta:
         app_label = 'core'

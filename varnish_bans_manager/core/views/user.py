@@ -63,7 +63,7 @@ class Login(AnonymousBase):
 
         # Done!
         form = LoginForm(initial={'destination': destination})
-        return self.__render(form)
+        return self._render(form)
 
     def post(self, request):
         form = LoginForm(data=request.POST)
@@ -77,9 +77,9 @@ class Login(AnonymousBase):
                 commands.redirect(form.cleaned_data.get('destination')),
             ], request)
         else:
-            return self.__render(form)
+            return self._render(form)
 
-    def __render(self, form):
+    def _render(self, form):
         return {'template': 'varnish-bans-manager/core/user/login.html', 'context': {
             'form': form,
         }}
@@ -95,7 +95,7 @@ class Logout(Base):
 class PasswordReset(AnonymousBase):
     def get(self, request):
         form = PasswordResetForm()
-        return self.__render(form)
+        return self._render(form)
 
     def post(self, request):
         form = PasswordResetForm(data=request.POST)
@@ -111,9 +111,9 @@ class PasswordReset(AnonymousBase):
                 commands.navigate(reverse('user-login')),
             ], request)
         else:
-            return self.__render(form)
+            return self._render(form)
 
-    def __render(self, form):
+    def _render(self, form):
         return {'template': 'varnish-bans-manager/core/user/password_reset.html', 'context': {
             'form': form,
         }}
@@ -141,7 +141,7 @@ class PasswordResetConfirm(AnonymousBase):
 
     def get(self, request, user):
         form = PasswordResetConfirmationForm(user)
-        return self.__render(form, request)
+        return self._render(form, request)
 
     def post(self, request, user):
         form = PasswordResetConfirmationForm(user, data=request.POST)
@@ -155,9 +155,9 @@ class PasswordResetConfirm(AnonymousBase):
                 commands.navigate(reverse('user-login')),
             ], request)
         else:
-            return self.__render(form, request)
+            return self._render(form, request)
 
-    def __render(self, form, request):
+    def _render(self, form, request):
         return {'template': 'varnish-bans-manager/core/user/password_reset_confirm.html', 'context': {
             'form': form,
             'url': request.path,
@@ -167,7 +167,7 @@ class PasswordResetConfirm(AnonymousBase):
 class Profile(AuthenticatedBase):
     def get(self, request):
         form = ProfilePreferencesForm(request.user)
-        return self.__render(form)
+        return self._render(form)
 
     def post(self, request):
         form = ProfilePreferencesForm(request.user, data=request.POST, files=request.FILES)
@@ -179,9 +179,9 @@ class Profile(AuthenticatedBase):
             ], request)
         else:
             messages.error(request, DEFAULT_FORM_ERROR_MESSAGE)
-            return self.__render(form)
+            return self._render(form)
 
-    def __render(self, form):
+    def _render(self, form):
         return {'template': 'varnish-bans-manager/core/user/profile.html', 'context': {
             'form': form,
         }}
@@ -190,7 +190,7 @@ class Profile(AuthenticatedBase):
 class Password(AuthenticatedBase):
     def get(self, request):
         form = PasswordChangeForm(request.user)
-        return self.__render(form)
+        return self._render(form)
 
     def post(self, request):
         form = PasswordChangeForm(request.user, data=request.POST)
@@ -202,9 +202,9 @@ class Password(AuthenticatedBase):
             ], request)
         else:
             messages.error(request, DEFAULT_FORM_ERROR_MESSAGE)
-            return self.__render(form)
+            return self._render(form)
 
-    def __render(self, form):
+    def _render(self, form):
         return {'template': 'varnish-bans-manager/core/user/password.html', 'context': {
             'form': form,
         }}

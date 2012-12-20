@@ -127,7 +127,7 @@ class Bulk(Base):
 class Add(Base):
     def get(self, request):
         form = AddForm(request.user)
-        return self.__render(form)
+        return self._render(form)
 
     def post(self, request):
         form = AddForm(request.user, data=request.POST, files=request.FILES)
@@ -139,9 +139,9 @@ class Add(Base):
             ], request)
         else:
             messages.error(request, DEFAULT_FORM_ERROR_MESSAGE)
-            return self.__render(form)
+            return self._render(form)
 
-    def __render(self, form):
+    def _render(self, form):
         return {'template': 'varnish-bans-manager/core/users/add.html', 'context': {
             'form': form,
         }}
