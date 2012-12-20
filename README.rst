@@ -25,22 +25,26 @@ and it's not available as standalone software for free. Unlike VAC:
   `Zabbix <http://www.zabbix.com>`_ or `Puppet <http://puppetlabs.com/>`_
   for that.
 
-.. image:: https://raw.github.com/dot2code/varnish-bans-manager/master/extras/screenshots/login_small.png
+=======  ======  =======  ==========
+|login|  |bans|  |users|  |settings|
+=======  ======  =======  ==========
+
+.. |login| image:: https://raw.github.com/dot2code/varnish-bans-manager/master/extras/screenshots/login_small.png
    :width: 200 px
    :alt: Login screen
    :target: https://raw.github.com/dot2code/varnish-bans-manager/master/extras/screenshots/login.png
 
-.. image:: https://raw.github.com/dot2code/varnish-bans-manager/master/extras/screenshots/bans_small.png
+.. |bans| image:: https://raw.github.com/dot2code/varnish-bans-manager/master/extras/screenshots/bans_small.png
    :width: 200 px
    :alt: Advanced ban submission
    :target: https://raw.github.com/dot2code/varnish-bans-manager/master/extras/screenshots/bans.png
 
-.. image:: https://raw.github.com/dot2code/varnish-bans-manager/master/extras/screenshots/users_small.png
+.. |users| image:: https://raw.github.com/dot2code/varnish-bans-manager/master/extras/screenshots/users_small.png
    :width: 200 px
    :alt: Users management
    :target: https://raw.github.com/dot2code/varnish-bans-manager/master/extras/screenshots/users.png
 
-.. image:: https://raw.github.com/dot2code/varnish-bans-manager/master/extras/screenshots/settings_small.png
+.. |settings| image:: https://raw.github.com/dot2code/varnish-bans-manager/master/extras/screenshots/settings_small.png
    :width: 200 px
    :alt: General settings
    :target: https://raw.github.com/dot2code/varnish-bans-manager/master/extras/screenshots/settings.png
