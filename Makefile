@@ -9,6 +9,9 @@ sdist: build
 	@echo "> Source distribution package successfully generated in $(VBM_ROOT)/build/dist/"
 	@echo
 
+upload: build
+	cd $(VBM_ROOT)/build; python setup.py register sdist upload
+
 build: clone
 	@echo
 	@echo "> Compiling .po files..."
