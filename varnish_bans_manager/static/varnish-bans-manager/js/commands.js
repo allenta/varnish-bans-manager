@@ -45,7 +45,7 @@
    * DOWNLOAD.
    ******************************************************************************/
 
-  vbm.commands.downlad = function(url) {
+  vbm.commands.download = function(url) {
     window.location = url;
   };
 
