@@ -13,9 +13,13 @@
 ## Configuration.
 ##
 VIRTUALENV="/var/www/varnish-bans-manager"
-CELERYBEAT="varnish-bans-manager celerybeat"
-CELERYBEAT_PID_FILE="/var/run/varnish-bans-manager/celerybeat.pid"
-CELERYBEAT_LOG_FILE="/var/log/varnish-bans-manager/celerybeat.log"
+CELERYBEAT="python -mvarnish_bans_manager.runner celerybeat"
+CELERYBEAT_USER="www-data"
+CELERYBEAT_GROUP="www-data"
+CELERYBEAT_PID_DIR="/var/run/varnish-bans-manager"
+CELERYBEAT_PID_FILE="$CELERYBEAT_PID_DIR/celerybeat.pid"
+CELERYBEAT_LOG_DIR="/var/log/varnish-bans-manager"
+CELERYBEAT_LOG_FILE="$CELERYBEAT_LOG_DIR/celerybeat.log"
 CELERYBEAT_LOG_LEVEL="WARNING"
 CELERYBEAT_SCHEDULE="/var/www/varnish-bans-manager/celerybeat-schedule"
 CELERYBEAT_DAEMON_OPTS="\
@@ -23,8 +27,8 @@ CELERYBEAT_DAEMON_OPTS="\
     --logfile="$CELERYBEAT_LOG_FILE" \
     --loglevel="$CELERYBEAT_LOG_LEVEL" \
     --schedule="$CELERYBEAT_SCHEDULE" \
-    --uid www-data \
-    --gid www-data \
+    --uid="$CELERYBEAT_USER" \
+    --gid="$CELERYBEAT_GROUP" \
     --detach"
 
 ##
@@ -77,6 +81,10 @@ stop_beat () {
 ##
 ##
 source "$VIRTUALENV/bin/activate"
+mkdir -p "$CELERYBEAT_PID_DIR"
+chown $CELERYBEAT_USER:$CELERYBEAT_GROUP "$CELERYBEAT_PID_DIR"
+mkdir -p "$CELERYBEAT_LOG_DIR"
+chown $CELERYBEAT_USER:$CELERYBEAT_GROUP "$CELERYBEAT_LOG_DIR"
 
 ##
 ##

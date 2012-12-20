@@ -14,11 +14,14 @@
 ##
 VIRTUALENV="/var/www/varnish-bans-manager"
 HTTP="varnish-bans-manager start"
-HTTP_PID_FILE="/var/run/varnish-bans-manager/http.pid"
+HTTP_USER="www-data"
+HTTP_GROUP="www-data"
+HTTP_PID_DIR="/var/run/varnish-bans-manager"
+HTTP_PID_FILE="$HTTP_PID_DIR/http.pid"
 HTTP_DAEMON_OPTS="\
     --pid "$HTTP_PID_FILE" \
-    --user www-data \
-    --group www-data \
+    --user "$HTTP_USER" \
+    --group "$HTTP_GROUP" \
     --daemon"
 
 ##
@@ -71,6 +74,9 @@ stop_http () {
 ##
 ##
 source "$VIRTUALENV/bin/activate"
+mkdir -p "/var/run/varnish-bans-manager"
+chown $HTTP_USER:$HTTP_GROUP "$HTTP_PID_DIR"
+
 
 ##
 ##
