@@ -1,1 +1,13 @@
-v0.1, 12/19/2012 -- Initial release.
+v0.2, 12/20/2012
+----------------
+
+  - Fixed sendfile support when using nginx as reverse proxy.
+  - Enabled Django caching framework using the default database as backend.
+  - Fixed bug when exporting users to CSV.
+  - Sightly simplified installation procedure.
+
+
+v0.1, 12/19/2012
+----------------
+
+  - Initial release.
