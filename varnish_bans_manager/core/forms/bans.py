@@ -9,62 +9,56 @@ from __future__ import absolute_import
 import re
 from urlparse import urlparse
 from django import forms
-from django.core.exceptions import ValidationError
+from django.contrib.contenttypes.models import ContentType
+from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.utils.encoding import force_text
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
-from varnish_bans_manager.core.models import Cache, Group, Setting
+from varnish_bans_manager.core.models import Node, Group, Setting
 
 
 class TargetField(forms.ChoiceField):
-    CACHE_CHOICE_PREFIX = 'c'
-    GROUP_CHOICE_PREFIX = 'g'
-
     default_error_messages = {
-        'invalid_cache': _('This cache is no longer available. Please, refresh the page to update the list and choose another.'),
-        'invalid_group': _('This group is no longer available. Please, refresh the page to update the list and choose another.'),
+        'invalid': _('The selected item is no longer available. Please, refresh the page to update the list and choose another.'),
     }
 
     def load_choices(self, expert=False):
         """
-        Build choices from current available groups and caches.
+        Build choices from current available groups and nodes.
         """
         groups = Group.objects.all().order_by('weight', 'created_at')
-        caches = Cache.objects.all().order_by('weight', 'created_at')
-        # Add caches not linked to any group.
-        choices = [(self._cache_choice_value(cache), cache.human_name) for cache in caches if cache.group_id is None]
-        # Add each group with its linked caches.
+        nodes = Node.objects.all().order_by('weight', 'created_at')
+        # Add nodes not linked to any group.
+        choices = [(self._build_choice_value(node), node.human_name) for node in nodes if node.group_id is None]
+        # Add each group with its linked nodes.
         for group in groups:
-            caches_in_current_group = [cache for cache in caches if cache.group_id == group.id]
-            if caches_in_current_group:
-                choices.append((self._group_choice_value(group), '%s (%d)' % (group.name, len(caches_in_current_group))))
+            nodes_in_current_group = [node for node in nodes if node.group_id == group.id]
+            if nodes_in_current_group:
+                choices.append((self._build_choice_value(group), '%s (%d)' % (group.name, len(nodes_in_current_group))))
                 if expert:
-                    choices.extend((self._cache_choice_value(cache), mark_safe('&nbsp;&nbsp;' + force_text(cache.human_name))) for cache in caches_in_current_group)
+                    choices.extend((self._build_choice_value(node), mark_safe('&nbsp;&nbsp;' + force_text(node.human_name))) for node in nodes_in_current_group)
         self.choices = choices
 
     def clean(self, value):
         """
-        Returns a list of caches.
+        Returns a Cache instance.
         """
-        caches = []
         value = super(TargetField, self).clean(value)
-        if value.startswith(self.CACHE_CHOICE_PREFIX):
-            try:
-                caches = [Cache.objects.get(pk=value[len(self.CACHE_CHOICE_PREFIX):])]
-            except Cache.DoesNotExist:
-                raise ValidationError(self.error_messages['invalid_cache'])
-        elif value.startswith(self.GROUP_CHOICE_PREFIX):
-            try:
-                caches = Group.objects.get(pk=value[len(self.GROUP_CHOICE_PREFIX):]).caches.all()
-            except Group.DoesNotExist:
-                raise ValidationError(self.error_messages['invalid_group'])
-        return caches
+        cache = self._parse_choice_value(value)
+        if cache is None:
+            raise ValidationError(self.error_messages['invalid'])
+        return cache
 
-    def _cache_choice_value(self, cache):
-        return '%s%d' % (self.CACHE_CHOICE_PREFIX, cache.id)
+    def _build_choice_value(self, cache):
+        return '%d:%d' % (ContentType.objects.get_for_model(cache).id, cache.id)
 
-    def _group_choice_value(self, group):
-        return '%s%d' % (self.GROUP_CHOICE_PREFIX, group.id)
+    def _parse_choice_value(self, choice):
+        (content_type_id, cache_id) = choice.split(':')
+        try:
+            content_type = ContentType.objects.get_for_id(int(content_type_id))
+            return content_type.get_object_for_this_type(pk=int(cache_id))
+        except ObjectDoesNotExist:
+            return None
 
 
 class SubmitForm(forms.Form):

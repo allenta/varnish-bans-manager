@@ -53,7 +53,7 @@ class Submit(Base):
                 SubmitTask(),
                 self.type,
                 form.expression,
-                [cache.id for cache in form.cleaned_data.get('target')],
+                [node.id for node in form.cleaned_data.get('target')],
                 callback={
                     'fn': ('varnish_bans_manager.core.views.bans.Submit', 'callback'),
                     'context': {

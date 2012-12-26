@@ -4,7 +4,7 @@ from __future__ import absolute_import
 from optparse import make_option
 from django.core.exceptions import ValidationError
 from django.core.management.base import BaseCommand, CommandError
-from varnish_bans_manager.core.models import Cache, Group
+from varnish_bans_manager.core.models import Node, Group
 
 
 class Command(BaseCommand):
@@ -16,7 +16,7 @@ class Command(BaseCommand):
         make_option('--host', dest='host'),
         make_option('--port', dest='port', type='int'),
         make_option('--secret-file', dest='secret-file'),
-        make_option('--legacy', dest='version', default=Cache.VERSION_30, action='store_const', const=Cache.VERSION_21),
+        make_option('--legacy', dest='version', default=Node.VERSION_30, action='store_const', const=Node.VERSION_21),
         make_option('--name', dest='name'),
         make_option('--group', dest='group', type='int'),
     )
@@ -49,20 +49,20 @@ class Command(BaseCommand):
         elif options.get('op') == 'delete' and \
              options.get('id') is not None:
             return self._delete(
-                self._get_object_or_command_error(Cache, options.get('id'))
+                self._get_object_or_command_error(Node, options.get('id'))
             )
 
         raise CommandError(self.help)
 
     def _list(self):
         self.stdout.write('id, host, port, name, group\n')
-        for cache in Cache.objects.order_by('weight', 'created_at').all():
+        for node in Node.objects.order_by('weight', 'created_at').all():
             self.stdout.write('%d, %s, %d, %s, %s\n' % (
-                cache.id,
-                cache.host,
-                cache.port,
-                cache.name or '-',
-                cache.group.name if cache.group else '-'
+                node.id,
+                node.host,
+                node.port,
+                node.name or '-',
+                node.group.name if node.group else '-'
             ))
 
     def _add(self, host, port, secret_file=None, version=None, name=None, group=None):
@@ -77,14 +77,14 @@ class Command(BaseCommand):
 
         # Validate & add new instance.
         try:
-            cache = Cache(host=host, port=port, secret=secret, version=version, name=name, group=group)
-            cache.full_clean()
-            cache.save()
+            node = Node(host=host, port=port, secret=secret, version=version, name=name, group=group)
+            node.full_clean()
+            node.save()
         except ValidationError:
             raise CommandError('Failed while validating new caching node.')
 
-    def _delete(self, cache):
-        cache.delete()
+    def _delete(self, node):
+        node.delete()
 
     def _get_object_or_command_error(self, model, pk=None):
         if pk is not None:

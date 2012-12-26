@@ -9,11 +9,57 @@ from __future__ import absolute_import
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from varnish_bans_manager.core.models.base import Model, RevisionField
-from varnish_bans_manager.core.models.group import Group
 from varnish_bans_manager.core.helpers.cli import Varnish
 
 
 class Cache(Model):
+    def _items(self):
+        raise NotImplementedError('Please implement this method')
+
+    items = property(_items)
+
+    def __iter__(self):
+        for item in self.items:
+            yield item
+
+    class Meta:
+        app_label = 'core'
+        abstract = True
+
+
+class Group(Cache):
+    name = models.CharField(
+        _('Name'),
+        help_text=_('Some name used internally by VBM to refer to the group of caching nodes.'),
+        max_length=255,
+        null=False
+    )
+    weight = models.SmallIntegerField(
+        default=0,
+        null=False
+    )
+    revision = RevisionField()
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        null=False
+    )
+    updated_at = models.DateTimeField(
+        auto_now=True,
+        null=False
+    )
+
+    # Cache methods.
+
+    def _items(self):
+        return self.nodes.all().order_by('weight', 'created_at')
+
+    items = property(_items)
+
+    class Meta:
+        app_label = 'core'
+
+
+class Node(Cache):
     VERSION_21 = 21
     VERSION_30 = 30
     VERSION_CHOICES = (
@@ -59,7 +105,7 @@ class Cache(Model):
     )
     group = models.ForeignKey(
         Group,
-        related_name='caches',
+        related_name='nodes',
         null=True,
         blank=True,
         on_delete=models.SET_NULL
@@ -94,6 +140,13 @@ class Cache(Model):
             return getattr(varnish, name)(*args)
         finally:
             varnish.quit()
+
+    # Cache methods.
+
+    def _items(self):
+        return [self]
+
+    items = property(_items)
 
     class Meta:
         app_label = 'core'
