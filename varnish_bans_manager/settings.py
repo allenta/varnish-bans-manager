@@ -412,7 +412,7 @@ LOGGING = {
         'logfile': {
             'level': 'DEBUG',
             'filters': ['require_development_environment'],
-            'class': 'logging.handlers.WatchedFileHandler',
+            'class': 'logging.handlers.NullHandler' if IS_PRODUCTION else 'logging.handlers.WatchedFileHandler',
             'filename': '/tmp/varnish-bans-manager' + USER_SUFFIX + '.log',
         },
     },
