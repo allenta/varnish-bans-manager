@@ -193,12 +193,13 @@ VBM configuration is located in a file usually stored in
 ``/etc/varnish-bans-manager.conf``. Next you can find an annotated version
 of a sample VBM configuration::
 
-    # Gunicorn HTTP server settings. Check out Gunicorn documentation
-    # (http://docs.gunicorn.org/en/latest/configure.html) for further
-    # details and for a full list of options. Note that 'debug' and
+    # HTTP server settings. All Gunicorn server settings are supported. Check
+    # out Gunicorn documentation (http://docs.gunicorn.org/en/latest/configure.html)
+    # for further details and for a full list of options. Note that 'debug' and
     # 'secure_scheme_headers' Gunicorn settings will always be overriden
     # by VBM internal settings.
     [http]
+    base_url: http://varnish-bans-manager.domain.com
     bind: 0.0.0.0:9000
     worker_class: eventlet
     forwarded_allow_ips: 127.0.0.1
