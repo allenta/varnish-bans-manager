@@ -13,6 +13,11 @@ from varnish_bans_manager.core.helpers.cli import Varnish
 
 
 class Cache(Model):
+    def _human_name(self):
+        raise NotImplementedError('Please implement this method')
+
+    human_name = property(_human_name)
+
     def _items(self):
         raise NotImplementedError('Please implement this method')
 
@@ -49,6 +54,10 @@ class Group(Cache):
     )
 
     # Cache methods.
+    def _human_name(self):
+        return self.name
+
+    human_name = property(_human_name)
 
     def _items(self):
         return self.nodes.all().order_by('weight', 'created_at')
@@ -57,6 +66,8 @@ class Group(Cache):
 
     class Meta:
         app_label = 'core'
+        verbose_name = _('cache group')
+        verbose_name_plural = _('cache groups')
 
 
 class Node(Cache):
@@ -120,11 +131,6 @@ class Node(Cache):
         null=False
     )
 
-    def _human_name(self):
-        return self.name if self.name else '%s:%d' % (self.host, self.port,)
-
-    human_name = property(_human_name)
-
     def ban(self, expression):
         self._cli('ban', expression)
 
@@ -143,6 +149,11 @@ class Node(Cache):
 
     # Cache methods.
 
+    def _human_name(self):
+        return self.name if self.name else '%s:%d' % (self.host, self.port,)
+
+    human_name = property(_human_name)
+
     def _items(self):
         return [self]
 
@@ -150,3 +161,5 @@ class Node(Cache):
 
     class Meta:
         app_label = 'core'
+        verbose_name = _('cache node')
+        verbose_name_plural = _('cache nodes')

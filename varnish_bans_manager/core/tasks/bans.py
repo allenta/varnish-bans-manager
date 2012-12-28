@@ -6,12 +6,61 @@
 """
 
 from __future__ import absolute_import
+import time
+from datetime import datetime
+from django.conf import settings
 from django.utils import timezone
-from varnish_bans_manager.core.tasks.base import MonitoredTask
-from varnish_bans_manager.core.models import BanSubmissionItem
+from templated_email import send_templated_mail
+from varnish_bans_manager.core.tasks.base import MonitoredTask, SingleInstanceTask
+from varnish_bans_manager.core.models import BanSubmission, BanSubmissionItem, Setting
+
+
+class NotifySubmissions(SingleInstanceTask):
+    """
+    Send a notification to the administrator with a report
+    of all bans submited lately.
+    """
+    ignore_result = True
+    soft_time_limit = 600  # 10 minutes.
+
+    def irun(self):
+        # Recover current state to go on where we ended last time,
+        # or start from the beginning.
+        if Setting.notify_bans and settings.VBM_NOTIFICATIONS_EMAIL:
+            ban_submissions = BanSubmission.objects.filter(launched_at__isnull=False)
+            if Setting.notify_bans_task_status is not None:
+                ban_submissions = ban_submissions.filter(pk__gt=Setting.notify_bans_task_status)
+            # Prepare data.
+            submissions_log = [{
+                    'id': ban_submission.id,
+                    'launched_at': ban_submission.launched_at,
+                    'user': ban_submission.user.human_name,
+                    'ban_type': BanSubmission.BAN_TYPE_CHOICES[ban_submission.ban_type],
+                    'expression': ban_submission.expression,
+                    'target_type': ban_submission.target.__class__.verbose_name,
+                    'target': ban_submission.target.human_name,
+                    'items': ban_submission.items.all(),
+                } for ban_submission in ban_submissions.iterator()]
+            if len(submissions_log) > 0:
+                # Send e-mail.
+                send_templated_mail(
+                    template_name='varnish-bans-manager/core/bans/submissions',
+                    from_email=settings.DEFAULT_FROM_EMAIL,
+                    recipient_list=[settings.VBM_NOTIFICATIONS_EMAIL],
+                    bcc=settings.DEFAULT_BCC_EMAILS,
+                    context={
+                        'base_url': settings.VBM_BASE_URL,
+                        'submissions_log': submissions_log,
+                    },
+                )
+                # Store last seen id to keep track of our position.
+                Setting.notify_bans_task_status = submissions_log[-1]['id']
 
 
 class Submit(MonitoredTask):
+    """
+    Perform a ban submission.
+    """
     def irun(self, ban_submission):
         ban_submission.launched_at = timezone.now()
         ban_submission.save()

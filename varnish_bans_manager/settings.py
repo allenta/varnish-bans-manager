@@ -554,6 +554,10 @@ CELERYD_HIJACK_ROOT_LOGGER = not IS_PRODUCTION
 
 # See http://docs.celeryproject.org/en/latest/userguide/periodic-tasks.html
 CELERYBEAT_SCHEDULE = {
+    'bans.notify_submissions': {
+        'task': 'varnish_bans_manager.core.tasks.bans.NotifySubmissions',
+        'schedule': crontab(minute='*/10'),
+    },
     'sessions.purge_expired': {
         'task': 'varnish_bans_manager.core.tasks.sessions.PurgeExpired',
         'schedule': crontab(minute=0, hour='*/1'),

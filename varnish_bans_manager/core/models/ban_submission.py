@@ -19,11 +19,12 @@ class BanSubmission(Model):
     BASIC_TYPE = 1
     ADVANCED_TYPE = 2
     EXPERT_TYPE = 3
-    BAN_TYPE_CHOICES = (
-        (BASIC_TYPE, _('Basic')),
-        (ADVANCED_TYPE, _('Advanced')),
-        (EXPERT_TYPE, _('Expert')),
-    )
+
+    BAN_TYPE_CHOICES = {
+        BASIC_TYPE: _('basic'),
+        ADVANCED_TYPE: _('advanced'),
+        EXPERT_TYPE: _('expert'),
+    }
 
     user = models.ForeignKey(
         User,
@@ -35,7 +36,7 @@ class BanSubmission(Model):
     )
     ban_type = models.PositiveSmallIntegerField(
         null=False,
-        choices=BAN_TYPE_CHOICES,
+        choices=BAN_TYPE_CHOICES.items(),
     )
     expression = models.CharField(
         max_length=2048,
@@ -52,6 +53,9 @@ class BanSubmission(Model):
         auto_now=True,
         null=False
     )
+
+    class Meta:
+        app_label = 'core'
 
 
 class BanSubmissionItem(Model):
@@ -80,3 +84,6 @@ class BanSubmissionItem(Model):
         auto_now=True,
         null=False
     )
+
+    class Meta:
+        app_label = 'core'

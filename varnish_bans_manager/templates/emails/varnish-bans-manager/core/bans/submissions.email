@@ -1,0 +1,48 @@
+{% extends "emails/base.email" %}
+{% load i18n %}
+
+{% block subject_content %}{% trans 'Ban submissions notification' %}{% endblock %}
+
+{% block plain_content %}
+  {% for entry in submissions_log %}
+    {% blocktrans with entry.launched_at|date:"DATETIME_FORMAT" as launched_at and entry.user as user and entry.ban_type as ban_type and entry.expression as expression and entry.target_type as target_type and entry.target as target %}
+      {{ launched_at }}: {{ user }} sent the following {{ ban_type }} ban to the {{ target_type }} {{ target }}
+
+      {{ expression }}
+
+      These were the results per cache node:
+    {% endblocktrans %}
+    {% for item in entry.items %}
+      {{ item.node.human_name }} - {% if item.success %}{% trans 'OK' %}{% else %}{% trans 'ERROR' %}: {{ item.message }}{% endif %}
+    {% endfor %}
+  {% endfor %}
+{% endblock %}
+
+{% block html_content %}
+  <p>{% trans 'These are the latest ban submissions made with your VBM installation.' %}</p>
+  <hr />
+  {% for entry in submissions_log %}
+    <div>
+      <strong>{{ entry.launched_at|date:"DATETIME_FORMAT" }}</strong>
+      <hr />
+      {% blocktrans with entry.user as user and entry.ban_type|capfirst as ban_type and entry.expression as expression and entry.target_type|capfirst as target_type and entry.target as target %}
+        <p>{{ ban_type }} ban submission by <em>{{ user }}</em></p>
+        <p><code>{{ expression }}</code></p>
+        <p>{{ target_type }} <em>{{ target }}</em></p>
+      {% endblocktrans %}
+      <ul>
+        {% for item in entry.items %}
+          <li>
+            <em>{{ item.node.human_name }}</em> -
+            {% if item.success %}
+              {% trans 'OK' %}
+            {% else %}
+              <strong>{% trans 'ERROR' %}:</strong> {{ item.message }}
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+    <hr />
+  {% endfor %}
+{% endblock %}
