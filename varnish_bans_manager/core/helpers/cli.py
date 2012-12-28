@@ -107,7 +107,7 @@ class Varnish(Telnet):
     def _fetch(self, command):
         """
         Runs a command on a Varnish caching node and return the result.
-        return value is a tuple of ((status, length), content).
+        Return value is a tuple of ((status, length), content).
         """
         self.write(('%s\n' % command).encode("utf8"))
         while 1:

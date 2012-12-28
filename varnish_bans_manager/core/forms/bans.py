@@ -14,7 +14,7 @@ from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.utils.encoding import force_text
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
-from varnish_bans_manager.core.models import Node, Group, Setting
+from varnish_bans_manager.core.models import BanSubmission, Node, Group, Setting
 
 
 class TargetField(forms.ChoiceField):
@@ -62,21 +62,36 @@ class TargetField(forms.ChoiceField):
 
 
 class SubmitForm(forms.Form):
+    target = TargetField(
+        label=_('Target'))
+
+    def __init__(self, user, *args, **kwargs):
+        super(SubmitForm, self).__init__(*args, **kwargs)
+        self.user = user
+
     def _merge_base_ban_expression(self, expression):
         base_ban_expression = Setting.base_ban_expression
         if base_ban_expression != '':
             return '%s && %s' % (base_ban_expression, expression)
         return expression
 
+    def _ban_submission(self):
+        return BanSubmission(
+            user=self.user,
+            ban_type=self.ban_type,
+            expression=self.expression,
+            target=self.cleaned_data.get('target'))
+
+    ban_submission = property(_ban_submission)
+
 
 class BasicForm(SubmitForm):
+    ban_type = BanSubmission.BASIC_TYPE
+
     url = forms.URLField(
         label=_('URL'),
         widget=forms.TextInput(attrs={'placeholder': _('URL to be removed from caches')}),
         max_length=2048)
-
-    target = TargetField(
-        label=_('Target'))
 
     error_messages = {
         'invalid_url_scheme': _('Only http:// and https:// schemes are supported.')
@@ -105,13 +120,12 @@ class BasicForm(SubmitForm):
 
 
 class AdvancedForm(SubmitForm):
+    ban_type = BanSubmission.ADVANCED_TYPE
+
     regular_expression = forms.CharField(
         label=_('Regular expression'),
         widget=forms.TextInput(attrs={'placeholder': _('match contents to be removed from caches')}),
         max_length=1024)
-
-    target = TargetField(
-        label=_('Target'))
 
     def __init__(self, *args, **kwargs):
         super(AdvancedForm, self).__init__(*args, **kwargs)
@@ -128,13 +142,12 @@ class AdvancedForm(SubmitForm):
 
 
 class ExpertForm(SubmitForm):
+    ban_type = BanSubmission.EXPERT_TYPE
+
     ban_expression = forms.CharField(
         label=_('Ban expression'),
         widget=forms.Textarea(attrs={'placeholder': _('match contents to be removed from caches'), 'rows': 4}),
         max_length=1024)
-
-    target = TargetField(
-        label=_('Target'))
 
     def __init__(self, *args, **kwargs):
         super(ExpertForm, self).__init__(*args, **kwargs)
