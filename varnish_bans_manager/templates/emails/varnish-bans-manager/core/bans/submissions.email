@@ -4,45 +4,27 @@
 {% block subject_content %}{% trans 'Ban submissions notification' %}{% endblock %}
 
 {% block plain_content %}
-  {% for entry in submissions_log %}
-    {% blocktrans with entry.launched_at|date:"DATETIME_FORMAT" as launched_at and entry.user as user and entry.ban_type as ban_type and entry.expression as expression and entry.target_type as target_type and entry.target as target %}
-      {{ launched_at }}: {{ user }} sent the following {{ ban_type }} ban to the {{ target_type }} {{ target }}
-
-      {{ expression }}
-
-      These were the results per cache node:
-    {% endblocktrans %}
-    {% for item in entry.items %}
-      {{ item.node.human_name }} - {% if item.success %}{% trans 'OK' %}{% else %}{% trans 'ERROR' %}: {{ item.message }}{% endif %}
-    {% endfor %}
-  {% endfor %}
+  {% trans 'Please, check out the HTML version of this e-mail ;)' %}
 {% endblock %}
 
 {% block html_content %}
-  <p>{% trans 'These are the latest ban submissions made with your VBM installation.' %}</p>
-  <hr />
   {% for entry in submissions_log %}
     <div>
-      <strong>{{ entry.launched_at|date:"DATETIME_FORMAT" }}</strong>
+      <div>{{ entry.launched_at|date:"DATETIME_FORMAT" }}</div>
+      <div style="font-size:11px; margin-top: 5px;">{{ entry.user }} · {{ entry.ban_type }} → <code>{{ entry.target }}</code> ({{ entry.target_type }})</div>
       <hr />
-      {% blocktrans with entry.user as user and entry.ban_type|capfirst as ban_type and entry.expression as expression and entry.target_type|capfirst as target_type and entry.target as target %}
-        <p>{{ ban_type }} ban submission by <em>{{ user }}</em></p>
-        <p><code>{{ expression }}</code></p>
-        <p>{{ target_type }} <em>{{ target }}</em></p>
-      {% endblocktrans %}
-      <ul>
+      <p><code>{{ entry.expression }}</code></p>
+      <ul style="list-style-type: none; margin-bottom: 60px;">
         {% for item in entry.items %}
           <li>
-            <em>{{ item.node.human_name }}</em> -
             {% if item.success %}
-              {% trans 'OK' %}
+              <code>✓ {{ item.node.human_name }}</code>
             {% else %}
-              <strong>{% trans 'ERROR' %}:</strong> {{ item.message }}
+              <code>✘ {{ item.node.human_name }}</code><span style="font-size:11px;">: {{ item.message }}</span>
             {% endif %}
           </li>
         {% endfor %}
       </ul>
     </div>
-    <hr />
   {% endfor %}
 {% endblock %}
