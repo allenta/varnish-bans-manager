@@ -88,7 +88,7 @@ class SingleInstanceTask(Task):
         if self._acquire_lock():
             return self.irun(*args, **kwargs)
         else:
-            raise SingleInstanceTaskLocked()
+            raise SingleInstanceTask.LockedException()
 
     def irun(self, *args, **kwargs):
         raise NotImplementedError('Please implement this method')
@@ -97,7 +97,7 @@ class SingleInstanceTask(Task):
         self._release_lock()
 
     def on_failure(self, exc, task_id, *args, **kwargs):
-        if not isinstance(exc, SingleInstanceTaskLocked):
+        if not isinstance(exc, SingleInstanceTask.LockedException):
             self._release_lock()
 
     def _acquire_lock(self):
@@ -109,6 +109,5 @@ class SingleInstanceTask(Task):
     def _lock_id(self):
         return "celery-single-instance:lock:%s" % self.name
 
-
-class SingleInstanceTaskLocked(Exception):
-    pass
+    class LockedException(Exception):
+        pass
