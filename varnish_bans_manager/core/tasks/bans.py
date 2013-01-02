@@ -6,8 +6,6 @@
 """
 
 from __future__ import absolute_import
-import time
-from datetime import datetime
 from django.conf import settings
 from django.utils import timezone
 from templated_email import send_templated_mail
