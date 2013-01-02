@@ -1,3 +1,10 @@
+v0.2.1, 02/01/2013
+------------------
+
+  - Logging of ban submissions.
+  - Task delivering e-mail notifications with logged ban submissions.
+  - Minor improvements to the DB schema.
+
 v0.2, 12/20/2012
 ----------------
 

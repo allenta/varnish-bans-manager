@@ -9,13 +9,18 @@ from __future__ import absolute_import
 from django.utils import translation
 from django.core.cache import cache
 from celery import Task
-from celery.signals import task_prerun
+from celery.signals import task_prerun, worker_process_init
 from varnish_bans_manager import core
 
 
 @task_prerun.connect
 def task_prerun_handler(task_id=None, task=None, *args, **kwargs):
-    core.initialize()
+    core.initialize_task()
+
+
+@worker_process_init.connect
+def worker_process_init_handler(*args, **kwargs):
+    core.initialize_worker()
 
 
 class MonitoredTask(Task):

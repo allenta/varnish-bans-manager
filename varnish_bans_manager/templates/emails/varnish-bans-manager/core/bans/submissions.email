@@ -1,0 +1,30 @@
+{% extends "emails/base.email" %}
+{% load i18n %}
+
+{% block subject_content %}{% trans 'Ban submissions notification' %}{% endblock %}
+
+{% block plain_content %}
+  {% trans 'Please, check out the HTML version of this e-mail ;)' %}
+{% endblock %}
+
+{% block html_content %}
+  {% for entry in submissions_log %}
+    <div>
+      <div>{{ entry.launched_at|date:"DATETIME_FORMAT" }}</div>
+      <div style="font-size:11px; margin-top: 5px;">{{ entry.user }} · {{ entry.ban_type }} → <code>{{ entry.target }}</code> ({{ entry.target_type }})</div>
+      <hr />
+      <p><code>{{ entry.expression }}</code></p>
+      <ul style="list-style-type: none; margin-bottom: 30px;">
+        {% for item in entry.items %}
+          <li>
+            {% if item.success %}
+              <code>✓ {{ item.node.human_name }}</code>
+            {% else %}
+              <code>✘ {{ item.node.human_name }}</code><span style="font-size:11px;">: {{ item.message }}</span>
+            {% endif %}
+          </li>
+        {% endfor %}
+      </ul>
+    </div>
+  {% endfor %}
+{% endblock %}

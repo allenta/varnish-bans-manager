@@ -20,8 +20,8 @@ from varnish_bans_manager.core.helpers import commands, DEFAULT_FORM_ERROR_MESSA
 from varnish_bans_manager.core.helpers.views import ajaxify
 from varnish_bans_manager.core.helpers.http import HttpResponseAjax
 from varnish_bans_manager.core.forms.bans import BasicForm, AdvancedForm, ExpertForm
-from varnish_bans_manager.core.tasks.bans import Submit as SubmitTask
 from varnish_bans_manager.core.models import BanSubmission
+from varnish_bans_manager.core.tasks.bans import Submit as SubmitTask
 
 
 class Base(View):
@@ -43,17 +43,15 @@ class Submit(Base):
             return HttpResponseForbidden()
 
     def get(self, request):
-        return self._render(form=self._form())
+        return self._render(form=self._form(request.user))
 
     def post(self, request):
-        form = self._form(data=request.POST)
+        form = self._form(request.user, data=request.POST)
         if form.is_valid():
             token = tasks.enqueue(
                 request,
                 SubmitTask(),
-                self.type,
-                form.expression,
-                [cache.id for cache in form.cleaned_data.get('target')],
+                form.ban_submission,
                 callback={
                     'fn': ('varnish_bans_manager.core.views.bans.Submit', 'callback'),
                     'context': {
@@ -72,19 +70,21 @@ class Submit(Base):
     def _render(self, **kwargs):
         return {'template': self.template, 'context': kwargs}
 
-    def _form(self, *args, **kwargs):
+    def _form(self, user, *args, **kwargs):
         raise NotImplementedError('Please implement this method')
 
     @classmethod
     def callback(cls, request, result, context):
         destination = reverse(context['destination'])
-        if result['errors']:
+        ban_submission = BanSubmission.objects.get(pk=result)
+        ban_submission_items = ban_submission.items.all()
+        successful_items_count = len([item for item in ban_submission_items if item.success])
+        if successful_items_count < len(ban_submission_items):
             return [
                 commands.modal('varnish-bans-manager/core/bans/submit_errors.html', {
-                    'expression': context['expression'],
-                    'submissions': result['submissions'],
-                    'misses': result['misses'],
-                    'errors': result['errors'],
+                    'expression': ban_submission.expression,
+                    'submissions': successful_items_count,
+                    'errors': [item for item in ban_submission_items if not item.success],
                     'destination': destination,
                 }, context_instance=RequestContext(request))
             ]
@@ -92,7 +92,7 @@ class Submit(Base):
             messages.success(request, ungettext(
                 'Your ban has been successfully submitted to %(count)d cache.',
                 'Your ban has been successfully submitted to %(count)d caches.',
-                result['submissions']) % {'count': result['submissions']})
+                successful_items_count) % {'count': successful_items_count})
             return [
                 commands.navigate(destination),
             ]
@@ -100,7 +100,6 @@ class Submit(Base):
 
 class Basic(Submit):
     permission = None
-    type = BanSubmission.BASIC_TYPE
     template = 'varnish-bans-manager/core/bans/basic.html'
     destination = 'bans-basic'
 
@@ -110,7 +109,6 @@ class Basic(Submit):
 
 class Advanced(Submit):
     permission = 'core.can_access_advanced_ban_submission'
-    type = BanSubmission.ADVANCED_TYPE
     template = 'varnish-bans-manager/core/bans/advanced.html'
     destination = 'bans-advanced'
 
@@ -120,7 +118,6 @@ class Advanced(Submit):
 
 class Expert(Submit):
     permission = 'core.can_access_expert_ban_submission'
-    type = BanSubmission.EXPERT_TYPE
     template = 'varnish-bans-manager/core/bans/expert.html'
     destination = 'bans-expert'
 

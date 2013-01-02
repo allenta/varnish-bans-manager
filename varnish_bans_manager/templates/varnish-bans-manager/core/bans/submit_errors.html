@@ -15,13 +15,6 @@
     </p>
   {% endif %}
 
-  {% if misses > 0 %}
-    <p>
-      <span class="badge badge-important">{{ misses }}</span>
-      {% blocktrans %}caches are no longer available.{% endblocktrans %}
-    </p>
-  {% endif %}
-
   {% if errors %}
     <p>
       <span class="badge badge-important">{{ errors|length }}</span>
@@ -30,7 +23,7 @@
     <div class="row-fluid">
       <div class="offset1">
         {% for error in errors %}
-          <p><code>{{ error.name }}</code> {{ error.message }}</p>
+          <p><code>{{ error.node.human_name }}</code> {{ error.message }}</p>
         {% endfor %}
       </div>
     </div>

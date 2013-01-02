@@ -12,7 +12,7 @@ from django.core.urlresolvers import reverse
 from django.utils.decorators import method_decorator
 from django.views.generic import View
 from varnish_bans_manager.core.helpers.views import ajaxify
-from varnish_bans_manager.core.views import bans, caches, users, settings, task, user
+from varnish_bans_manager.core.views import bans, caches, settings, task, user, users
 
 
 class Index(View):

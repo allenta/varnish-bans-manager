@@ -158,8 +158,8 @@ created virtualenv active.
 
     www-data:~$ varnish-bans-manager users --add --administrator --email "bob@domain.com" --password "s3cr3t" --firstname "Bob" --lastname "Brown"
 
-7. Adding/removing caches and groups is not yet supported in the web UI. Meanwhile,
-   you can add your caches and groups using the command line::
+7. Adding/removing caching nodes and groups is not yet supported in the web UI.
+   Meanwhile, you can add your nodes and groups using the command line::
 
     www-data:~$ varnish-bans-manager groups --add --name "production"
     www-data:~$ varnish-bans-manager groups --add --name "development"
@@ -168,9 +168,9 @@ created virtualenv active.
     1, production
     2, development
 
-    www-data:~$ varnish-bans-manager caches --add --host "192.168.1.100" --port 6082 --secret-file /etc/varnish/secret --group 1
-    www-data:~$ varnish-bans-manager caches --add --host "192.168.1.101" --port 6082 --secret-file /etc/varnish/secret --group 1
-    www-data:~$ varnish-bans-manager caches --add --host "192.168.1.102" --port 6082 --secret-file /etc/varnish/secret --group 1
+    www-data:~$ varnish-bans-manager nodes --add --host "192.168.1.100" --port 6082 --secret-file /etc/varnish/secret --group 1
+    www-data:~$ varnish-bans-manager nodes --add --host "192.168.1.101" --port 6082 --secret-file /etc/varnish/secret --group 1
+    www-data:~$ varnish-bans-manager nodes --add --host "192.168.1.102" --port 6082 --secret-file /etc/varnish/secret --group 1
 
 Final touches
 -------------
@@ -193,12 +193,13 @@ VBM configuration is located in a file usually stored in
 ``/etc/varnish-bans-manager.conf``. Next you can find an annotated version
 of a sample VBM configuration::
 
-    # Gunicorn HTTP server settings. Check out Gunicorn documentation
-    # (http://docs.gunicorn.org/en/latest/configure.html) for further
-    # details and for a full list of options. Note that 'debug' and
+    # HTTP server settings. All Gunicorn server settings are supported. Check
+    # out Gunicorn documentation (http://docs.gunicorn.org/en/latest/configure.html)
+    # for further details and for a full list of options. Note that 'debug' and
     # 'secure_scheme_headers' Gunicorn settings will always be overriden
     # by VBM internal settings.
     [http]
+    base_url: http://varnish-bans-manager.domain.com
     bind: 0.0.0.0:9000
     worker_class: eventlet
     forwarded_allow_ips: 127.0.0.1
@@ -270,3 +271,13 @@ of a sample VBM configuration::
     # For development purposes only. Always keep this value to false, or,
     # even better, remove it from the configuration file.
     development: false
+
+Upgrade
+=======
+
+No migration mechanism is currently supported by VBM (yet). To upgrade from one
+version to another, please make sure you delete the whole database contents before
+installing the new version. To get the list of queries to be run on your database
+to accomplish this, you may execute the following command::
+
+  www-data:~$ varnish-bans-manager sqlclear core

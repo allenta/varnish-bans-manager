@@ -56,7 +56,7 @@ def _append_script(response, script):
 class CustomizationsMiddleware:
     def process_request(self, request):
         # Request-level initializations.
-        core.initialize()
+        core.initialize_request()
 
         # Initialize page id.
         request.page_id = None
