@@ -14,7 +14,7 @@
       <div style="font-size:11px; margin-top: 5px;">{{ entry.user }} · {{ entry.ban_type }} → <code>{{ entry.target }}</code> ({{ entry.target_type }})</div>
       <hr />
       <p><code>{{ entry.expression }}</code></p>
-      <ul style="list-style-type: none; margin-bottom: 60px;">
+      <ul style="list-style-type: none; margin-bottom: 30px;">
         {% for item in entry.items %}
           <li>
             {% if item.success %}

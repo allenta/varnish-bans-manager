@@ -158,8 +158,8 @@ created virtualenv active.
 
     www-data:~$ varnish-bans-manager users --add --administrator --email "bob@domain.com" --password "s3cr3t" --firstname "Bob" --lastname "Brown"
 
-7. Adding/removing caches and groups is not yet supported in the web UI. Meanwhile,
-   you can add your caches and groups using the command line::
+7. Adding/removing caching nodes and groups is not yet supported in the web UI.
+   Meanwhile, you can add your nodes and groups using the command line::
 
     www-data:~$ varnish-bans-manager groups --add --name "production"
     www-data:~$ varnish-bans-manager groups --add --name "development"
@@ -168,9 +168,9 @@ created virtualenv active.
     1, production
     2, development
 
-    www-data:~$ varnish-bans-manager caches --add --host "192.168.1.100" --port 6082 --secret-file /etc/varnish/secret --group 1
-    www-data:~$ varnish-bans-manager caches --add --host "192.168.1.101" --port 6082 --secret-file /etc/varnish/secret --group 1
-    www-data:~$ varnish-bans-manager caches --add --host "192.168.1.102" --port 6082 --secret-file /etc/varnish/secret --group 1
+    www-data:~$ varnish-bans-manager nodes --add --host "192.168.1.100" --port 6082 --secret-file /etc/varnish/secret --group 1
+    www-data:~$ varnish-bans-manager nodes --add --host "192.168.1.101" --port 6082 --secret-file /etc/varnish/secret --group 1
+    www-data:~$ varnish-bans-manager nodes --add --host "192.168.1.102" --port 6082 --secret-file /etc/varnish/secret --group 1
 
 Final touches
 -------------

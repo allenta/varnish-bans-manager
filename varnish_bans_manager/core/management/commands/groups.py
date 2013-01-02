@@ -17,9 +17,9 @@ class Command(BaseCommand):
     )
     help = """Usage,
 
-    caches --list
-    caches --add --name <value>
-    caches --delete --id <value>
+    groups --list
+    groups --add --name <value>
+    groups --delete --id <value>
     """
 
     def handle(self, *args, **options):

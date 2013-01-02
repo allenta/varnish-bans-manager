@@ -22,9 +22,9 @@ class Command(BaseCommand):
     )
     help = """Usage,
 
-    caches --list
-    caches --add --host <host> --port <port> [--secret-file <value>] [--legacy] [--name <value>] [--group <group>]
-    caches --delete --id <value>
+    nodes --list
+    nodes --add --host <host> --port <port> [--secret-file <value>] [--legacy] [--name <value>] [--group <group>]
+    nodes --delete --id <value>
     """
 
     def handle(self, *args, **options):
