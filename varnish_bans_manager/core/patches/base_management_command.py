@@ -13,7 +13,7 @@ base_execute = base.BaseCommand.execute
 
 
 def execute(self, *args, **options):
-    core.initialize()
+    core.initialize_command()
     base_execute(self, *args, **options)
 
 

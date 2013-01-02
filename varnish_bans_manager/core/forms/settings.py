@@ -40,8 +40,7 @@ class GeneralForm(forms.Form):
 
     notify_bans = forms.BooleanField(
         label=_(
-            'Deliver e-mail to <code>%s</code> everytime a ban is '
-            'submitted through VBM.' %
+            'Deliver periodical ban submission reports to <code>%s</code>.' %
             settings.VBM_NOTIFICATIONS_EMAIL),
         help_text=_('Adjust VBM settings file to use a different e-mail address.'),
         required=False)

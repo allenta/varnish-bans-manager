@@ -102,7 +102,7 @@ class PasswordResetForm(forms.Form):
             bcc=settings.DEFAULT_BCC_EMAILS,
             context={
                 'name': self.user.first_name or self.user.email,
-                'domain': host,
+                'base_url': "http://%s" % host,
                 'reset_url': \
                     (settings.HTTPS_ENABLED and 'https' or 'http') + '://' +
                     host +

@@ -65,6 +65,7 @@ class SettingMetaclass(Setting.__class__):
     url_matching_variable = property(*_property('url_matching_variable', Setting.DEFAULT_URL_MATCHING_VARIABLE))
     base_ban_expression = property(*_property('base_ban_expression', ''))
     notify_bans = property(*_property('notify_bans', False))
+    notify_bans_task_status = property(*_property('notify_bans_task_status', None))
 
 
 Setting.__class__ = SettingMetaclass

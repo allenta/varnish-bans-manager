@@ -8,6 +8,7 @@
 from __future__ import absolute_import
 import os
 import sys
+import urlparse
 from cStringIO import StringIO
 import ConfigParser
 import getpass
@@ -521,6 +522,9 @@ VBM_HTTP = dict(_config.items('http'))
 VBM_EMAIL_SUBJECT_PREFIX = _config.get('email', 'subject_prefix') + ' '
 VBM_CONTACT_EMAIL = _config.get('email', 'contact')
 VBM_NOTIFICATIONS_EMAIL = _config.get('email', 'notifications')
+VBM_BASE_URL = VBM_HTTP.pop('base_url').rstrip('/')
+if not VBM_BASE_URL.startswith('http'):
+    VBM_BASE_URL = "http://%s" % VBM_BASE_URL
 
 ###############################################################################
 ## CELERY (http://docs.celeryproject.org/en/latest/configuration.html).
@@ -550,6 +554,10 @@ CELERYD_HIJACK_ROOT_LOGGER = not IS_PRODUCTION
 
 # See http://docs.celeryproject.org/en/latest/userguide/periodic-tasks.html
 CELERYBEAT_SCHEDULE = {
+    'bans.notify_submissions': {
+        'task': 'varnish_bans_manager.core.tasks.bans.NotifySubmissions',
+        'schedule': crontab(minute='*/10'),
+    },
     'sessions.purge_expired': {
         'task': 'varnish_bans_manager.core.tasks.sessions.PurgeExpired',
         'schedule': crontab(minute=0, hour='*/1'),
