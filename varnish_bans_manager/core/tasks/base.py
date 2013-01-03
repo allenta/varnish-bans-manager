@@ -7,6 +7,7 @@
 
 from __future__ import absolute_import
 from django.utils import translation
+from django.conf import settings
 from django.core.cache import cache
 from celery import Task
 from celery.signals import task_prerun, worker_process_init
@@ -23,7 +24,31 @@ def worker_process_init_handler(*args, **kwargs):
     core.initialize_worker()
 
 
-class MonitoredTask(Task):
+class InternationalizedTask(Task):
+    abstract = True
+
+    def run(self, *args, **kwargs):
+        # Extract & remove special 'language' argument.
+        language = settings.LANGUAGE_CODE
+        if 'language' in kwargs:
+            language = kwargs['language']
+            del kwargs['language']
+
+        # Switch language.
+        prev_language = translation.get_language()
+        translation.activate(language)
+
+        # Execute task & restore language.
+        try:
+            return self.internationalized_run(*args, **kwargs)
+        finally:
+            translation.activate(prev_language)
+
+    def internationalized_run(self, *args, **kwargs):
+        raise NotImplementedError('Please implement this method')
+
+
+class MonitoredTask(InternationalizedTask):
     """
     Depending on the specific task, subclasses can, for example,
     implement cleanup logic overriding on_failure, on_retry, etc.
@@ -31,29 +56,17 @@ class MonitoredTask(Task):
     """
     abstract = True
 
-    def run(self, *args, **kwargs):
+    def internationalized_run(self, *args, **kwargs):
         # Extract & remove special 'callback' argument.
         if 'callback' in kwargs:
             callback = kwargs['callback']
             del kwargs['callback']
-        # Extract & remove special 'language' argument.
-        language = 'en'
-        if 'language' in kwargs:
-            language = kwargs['language']
-            del kwargs['language']
-        # Switch language.
-        prev_language = translation.get_language()
-        translation.activate(language)
-        # Execute task & restore language.
-        try:
-            result = self.irun(*args, **kwargs)
-        finally:
-            translation.activate(prev_language)
-        # Encapsulate result.
+
+        # Execute task & encapsulate result.
         return {
             'id': self.request.id,
             'callback': callback,
-            'result': result,
+            'result': self.irun(*args, **kwargs),
         }
 
     def set_progress(self, count, total):
@@ -65,7 +78,7 @@ class MonitoredTask(Task):
         raise NotImplementedError('Please implement this method')
 
 
-class SingleInstanceTask(Task):
+class SingleInstanceTask(InternationalizedTask):
     """
     Child classes are reponsible to complete as much work as possible and
     finish before lock expiration. Once expired, worker will be killed.
@@ -84,11 +97,11 @@ class SingleInstanceTask(Task):
         # Complete instantiation.
         super(SingleInstanceTask, self).__init__(*args, **kwargs)
 
-    def run(self, *args, **kwargs):
+    def internationalized_run(self, *args, **kwargs):
         if self._acquire_lock():
             return self.irun(*args, **kwargs)
         else:
-            raise SingleInstanceTaskLocked()
+            raise SingleInstanceTask.LockedException()
 
     def irun(self, *args, **kwargs):
         raise NotImplementedError('Please implement this method')
@@ -97,7 +110,7 @@ class SingleInstanceTask(Task):
         self._release_lock()
 
     def on_failure(self, exc, task_id, *args, **kwargs):
-        if not isinstance(exc, SingleInstanceTaskLocked):
+        if not isinstance(exc, SingleInstanceTask.LockedException):
             self._release_lock()
 
     def _acquire_lock(self):
@@ -109,6 +122,5 @@ class SingleInstanceTask(Task):
     def _lock_id(self):
         return "celery-single-instance:lock:%s" % self.name
 
-
-class SingleInstanceTaskLocked(Exception):
-    pass
+    class LockedException(Exception):
+        pass
