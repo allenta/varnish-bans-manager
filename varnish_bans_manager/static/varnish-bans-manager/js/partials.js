@@ -129,3 +129,62 @@
     };
   };
 })(jQuery);
+
+/******************************************************************************
+ * Bans > Submissions.
+ ******************************************************************************/
+
+(function ($) {
+  vbm.partials.registry['bans-submissions-page'] = function(options) {
+    return {
+      callback: function(context) {
+        var browser = $(context).find('.submissions-browser');
+
+        (function (browser) {
+          function get_data(page) {
+            return {
+              page: page || 1,
+              items_per_page: browser.find('.collection-items-per-page li.active').attr('data-collection-items-per-page'),
+              user: browser.find('.collection-filter select[name="user"]').val(),
+              ban_type: browser.find('.collection-filter select[name="ban_type"]').val(),
+              target: browser.find('.collection-filter select[name="target"]').val(),
+              sort_criteria: browser.find('.collection-sort li.active').attr('data-sort-criteria'),
+              sort_direction: browser.find('.collection-sort li.active').attr('data-sort-direction')
+            };
+          }
+
+          function browse(page) {
+            vbm.navigation.navigate(options.browse_url, {
+              submit: get_data(page)
+            });
+          }
+
+          $('.collection-filter form', browser).submit(function() {
+            browse();
+            return false;
+          });
+
+          $('.collection-sort li', browser).click(function() {
+            $(this).find('i:not(.icon-empty)').
+              closest('li').
+              toggleAttr('data-sort-direction', 'asc', 'desc');
+            $(this).addClass('active').siblings('li').removeClass('active');
+            browse();
+            return false;
+          });
+
+          $('.collection-items-per-page li', browser).click(function() {
+            $(this).addClass('active').siblings('li').removeClass('active');
+            browse();
+            return false;
+          });
+
+          $('.collection-pager li:not(.disabled)', browser).click(function() {
+            browse($(this).attr('data-page'));
+            return false;
+          });
+        })(browser);
+      }
+    };
+  };
+})(jQuery);

@@ -9,18 +9,101 @@
 {% block sidebar_section %}submissions{% endblock %}
 
 {% block sidebar_content %}
-  <div class="page-header">
-    <h1>
-      {% trans 'Recent submissions' %}
-      <small>{% trans 'Browse recently submited bans' %}</small>
-    </h1>
+  <div class="submissions-browser">
+    <div class="page-header">
+      <h1>
+        {% trans 'Recent submissions' %}
+        <small>{% trans 'Browse recently submited bans' %}</small>
+      </h1>
+    </div>
+
+    <div id="breadcrumb">
+      <i class="font-awesome font-awesome-home"></i>
+      <span class="item">{% trans 'Bans' %}</span>
+      <a href="{% url 'bans-submissions' %}" class="navigation current">{% trans 'Submissions' %}</a>
+    </div>
+
+    <div class="collection-filter">
+      <div class="row-fluid">
+        <form action="#">
+          <div class="control-group span3">
+            <div class="controls">
+              {{ form.user|add_class:"span12" }}
+            </div>
+          </div>
+          <div class="control-group span3">
+            <div class="controls">
+              {{ form.ban_type|add_class:"span12" }}
+            </div>
+          </div>
+          <div class="control-group span4">
+            <div class="controls">
+              {{ form.target|add_class:"span12" }}
+            </div>
+          </div>
+          <div class="control-group span2">
+            <button type="submit" class="btn btn-primary span12"><i class="icon-search icon-white"></i> {% trans 'Search' %}</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="btn-toolbar pull-right">
+      <div class="btn-group collection-sort">
+        <button class="btn dropdown-toggle" data-toggle="dropdown"><i class="font-awesome font-awesome-sort"></i> Sort by <span class="caret"></span></button>
+        <ul class="dropdown-menu">
+          {% for id, name in form.SORT_CRITERIA_CHOICES %}
+            {% with sort_criteria=form.cleaned_data.sort_criteria sort_direction=form.cleaned_data.sort_direction %}
+              <li data-sort-criteria="{{ id }}" data-sort-direction="{% if id == sort_criteria %}{{ sort_direction }}{% else %}asc{% endif %}" class="{% if id == sort_criteria %}active{% endif %}">
+                <a href="#"><i class="{% if id == sort_criteria %}icon-sort-direction-{{ sort_direction }}{% else %}icon-empty{% endif %}"></i> {{ name }}</a>
+              </li>
+            {% endwith %}
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+
+    {% if form.paginator.current_page.object_list %}
+      <table class="table table-striped users">
+        <tbody>
+          {% for bansubmission in form.paginator.current_page.object_list %}
+            <tr>
+              <td class="xxx">{{ bansubmission.id }}</td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <div class="btn-group dropup pull-left collection-items-per-page">
+        <button class="btn dropdown-toggle" data-toggle="dropdown">{% trans 'Items per page' %} <span class="caret"></span></button>
+        <ul class="dropdown-menu">
+          {% for items in form.ITEMS_PER_PAGE_CHOICES %}
+            <li data-collection-items-per-page="{{ items }}" class="{% if items == form.cleaned_data.items_per_page %}active{% endif %}">
+              <a href="#">{{ items }}</a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <div class="pagination pagination-right collection-pager">
+        <ul>
+          <li class="{% if not form.paginator.current_page.has_previous %}disabled{% endif %}" data-page="{% if form.paginator.current_page.has_previous %}{{ form.paginator.current_page.previous_page_number }}{% endif %}">
+            <a href="#">«</a>
+          </li>
+          {% for page in form.paginator.page_range_slice %}
+            <li data-page="{{ page }}" class="{% if page == form.cleaned_data.page %}active{% endif %}"><a href="#">{{ page }}</a></li>
+          {% endfor %}
+          <li class="{% if not form.paginator.current_page.has_next %}disabled{% endif %}" data-page="{% if form.paginator.current_page.has_next %}{{ form.paginator.current_page.next_page_number }}{% endif %}">
+            <a href="#">»</a>
+          </li>
+        </ul>
+      </div>
+    {% endif %}
   </div>
 
-  <div id="breadcrumb">
-    <i class="font-awesome font-awesome-home"></i>
-    <span class="item">{% trans 'Bans' %}</span>
-    <a href="{% url 'bans-submissions' %}" class="navigation current">{% trans 'Submissions' %}</a>
-  </div>
-
-  <p><span class="label label-info"><i class="font-awesome font-awesome-exclamation-sign"></i> {% trans 'Coming soon...' %}</span></p>
+  <script type="text/javascript">
+    vbm.partials.ready('bans-submissions-page', {
+      browse_url: '{% url 'bans-submissions' %}'
+    });
+  </script>
 {% endblock %}
