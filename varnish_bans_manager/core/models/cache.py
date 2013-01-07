@@ -18,6 +18,11 @@ class Cache(Model):
 
     human_name = property(_human_name)
 
+    def _human_class_name(self):
+        return self.__class__.verbose_name
+
+    human_class_name = property(_human_class_name)
+
     def _items(self):
         raise NotImplementedError('Please implement this method')
 

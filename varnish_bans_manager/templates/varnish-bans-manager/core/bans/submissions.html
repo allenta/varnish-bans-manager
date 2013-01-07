@@ -3,6 +3,7 @@
 {% load url from future %}
 {% load vbm_widget_helpers %}
 {% load vbm_form_helpers %}
+{% load humanize %}
 
 {% block title %}{% trans 'Bans' %} > {% trans 'Submissions' %}{% endblock %}
 
@@ -64,11 +65,31 @@
     </div>
 
     {% if form.paginator.current_page.object_list %}
-      <table class="table table-striped users">
+      <table class="table">
         <tbody>
-          {% for bansubmission in form.paginator.current_page.object_list %}
+          {% for ban_submission in form.paginator.current_page.object_list %}
             <tr>
-              <td class="xxx">{{ bansubmission.id }}</td>
+              <td>
+                <p><pre>{{ ban_submission.expression }}</pre></p>
+                <div class="description pull-right">
+                  <span class="tip" title="{{ ban_submission.launched_at|date:"DATETIME_FORMAT" }}"><i class="font-awesome font-awesome-time"></i> {% trans 'Submitted' %} {{ ban_submission.launched_at|naturaltime }}</span>
+                </div>
+                <div class="description pull-left">
+                  <i class="font-awesome font-awesome-user"></i>
+                  {% if perms.core.can_access_users_management %}
+                    <a href="{% url 'users-update' ban_submission.user.id %}" class="navigation">
+                  {% endif %}
+                  {{ ban_submission.user.human_name }}
+                  {% if perms.core.can_access_users_management %}
+                    </a>
+                  {% endif %}
+                  · {{ ban_submission.human_ban_type_name }} → {{ ban_submission.target.human_name }} ({{ ban_submission.target.human_class_name }})
+                </div>
+                <br class="clearfix"/>
+                <div class="description pull-right">
+                  <center><a href="#"><i class="font-awesome font-awesome-double-angle-down"></i> {% trans 'expand' %} <i class="font-awesome font-awesome-double-angle-down"></i></a></center>
+                </div>
+              </td>
             </tr>
           {% endfor %}
         </tbody>

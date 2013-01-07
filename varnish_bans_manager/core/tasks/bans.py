@@ -33,9 +33,9 @@ class NotifySubmissions(SingleInstanceTask):
                     'id': ban_submission.id,
                     'launched_at': ban_submission.launched_at,
                     'user': ban_submission.user.human_name,
-                    'ban_type': dict(BanSubmission.BAN_TYPE_CHOICES)[ban_submission.ban_type],
+                    'ban_type': ban_submission.human_ban_type_name,
                     'expression': ban_submission.expression,
-                    'target_type': ban_submission.target.__class__.verbose_name,
+                    'target_type': ban_submission.target.human_class_name,
                     'target': ban_submission.target.human_name,
                     'items': ban_submission.items.all(),
                 } for ban_submission in ban_submissions.iterator()]

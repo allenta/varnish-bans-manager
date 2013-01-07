@@ -54,6 +54,11 @@ class BanSubmission(Model):
         null=False
     )
 
+    def _human_ban_type_name(self):
+        return dict(self.BAN_TYPE_CHOICES)[self.ban_type]
+
+    human_ban_type_name = property(_human_ban_type_name)
+
     class Meta:
         app_label = 'core'
 
