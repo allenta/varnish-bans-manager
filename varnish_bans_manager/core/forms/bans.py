@@ -205,13 +205,22 @@ class SubmissionsForm(forms.Form):
             page=self.cleaned_data.get('page'))
 
     def _query_set(self):
+        # Sort criteria.
         order_by_prefix = '-' if self.cleaned_data.get('sort_direction') == 'desc' else ''
         result = BanSubmission.objects.\
             order_by(order_by_prefix + self.cleaned_data.get('sort_criteria'))
+        # Basic filters.
         filters = {}
-        for field in ('user', 'ban_type'):
-            if self.cleaned_data.get(field):
-                filters[field] = self.cleaned_data.get(field)
+        for field in ('user', 'ban_type',):
+            value = self.cleaned_data.get(field)
+            if value:
+                filters[field] = value
+        # Target filter.
+        target = self.cleaned_data.get('target')
+        if target:
+            filters['target_content_type'] = ContentType.objects.get_for_model(target)
+            filters['target_id'] = target.id
+        # Done!
         if filters:
             result = result.filter(**filters)
         return result
