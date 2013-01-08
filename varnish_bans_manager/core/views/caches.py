@@ -12,6 +12,7 @@ from django.utils.decorators import method_decorator
 from django.utils.translation import ugettext_lazy as _
 from django.views.generic import View
 from varnish_bans_manager.core.models import Group, Node
+from varnish_bans_manager.core.helpers.http import HttpResponseAjax
 from varnish_bans_manager.core.helpers.views import ajaxify
 
 
@@ -35,3 +36,15 @@ class Browse(Base):
         return {'template': 'varnish-bans-manager/core/caches/browse.html', 'context': {
             'caches': caches,
         }}
+
+
+class GroupsReorder(Base):
+    def post(self, request):
+        ids = [int(id) for id in request.POST.getlist('ids')]
+        for group in Group.objects.all():
+            try:
+                group.weight = ids.index(group.id)
+            except ValueError:
+                group.weight = 0
+            group.save()
+        return HttpResponseAjax()

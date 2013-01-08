@@ -37,6 +37,7 @@ body.caches-browse-page {
   .group {
     @extend .well;
     .group-sortable-handle {
+      cursor: move;
       margin-right: 10px;
     }
     label {
@@ -64,6 +65,7 @@ body.caches-browse-page {
           }
         }
         .node-sortable-handle {
+          cursor: move;
           color: #999999;
         }
       }

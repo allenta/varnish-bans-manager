@@ -32,6 +32,46 @@
 })(jQuery);
 
 /******************************************************************************
+ * Caches > Browse.
+ ******************************************************************************/
+
+(function ($) {
+  vbm.partials.registry['caches-browse-page'] = function(options) {
+    return {
+      callback: function(context) {
+        // Sortable groups.
+        groups_container = $('.groups', context);
+        groups_container.sortable({
+          axis: 'y',
+          containment: groups_container,
+          handle: '.group-sortable-handle',
+          items: '.group[data-group-id]',
+          opacity: 0.5,
+          tolerance: 'pointer',
+          stop: function(event, ui) {
+            groups_container.sortable('disable');
+            group_ids = jQuery.map(groups_container.find('.group[data-group-id]'), function (group) {
+              return $(group).data('group-id');
+            });
+            vbm.ajax.call({
+              url: options.groups_reorder_url,
+              type: 'POST',
+              data: { ids: group_ids },
+              success: function () {
+                groups_container.sortable('enable');
+              },
+              error: function () {
+                groups_container.sortable('cancel').sortable('enable');
+              },
+            });
+          }
+        });
+      }
+    };
+  }
+})(jQuery);
+
+/******************************************************************************
  * Users > Browse.
  ******************************************************************************/
 
