@@ -183,6 +183,19 @@
             browse($(this).attr('data-page'));
             return false;
           });
+
+          $('table .expand-ban-submission-details a', browser).click(function() {
+            $(this).hide();
+            $(this).closest('td').find('.expanded-ban-submission-details').slideDown();
+            return false;
+          });
+
+          $('table .collapse-ban-submission-details a', browser).click(function() {
+            $(this).closest('.expanded-ban-submission-details').slideUp(200, function() {
+              $(this).closest('td').find('.expand-ban-submission-details a').show();
+            });
+            return false;
+          });
         })(browser);
       }
     };

@@ -89,14 +89,31 @@
                   {% endif %}
                 </div>
                 <br class="clearfix"/>
-                <div class="description pull-right">
+                <div class="description pull-right expand-ban-submission-details">
                   <a href="#"><i class="font-awesome font-awesome-double-angle-down"></i> {% trans 'expand' %} <i class="font-awesome font-awesome-double-angle-down"></i></a>
                 </div>
                 <br class="clearfix"/>
-                <div class="hide">
-                  {% for item in instance.items %}
-                    <p>{{ item.id }}</p>
-                  {% endfor %}
+                <div class="hide expanded-ban-submission-details">
+                  <div class="row-fluid">
+                    <div class="offset1 span10">
+                      {% for item in instance.items %}
+                        <p>
+                          {% if item.success %}
+                            <i class="font-awesome font-awesome-ok"></i>
+                          {% else %}
+                            <i class="font-awesome font-awesome-remove"></i>
+                          {% endif %}
+                          <code>{{ item.node.human_name }}</code>
+                          {% if not item.success %}
+                            {{ item.message }}
+                          {% endif %}
+                        </p>
+                      {% endfor %}
+                    </div>
+                  </div>
+                  <div class="description pull-right collapse-ban-submission-details">
+                    <a href="#"><i class="font-awesome font-awesome-double-angle-up"></i> {% trans 'collapse' %} <i class="font-awesome font-awesome-double-angle-up"></i></a>
+                  </div>
                 </div>
               </td>
             </tr>
