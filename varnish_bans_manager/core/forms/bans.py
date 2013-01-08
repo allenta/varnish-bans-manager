@@ -201,6 +201,7 @@ class SubmissionsForm(forms.Form):
     def execute(self):
         self.paginator = Paginator(
             object_list=self._query_set(),
+            expander=self._expander(),
             per_page=self.cleaned_data.get('items_per_page'),
             page=self.cleaned_data.get('page'))
 
@@ -224,3 +225,13 @@ class SubmissionsForm(forms.Form):
         if filters:
             result = result.filter(**filters)
         return result
+
+    def _expander(self):
+        def fn(ban_submission):
+            items = ban_submission.items.all().order_by('created_at')
+            return {
+                'ban_submission': ban_submission,
+                'items': items,
+                'errors': sum(1 for item in items if not item.success),
+            }
+        return fn

@@ -67,27 +67,36 @@
     {% if form.paginator.current_page.object_list %}
       <table class="table">
         <tbody>
-          {% for ban_submission in form.paginator.current_page.object_list %}
+          {% for instance in form.paginator.current_page.object_list %}
             <tr>
               <td>
-                <p><pre>{{ ban_submission.expression }}</pre></p>
+                <p><pre>{{ instance.ban_submission.expression }}</pre></p>
                 <div class="description pull-right">
-                  <span class="tip" title="{{ ban_submission.launched_at|date:"DATETIME_FORMAT" }}"><i class="font-awesome font-awesome-time"></i> {% trans 'Submitted' %} {{ ban_submission.launched_at|naturaltime }}</span>
+                  <span class="tip" title="{{ instance.ban_submission.launched_at|date:"DATETIME_FORMAT" }}"><i class="font-awesome font-awesome-time"></i> {% trans 'Submitted' %} {{ instance.ban_submission.launched_at|naturaltime }}</span>
                 </div>
                 <div class="description pull-left">
                   <i class="font-awesome font-awesome-user"></i>
                   {% if perms.core.can_access_users_management %}
-                    <a href="{% url 'users-update' ban_submission.user.id %}" class="navigation">
+                    <a href="{% url 'users-update' instance.ban_submission.user.id %}" class="navigation">
                   {% endif %}
-                  {{ ban_submission.user.human_name }}
+                  {{ instance.ban_submission.user.human_name }}
                   {% if perms.core.can_access_users_management %}
                     </a>
                   {% endif %}
-                  · {{ ban_submission.human_ban_type_name }} → {{ ban_submission.target.human_name }} ({{ ban_submission.target.human_class_name }})
+                  · {{ instance.ban_submission.human_ban_type_name }} → {{ instance.ban_submission.target.human_name }} ({{ instance.ban_submission.target.human_class_name }})
+                  {% if instance.errors > 0 %}
+                    <span class="label label-important"><i class="font-awesome font-awesome-warning-sign"></i> {{ instance.errors }} {% trans 'errors' %}</span>
+                  {% endif %}
                 </div>
                 <br class="clearfix"/>
                 <div class="description pull-right">
-                  <center><a href="#"><i class="font-awesome font-awesome-double-angle-down"></i> {% trans 'expand' %} <i class="font-awesome font-awesome-double-angle-down"></i></a></center>
+                  <a href="#"><i class="font-awesome font-awesome-double-angle-down"></i> {% trans 'expand' %} <i class="font-awesome font-awesome-double-angle-down"></i></a>
+                </div>
+                <br class="clearfix"/>
+                <div class="hide">
+                  {% for item in instance.items %}
+                    <p>{{ item.id }}</p>
+                  {% endfor %}
                 </div>
               </td>
             </tr>
