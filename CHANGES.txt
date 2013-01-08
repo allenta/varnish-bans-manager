@@ -1,3 +1,9 @@
+v0.2.3, 08/01/2013
+------------------
+
+  - Blocked Celery version. Latest version at the moment (3.0.13) seems to be
+  broken when using a Django DB backend.
+
 v0.2.2, 08/01/2013
 ------------------
 
