@@ -69,9 +69,9 @@ Note that the site building phase has some extra system requirements:
 TODO
 ====
 
-- Ban notifications.
 - Bans & groups management.
 - List of recent ban submissions.
 - Access to current status of bans.
 - Ban templates.
 - Refactor ``varnish_bans_manager.filesystem.models``.
+- Locale-aware application level ordering.

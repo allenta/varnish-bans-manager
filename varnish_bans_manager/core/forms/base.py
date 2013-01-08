@@ -8,7 +8,7 @@
 from __future__ import absolute_import
 from django.core.exceptions import ValidationError
 from django.core import validators
-from django.forms import IntegerField, CharField, BooleanField, Field
+from django.forms import IntegerField, CharField, BooleanField, ChoiceField, Field
 from django.utils.translation import ugettext_lazy as _
 from django.forms.widgets import SelectMultiple
 
@@ -42,6 +42,16 @@ class FallbackBooleanField(FallbackMixinField, BooleanField):
 class SortDirectionField(FallbackCharField):
     def __init__(self, default=None, *args, **kwargs):
         super(SortDirectionField, self).__init__(choices=['asc', 'desc'], default=default, *args, **kwargs)
+
+
+class BetterChoiceField(ChoiceField):
+    def __init__(self, choices=(), placeholder=None, *args, **kwargs):
+        choices = tuple([(u'', (u'- %s -' % unicode(placeholder)) if placeholder else u'')] + list(choices))
+        super(BetterChoiceField, self).__init__(choices=choices, *args, **kwargs)
+
+    def clean(self, value):
+        value = super(BetterChoiceField, self).clean(value)
+        return None if value == u'' else value
 
 
 class IntegerListField(Field):

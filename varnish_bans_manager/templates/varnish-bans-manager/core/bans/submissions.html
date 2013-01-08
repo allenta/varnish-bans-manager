@@ -3,24 +3,154 @@
 {% load url from future %}
 {% load vbm_widget_helpers %}
 {% load vbm_form_helpers %}
+{% load humanize %}
 
 {% block title %}{% trans 'Bans' %} > {% trans 'Submissions' %}{% endblock %}
 
 {% block sidebar_section %}submissions{% endblock %}
 
 {% block sidebar_content %}
-  <div class="page-header">
-    <h1>
-      {% trans 'Recent submissions' %}
-      <small>{% trans 'Browse recently submited bans' %}</small>
-    </h1>
+  <div class="submissions-browser">
+    <div class="page-header">
+      <h1>
+        {% trans 'Recent submissions' %}
+        <small>{% trans 'Browse recently submited bans' %}</small>
+      </h1>
+    </div>
+
+    <div id="breadcrumb">
+      <i class="font-awesome font-awesome-home"></i>
+      <span class="item">{% trans 'Bans' %}</span>
+      <a href="{% url 'bans-submissions' %}" class="navigation current">{% trans 'Submissions' %}</a>
+    </div>
+
+    <div class="collection-filter">
+      <div class="row-fluid">
+        <form action="#">
+          <div class="control-group span3">
+            <div class="controls">
+              {{ form.user|add_class:"span12" }}
+            </div>
+          </div>
+          <div class="control-group span3">
+            <div class="controls">
+              {{ form.ban_type|add_class:"span12" }}
+            </div>
+          </div>
+          <div class="control-group span4">
+            <div class="controls">
+              {{ form.target|add_class:"span12" }}
+            </div>
+          </div>
+          <div class="control-group span2">
+            <button type="submit" class="btn btn-primary span12"><i class="icon-search icon-white"></i> {% trans 'Search' %}</button>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <div class="btn-toolbar pull-right">
+      <div class="btn-group collection-sort">
+        <button class="btn dropdown-toggle" data-toggle="dropdown"><i class="font-awesome font-awesome-sort"></i> Sort by <span class="caret"></span></button>
+        <ul class="dropdown-menu">
+          {% for id, name in form.SORT_CRITERIA_CHOICES %}
+            {% with sort_criteria=form.cleaned_data.sort_criteria sort_direction=form.cleaned_data.sort_direction %}
+              <li data-sort-criteria="{{ id }}" data-sort-direction="{% if id == sort_criteria %}{{ sort_direction }}{% else %}asc{% endif %}" class="{% if id == sort_criteria %}active{% endif %}">
+                <a href="#"><i class="{% if id == sort_criteria %}icon-sort-direction-{{ sort_direction }}{% else %}icon-empty{% endif %}"></i> {{ name }}</a>
+              </li>
+            {% endwith %}
+          {% endfor %}
+        </ul>
+      </div>
+    </div>
+
+    {% if form.paginator.current_page.object_list %}
+      <table class="table">
+        <tbody>
+          {% for instance in form.paginator.current_page.object_list %}
+            <tr>
+              <td>
+                <p><pre>{{ instance.ban_submission.expression }}</pre></p>
+                <div class="description pull-right">
+                  <span class="tip" title="{{ instance.ban_submission.launched_at|date:"DATETIME_FORMAT" }}"><i class="font-awesome font-awesome-time"></i> {% trans 'Submitted' %} {{ instance.ban_submission.launched_at|naturaltime }}</span>
+                </div>
+                <div class="description pull-left">
+                  <i class="font-awesome font-awesome-user"></i>
+                  {% if perms.core.can_access_users_management %}
+                    <a href="{% url 'users-update' instance.ban_submission.user.id %}" class="navigation">
+                  {% endif %}
+                  {{ instance.ban_submission.user.human_name }}
+                  {% if perms.core.can_access_users_management %}
+                    </a>
+                  {% endif %}
+                  · {{ instance.ban_submission.human_ban_type_name }} → {{ instance.ban_submission.target.human_name }} ({{ instance.ban_submission.target.human_class_name }})
+                  {% if instance.errors > 0 %}
+                    <span class="label label-important"><i class="font-awesome font-awesome-warning-sign"></i> {{ instance.errors }} {% trans 'errors' %}</span>
+                  {% endif %}
+                </div>
+                <br class="clearfix"/>
+                <div class="description pull-right expand-ban-submission-details">
+                  <a href="#"><i class="font-awesome font-awesome-double-angle-down"></i> {% trans 'expand' %} <i class="font-awesome font-awesome-double-angle-down"></i></a>
+                </div>
+                <br class="clearfix"/>
+                <div class="hide expanded-ban-submission-details">
+                  <div class="row-fluid">
+                    <div class="offset1 span10">
+                      {% for item in instance.items %}
+                        <p>
+                          {% if item.success %}
+                            <i class="font-awesome font-awesome-ok"></i>
+                          {% else %}
+                            <i class="font-awesome font-awesome-remove"></i>
+                          {% endif %}
+                          <code>{{ item.node.human_name }}</code>
+                          {% if not item.success %}
+                            {{ item.message }}
+                          {% endif %}
+                        </p>
+                      {% endfor %}
+                    </div>
+                  </div>
+                  <div class="description pull-right collapse-ban-submission-details">
+                    <a href="#"><i class="font-awesome font-awesome-double-angle-up"></i> {% trans 'collapse' %} <i class="font-awesome font-awesome-double-angle-up"></i></a>
+                  </div>
+                </div>
+              </td>
+            </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+      <div class="btn-group dropup pull-left collection-items-per-page">
+        <button class="btn dropdown-toggle" data-toggle="dropdown">{% trans 'Items per page' %} <span class="caret"></span></button>
+        <ul class="dropdown-menu">
+          {% for items in form.ITEMS_PER_PAGE_CHOICES %}
+            <li data-collection-items-per-page="{{ items }}" class="{% if items == form.cleaned_data.items_per_page %}active{% endif %}">
+              <a href="#">{{ items }}</a>
+            </li>
+          {% endfor %}
+        </ul>
+      </div>
+
+      <div class="pagination pagination-right collection-pager">
+        <ul>
+          <li class="{% if not form.paginator.current_page.has_previous %}disabled{% endif %}" data-page="{% if form.paginator.current_page.has_previous %}{{ form.paginator.current_page.previous_page_number }}{% endif %}">
+            <a href="#">«</a>
+          </li>
+          {% for page in form.paginator.page_range_slice %}
+            <li data-page="{{ page }}" class="{% if page == form.cleaned_data.page %}active{% endif %}"><a href="#">{{ page }}</a></li>
+          {% endfor %}
+          <li class="{% if not form.paginator.current_page.has_next %}disabled{% endif %}" data-page="{% if form.paginator.current_page.has_next %}{{ form.paginator.current_page.next_page_number }}{% endif %}">
+            <a href="#">»</a>
+          </li>
+        </ul>
+      </div>
+    {% endif %}
   </div>
 
-  <div id="breadcrumb">
-    <i class="font-awesome font-awesome-home"></i>
-    <span class="item">{% trans 'Bans' %}</span>
-    <a href="{% url 'bans-submissions' %}" class="navigation current">{% trans 'Submissions' %}</a>
-  </div>
-
-  <p><span class="label label-info"><i class="font-awesome font-awesome-exclamation-sign"></i> {% trans 'Coming soon...' %}</span></p>
+  <script type="text/javascript">
+    vbm.partials.ready('bans-submissions-page', {
+      browse_url: '{% url 'bans-submissions' %}'
+    });
+  </script>
 {% endblock %}

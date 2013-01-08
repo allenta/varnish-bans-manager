@@ -10,14 +10,17 @@ import re
 from urlparse import urlparse
 from django import forms
 from django.contrib.contenttypes.models import ContentType
+from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.utils.encoding import force_text
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
+from varnish_bans_manager.core.helpers.paginator import Paginator
 from varnish_bans_manager.core.models import BanSubmission, Node, Group, Setting
+from varnish_bans_manager.core.forms.base import FallbackIntegerField, BetterChoiceField, FallbackCharField, SortDirectionField
 
 
-class TargetField(forms.ChoiceField):
+class TargetField(BetterChoiceField):
     default_error_messages = {
         'invalid': _('The selected item is no longer available. Please, refresh the page to update the list and choose another.'),
     }
@@ -37,17 +40,20 @@ class TargetField(forms.ChoiceField):
                 choices.append((self._build_choice_value(group), '%s (%d)' % (group.name, len(nodes_in_current_group))))
                 if expert:
                     choices.extend((self._build_choice_value(node), mark_safe('&nbsp;&nbsp;' + force_text(node.human_name))) for node in nodes_in_current_group)
-        self.choices = choices
+        self.choices = self.choices + choices
 
     def clean(self, value):
         """
         Returns a Cache instance.
         """
         value = super(TargetField, self).clean(value)
-        cache = self._parse_choice_value(value)
-        if cache is None:
-            raise ValidationError(self.error_messages['invalid'])
-        return cache
+        if value:
+            cache = self._parse_choice_value(value)
+            if cache is None:
+                raise ValidationError(self.error_messages['invalid'])
+            return cache
+        else:
+            return None
 
     def _build_choice_value(self, cache):
         return '%d:%d' % (ContentType.objects.get_for_model(cache).id, cache.id)
@@ -63,7 +69,8 @@ class TargetField(forms.ChoiceField):
 
 class SubmitForm(forms.Form):
     target = TargetField(
-        label=_('Target'))
+        label=_('Target'),
+        placeholder=_('select'))
 
     def __init__(self, user, *args, **kwargs):
         super(SubmitForm, self).__init__(*args, **kwargs)
@@ -157,3 +164,74 @@ class ExpertForm(SubmitForm):
         return self.cleaned_data.get('ban_expression')
 
     expression = property(_expression)
+
+
+class SubmissionsForm(forms.Form):
+    ITEMS_PER_PAGE_CHOICES = [10, 20, 50]
+    SORT_CRITERIA_CHOICES = (
+        ('launched_at', _('Submission date')),
+    )
+
+    user = BetterChoiceField(
+        choices=(),
+        required=False,
+        placeholder=_('all submitters'))
+    ban_type = BetterChoiceField(
+        choices=BanSubmission.BAN_TYPE_CHOICES,
+        required=False,
+        placeholder=_('all types'))
+    target = TargetField(
+        required=False,
+        placeholder=_('all targets'))
+    items_per_page = FallbackIntegerField(choices=ITEMS_PER_PAGE_CHOICES)
+    page = FallbackIntegerField(default=1, min_value=1)
+    sort_criteria = FallbackCharField(choices=[id for (id, name) in SORT_CRITERIA_CHOICES])
+    sort_direction = SortDirectionField(default='desc')
+
+    def __init__(self, *args, **kwargs):
+        super(SubmissionsForm, self).__init__(*args, **kwargs)
+        self.fields['target'].load_choices(expert=True)
+        self.fields['user'].choices = \
+            list(self.fields['user'].choices) + \
+            sorted(
+                [(user.id, user.human_name) for user in User.objects.all()],
+                key=lambda item: item[1])
+        self.paginator = None
+
+    def execute(self):
+        self.paginator = Paginator(
+            object_list=self._query_set(),
+            expander=self._expander(),
+            per_page=self.cleaned_data.get('items_per_page'),
+            page=self.cleaned_data.get('page'))
+
+    def _query_set(self):
+        # Sort criteria.
+        order_by_prefix = '-' if self.cleaned_data.get('sort_direction') == 'desc' else ''
+        result = BanSubmission.objects.\
+            order_by(order_by_prefix + self.cleaned_data.get('sort_criteria'))
+        # Basic filters.
+        filters = {}
+        for field in ('user', 'ban_type',):
+            value = self.cleaned_data.get(field)
+            if value:
+                filters[field] = value
+        # Target filter.
+        target = self.cleaned_data.get('target')
+        if target:
+            filters['target_content_type'] = ContentType.objects.get_for_model(target)
+            filters['target_id'] = target.id
+        # Done!
+        if filters:
+            result = result.filter(**filters)
+        return result
+
+    def _expander(self):
+        def fn(ban_submission):
+            items = ban_submission.items.all().order_by('created_at')
+            return {
+                'ban_submission': ban_submission,
+                'items': items,
+                'errors': sum(1 for item in items if not item.success),
+            }
+        return fn
