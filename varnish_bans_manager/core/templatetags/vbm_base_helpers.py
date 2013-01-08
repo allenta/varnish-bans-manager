@@ -55,6 +55,17 @@ def hidden(value, pattern):
 def classify(value):
     return re.sub(r"_", '-', value)
 
+###############################################################################
+
+
+@register.filter(is_safe=True)
+def in_rows(items, num_cols):
+    items = list(items)
+    num_cols = int(num_cols)
+    rows = []
+    for index in range((len(items) + (num_cols - (len(items) % num_cols))) / num_cols):
+        rows.append(items[index:index + num_cols])
+    return rows
 
 ###############################################################################
 

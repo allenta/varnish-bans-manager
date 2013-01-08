@@ -30,6 +30,48 @@ body.user-password-reset-confirm-page {
 }
 
 /******************************************************************************
+ * Caches > Browse.
+ ******************************************************************************/
+
+body.caches-browse-page {
+  .group {
+    @extend .well;
+    .group-sortable-handle {
+      margin-right: 10px;
+    }
+    label {
+      text-transform: uppercase;
+      display: inline-block;
+    }
+    hr {
+      margin: 5px 0 15px;
+    }
+    .nodes {
+      overflow: hidden;
+      .node {
+        @extend .box;
+        background-color: white;
+        padding: 10px;
+        &.add {
+          a {
+            color: #999999;
+            &:hover {
+              color: #333333;
+            }
+            i {
+              text-decoration: none;
+            }
+          }
+        }
+        .node-sortable-handle {
+          color: #999999;
+        }
+      }
+    }
+  }
+}
+
+/******************************************************************************
  * Users > Browse.
  ******************************************************************************/
 

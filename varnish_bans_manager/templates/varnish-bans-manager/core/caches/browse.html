@@ -1,6 +1,7 @@
 {% extends "varnish-bans-manager/core/caches/layout.html" %}
 {% load i18n %}
 {% load url from future %}
+{% load vbm_base_helpers %}
 
 {% block title %}{% trans 'Caches' %} > {% trans 'Browse' %}{% endblock %}
 
@@ -20,5 +21,50 @@
     <a href="{% url 'caches-browse' %}" class="navigation current">{% trans 'Browse' %}</a>
   </div>
 
-  <p><span class="label label-info"><i class="font-awesome font-awesome-exclamation-sign"></i> {% trans 'Coming soon...' %}</span></p>
+  <div class="row-fluid">
+    <div class="widget-box">
+      <div class="widget-title">
+        <span class="icon"><i class="icon-cog"></i></span>
+        <h3>{% trans 'Caches map' %}</h3>
+      </div>
+      <div class="widget-content groups">
+        {% for group, nodes in caches %}
+          <div class="group" {% if group.id %}data-group-id="{{ group.id }}"{% endif %}>
+            {% if group.id %}
+              <i class="font-awesome font-awesome-reorder group-sortable-handle"></i>
+            {% endif %}
+            <label>{{ group.human_name }}</label>
+            <hr />
+            <div class="nodes">
+              {% for row in nodes|in_rows:"2" %}
+                <div class="row-fluid">
+                  {% for node in row %}
+                    <div class="node span6">
+                      <a href="#" class="node-sortable-handle"><i class="font-awesome font-awesome-reorder pull-right"></i></a>
+                      <a href="#">{{ node.human_name }}</a>
+                    </div>
+                  {% endfor %}
+                  {% if forloop.last %}
+                    {% if row|length == 2 %}
+                      </div>
+                      <div class="row-fluid">
+                    {% endif %}
+                    <div class="node span6 add">
+                      <a href="#">
+                        <i class="font-awesome font-awesome-plus pull-right"></i>
+                        {% trans 'Add a node' %}
+                      </a>
+                    </div>
+                  {% endif %}
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        {% endfor %}
+        <div class="pull-right">
+          <button class="btn btn-primary" type="submit"><i class="icon-plus icon-white"></i> Add group</button>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}
