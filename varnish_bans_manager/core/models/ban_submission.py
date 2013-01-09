@@ -6,12 +6,12 @@
 """
 
 from __future__ import absolute_import
-from varnish_bans_manager.core.models.base import Model
 from django.contrib.auth.models import User
 from django.contrib.contenttypes import generic
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
+from varnish_bans_manager.core.models.base import Model
 from varnish_bans_manager.core.models import Node
 
 
