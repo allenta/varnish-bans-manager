@@ -72,7 +72,7 @@
             }
             complete(form, false);
           },
-          type: 'POST',
+          type: ($(this).attr('data-type') || 'POST').toUpperCase(),
           dataType: 'json',
           iframe: false
         };
