@@ -12,7 +12,7 @@
   <div class="page-header">
     <h1>
       {% trans 'Ban lists' %}
-      <small>{% trans 'Check ban lists in caches & groups' %}</small>
+      <small>{% trans 'Check ban lists in nodes & groups' %}</small>
     </h1>
   </div>
 
@@ -22,5 +22,64 @@
     <a href="{% url 'bans-status' %}" class="navigation current">{% trans 'Status' %}</a>
   </div>
 
-  <p><span class="label label-info"><i class="font-awesome font-awesome-exclamation-sign"></i> {% trans 'Coming soon...' %}</span></p>
+  <form class="ajax" data-url="{% url 'bans-status' %}">
+    <div class="collection-filter">
+      <div class="row-fluid">
+        <form action="#">
+          {% form_cgroup form.cache 'span10' %}
+            <div class="controls">
+              {{ form.cache|add_class:"span12" }}
+            </div>
+            {% form_ferrors form.cache 'block' %}
+          {% endform_cgroup %}
+          <div class="control-group span2">
+            <button type="submit" class="btn btn-primary span12"><i class="icon-search icon-white"></i> {% trans 'View' %}</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </form>
+
+  <div class="row-fluid">
+    <div class="widget-box">
+      <div class="widget-title">
+        <span class="icon"><i class="icon-minus-sign"></i></span>
+        <ul class="nav nav-tabs">
+          <li class="active">
+            <a data-toggle="tab" href="#bans-status-shared">Shared</a>
+          </li>
+          <li>
+            <a data-toggle="tab" href="#bans-status-differences">Differences</a>
+          </li>
+        </ul>
+        <div class="pull-right label label-info">
+          production
+        </div>
+      </div>
+      <div class="widget-content tab-content">
+        <div id="bans-status-shared" class="tab-pane active">
+          <div class="alert alert-info">All ban expressions shared by all the selected caching nodes.</div>
+
+          <pre>obj.size < 10MB && obj.http.x-url ~ .*</pre>
+          <pre>obj.size < 10MB && obj.http.x-host == "svn.d2c.dev" && obj.http.x-url == "/dot2code"</pre>
+          <pre>obj.size < 10MB && obj.http.x-host == "domain.com" && obj.http.x-url == "/files/private/core/code/1866/file/406623211.png"</pre>
+          <pre>obj.size < 10MB && obj.http.x-url ~ .*</pre>
+        </div>
+        <div id="bans-status-differences" class="tab-pane">
+          <div class="alert alert-info nomargin">Ban expressions not shared by all the selected caching nodes, broken down by node.</div>
+
+          <h1><code>127.0.0.1:6082</code></h1>
+          <pre>obj.size < 10MB && obj.http.x-host == "svn.d2c.dev" && obj.http.x-url == "/dot2code"</pre>
+          <pre>obj.size < 10MB && obj.http.x-host == "domain.com" && obj.http.x-url == "/files/private/core/code/1866/file/406623211.png"</pre>
+          <pre>obj.size < 10MB && obj.http.x-url ~ .*</pre>
+          <pre>obj.size < 10MB && obj.http.x-host == "domain.com" && obj.http.x-url == "/files/private/core/code/1866/file/406623211.png"</pre>
+
+          <h1><code>127.0.0.1:6083</code></h1>
+          <pre>obj.size < 10MB && obj.http.x-host == "domain.com" && obj.http.x-url == "/files/private/core/code/1866/file/406623211.png"</pre>
+          <pre>obj.size < 10MB && obj.http.x-url ~ .*</pre>
+          <pre>obj.size < 10MB && obj.http.x-host == "svn.d2c.dev" && obj.http.x-url == "/dot2code"</pre>
+        </div>
+      </div>
+    </div>
+  </div>
 {% endblock %}
