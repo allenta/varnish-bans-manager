@@ -36,6 +36,7 @@ body.user-password-reset-confirm-page {
 body.caches-browse-page {
   .group {
     @extend .well;
+    padding-bottom: 0;
     .group-sortable-handle {
       cursor: move;
       margin-right: 10px;
@@ -44,11 +45,9 @@ body.caches-browse-page {
       text-transform: uppercase;
       display: inline-block;
     }
-    hr {
-      margin: 5px 0 15px;
-    }
     .nodes {
       overflow: hidden;
+      margin-top: 10px;
       .node {
         @extend .box;
         background-color: white;
@@ -64,9 +63,13 @@ body.caches-browse-page {
             }
           }
         }
+        &:nth-child(2n + 1) {
+          margin-left: 0;
+        }
         .node-sortable-handle {
           cursor: move;
           color: #999999;
+          float: right;
         }
       }
     }

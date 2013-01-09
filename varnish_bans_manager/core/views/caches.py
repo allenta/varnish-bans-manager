@@ -48,3 +48,16 @@ class GroupsReorder(Base):
                 group.weight = 0
             group.save()
         return HttpResponseAjax()
+
+
+class NodesReorder(Base):
+    def post(self, request):
+        group_id = int(request.POST.get('group_id')) if request.POST.get('group_id') else None
+        node_ids = [int(id) for id in request.POST.getlist('node_ids')]
+        for node in Node.objects.filter(group_id=group_id):
+            try:
+                node.weight = node_ids.index(node.id)
+            except ValueError:
+                node.weight = 0
+            node.save()
+        return HttpResponseAjax()

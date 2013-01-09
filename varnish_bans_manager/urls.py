@@ -86,6 +86,9 @@ caches_patterns = patterns('varnish_bans_manager.core.views.caches',
     url(r'^groups/reorder$',
         core_views.caches.GroupsReorder.as_view(),
         name="caches-groups-reorder"),
+    url(r'^nodes/reorder$',
+        core_views.caches.NodesReorder.as_view(),
+        name="caches-nodes-reorder"),
 )
 
 ###############################################################################

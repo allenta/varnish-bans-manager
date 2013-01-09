@@ -59,18 +59,6 @@ def classify(value):
 
 
 @register.filter(is_safe=True)
-def in_rows(items, num_cols):
-    items = list(items)
-    num_cols = int(num_cols)
-    rows = []
-    for index in range((len(items) + (num_cols - (len(items) % num_cols))) / num_cols):
-        rows.append(items[index:index + num_cols])
-    return rows
-
-###############################################################################
-
-
-@register.filter(is_safe=True)
 def jsonify(value):
     return json.dumps(value)
 

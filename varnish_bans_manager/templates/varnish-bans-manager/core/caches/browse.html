@@ -1,7 +1,6 @@
 {% extends "varnish-bans-manager/core/caches/layout.html" %}
 {% load i18n %}
 {% load url from future %}
-{% load vbm_base_helpers %}
 
 {% block title %}{% trans 'Caches' %} > {% trans 'Browse' %}{% endblock %}
 
@@ -34,30 +33,19 @@
               <i class="font-awesome font-awesome-reorder group-sortable-handle"></i>
             {% endif %}
             <label>{{ group.human_name }}</label>
-            <hr />
             <div class="nodes">
-              {% for row in nodes|in_rows:"2" %}
-                <div class="row-fluid">
-                  {% for node in row %}
-                    <div class="node span6">
-                      <a href="#" class="node-sortable-handle"><i class="font-awesome font-awesome-reorder pull-right"></i></a>
-                      <a href="#">{{ node.human_name }}</a>
-                    </div>
-                  {% endfor %}
-                  {% if forloop.last %}
-                    {% if row|length == 2 %}
-                      </div>
-                      <div class="row-fluid">
-                    {% endif %}
-                    <div class="node span6 add">
-                      <a href="#">
-                        <i class="font-awesome font-awesome-plus pull-right"></i>
-                        {% trans 'Add a node' %}
-                      </a>
-                    </div>
-                  {% endif %}
+              {% for node in nodes %}
+                <div class="node span6" data-node-id="{{ node.id }}">
+                  <i class="font-awesome font-awesome-reorder node-sortable-handle"></i>
+                  <a href="#">{{ node.human_name }}</a>
                 </div>
               {% endfor %}
+              <div class="node span6 add">
+                <a href="#">
+                  <i class="font-awesome font-awesome-plus pull-right"></i>
+                  {% trans 'Add a node' %}
+                </a>
+              </div>
             </div>
           </div>
         {% endfor %}
@@ -71,6 +59,7 @@
   <script type="text/javascript">
     vbm.partials.ready('caches-browse-page', {
       groups_reorder_url: '{% url 'caches-groups-reorder' %}',
+      nodes_reorder_url: '{% url 'caches-nodes-reorder' %}'
     });
   </script>
 {% endblock %}

@@ -40,7 +40,7 @@
     return {
       callback: function(context) {
         // Sortable groups.
-        groups_container = $('.groups', context);
+        var groups_container = $('.groups', context);
         groups_container.sortable({
           axis: 'y',
           containment: groups_container,
@@ -50,13 +50,13 @@
           tolerance: 'pointer',
           stop: function(event, ui) {
             groups_container.sortable('disable');
-            group_ids = jQuery.map(groups_container.find('.group[data-group-id]'), function (group) {
+            var ids = jQuery.map(groups_container.find('.group'), function (group) {
               return $(group).data('group-id');
             });
             vbm.ajax.call({
               url: options.groups_reorder_url,
               type: 'POST',
-              data: { ids: group_ids },
+              data: { ids: ids },
               success: function () {
                 groups_container.sortable('enable');
               },
@@ -65,6 +65,35 @@
               },
             });
           }
+        });
+        // Sortable nodes.
+        groups_container.find('.group').each(function() {
+          var group = $(this);
+          var nodes_container = group.find('.nodes');
+          nodes_container.sortable({
+            containment: nodes_container,
+            handle: '.node-sortable-handle',
+            items: '.node[data-node-id]',
+            opacity: 0.5,
+            tolerance: 'pointer',
+            stop: function(event, ui) {
+              nodes_container.sortable('disable');
+              var node_ids = jQuery.map(nodes_container.find('.node'), function (node) {
+                return $(node).data('node-id');
+              });
+              vbm.ajax.call({
+                url: options.nodes_reorder_url,
+                type: 'POST',
+                data: { group_id: group.data('group-id'), node_ids: node_ids },
+                success: function () {
+                  nodes_container.sortable('enable');
+                },
+                error: function () {
+                  nodes_container.sortable('cancel').sortable('enable');
+                },
+              });
+            }
+          })
         });
       }
     };
