@@ -15,6 +15,13 @@
             <div class="title">{% trans 'Browse' %}</div>
           </a>
         </li>
+        <!-- Add group -->
+        <li class="{% active section "^groups-add$" %}">
+          <a href="{% url 'caches-groups-add' %}" class="navigation">
+            <div class="icon add"></div>
+            <div class="title">{% trans 'Add group' %}</div>
+          </a>
+        </li>
         <!-- More -->
         <li>
           <a href="#" class="btn-more">
