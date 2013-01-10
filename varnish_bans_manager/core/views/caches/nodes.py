@@ -10,9 +10,10 @@ from abc import ABCMeta
 from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404
+from django.utils.translation import ugettext_lazy as _
 from varnish_bans_manager.core.models import Group, Node
 from varnish_bans_manager.core.helpers import commands
-from varnish_bans_manager.core.helpers import DEFAULT_SUCCESS_MESSAGE, DEFAULT_FORM_ERROR_MESSAGE
+from varnish_bans_manager.core.helpers import DEFAULT_SUCCESS_MESSAGE, DEFAULT_ERROR_MESSAGE, DEFAULT_FORM_ERROR_MESSAGE
 from varnish_bans_manager.core.helpers.http import HttpResponseAjax
 from varnish_bans_manager.core.forms.caches.nodes import AddForm, UpdateForm
 from varnish_bans_manager.core.views.caches.base import Base as CachesBase
@@ -77,6 +78,18 @@ class Update(Base):
         return {'template': 'varnish-bans-manager/core/caches/nodes/update.html', 'context': {
             'form': form,
         }}
+
+
+class Delete(Base):
+    def post(self, request, node):
+        try:
+            node.delete()
+            messages.success(request, _('The node has been successfully deleted.'))
+        except:
+            messages.error(request, DEFAULT_ERROR_MESSAGE)
+        return HttpResponseAjax([
+            commands.navigate(reverse('caches-browse')),
+        ], request)
 
 
 class Reorder(Base):

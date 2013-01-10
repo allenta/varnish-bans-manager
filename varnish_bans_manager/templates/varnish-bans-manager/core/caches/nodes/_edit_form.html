@@ -1,4 +1,5 @@
 {% load i18n %}
+{% load url from future %}
 {% load vbm_form_helpers %}
 {% load vbm_widget_helpers %}
 
@@ -70,6 +71,9 @@
   </fieldset>
 
   <div class="form-actions pull-right">
+    {% if form.instance.id %}
+      <a href="#" class="btn btn-danger ajax confirm" data-type="post" data-url="{% url 'caches-nodes-delete' id=form.instance.id %}"><i class="icon-remove icon-white"></i> {% trans 'Delete' %}</a>
+    {% endif %}
     <button class="btn btn-primary" type="submit"><i class="icon-ok icon-white"></i> {% trans 'Save' %}</button>
   </div>
 </form>

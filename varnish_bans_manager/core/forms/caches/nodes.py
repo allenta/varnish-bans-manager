@@ -13,9 +13,10 @@ from varnish_bans_manager.core.models import Group, Node
 
 class EditForm(forms.ModelForm):
     group = forms.ModelChoiceField(
-        Group.objects.all(),
+        Group.objects.all().order_by('weight', 'name'),
         label=_('Group'),
-        empty_label=_('- No group -')
+        empty_label=_('- No group -'),
+        required=False
     )
 
     class Meta:
@@ -32,4 +33,8 @@ class AddForm(EditForm):
 
 
 class UpdateForm(EditForm):
-    pass
+    def save(self, *args, **kwargs):
+        # Reset node weight if it has been assigned to a different group.
+        if 'group' in self.changed_data:
+            self.instance.weight = 0
+        super(UpdateForm, self).save(*args, **kwargs)
