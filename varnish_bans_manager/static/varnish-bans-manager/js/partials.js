@@ -39,6 +39,9 @@
   vbm.partials.registry['caches-browse-page'] = function(options) {
     return {
       callback: function(context) {
+        // Keep track of everything sortable.
+        var sortables = []
+
         // Sortable groups.
         var groups_container = $('.groups', context);
         groups_container.sortable({
@@ -49,7 +52,7 @@
           opacity: 0.5,
           tolerance: 'pointer',
           stop: function(event, ui) {
-            groups_container.sortable('disable');
+            jQuery.each(sortables, function (index, sortable) { sortable.sortable('disable') });
             var ids = jQuery.map(groups_container.find('.group'), function (group) {
               return $(group).data('group-id');
             });
@@ -58,42 +61,51 @@
               type: 'POST',
               data: { ids: ids },
               success: function () {
-                groups_container.sortable('enable');
+                jQuery.each(sortables, function (index, sortable) { sortable.sortable('enable') });
               },
               error: function () {
-                groups_container.sortable('cancel').sortable('enable');
+                groups_container.sortable('cancel');
+                jQuery.each(sortables, function (index, sortable) { sortable.sortable('enable') });
               },
             });
           }
         });
+        sortables.push(groups_container);
+
         // Sortable nodes.
-        groups_container.find('.group').each(function() {
-          var group = $(this);
-          var nodes_container = group.find('.nodes');
+        groups_container.find('.group .nodes').each(function() {
+          var nodes_container = $(this);
           nodes_container.sortable({
-            containment: nodes_container,
+            connectWith: '.nodes',
+            containment: groups_container,
             handle: '.node-sortable-handle',
             items: '.node[data-node-id]',
             opacity: 0.5,
             tolerance: 'pointer',
             stop: function(event, ui) {
-              nodes_container.sortable('disable');
-              var node_ids = jQuery.map(nodes_container.find('.node'), function (node) {
+              jQuery.each(sortables, function (index, sortable) { sortable.sortable('disable') });
+              var node_ids = jQuery.map(ui.item.closest('.nodes').find('.node'), function (node) {
                 return $(node).data('node-id');
               });
               vbm.ajax.call({
                 url: options.nodes_reorder_url,
                 type: 'POST',
-                data: { group_id: group.data('group-id'), node_ids: node_ids },
+                data: {
+                  group_id: ui.item.closest('.group').data('group-id'),
+                  node_ids: node_ids,
+                  target_id: ui.item.data('node-id'),
+                },
                 success: function () {
-                  nodes_container.sortable('enable');
+                  jQuery.each(sortables, function (index, sortable) { sortable.sortable('enable') });
                 },
                 error: function () {
-                  nodes_container.sortable('cancel').sortable('enable');
+                  nodes_container.sortable('cancel');
+                  jQuery.each(sortables, function (index, sortable) { sortable.sortable('enable') });
                 },
               });
             }
-          })
+          });
+          sortables.push(nodes_container);
         });
       }
     };

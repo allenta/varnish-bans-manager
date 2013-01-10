@@ -10,7 +10,7 @@ from abc import ABCMeta
 from django.contrib import messages
 from django.core.urlresolvers import reverse
 from django.shortcuts import get_object_or_404
-from varnish_bans_manager.core.models import Node
+from varnish_bans_manager.core.models import Group, Node
 from varnish_bans_manager.core.helpers import commands
 from varnish_bans_manager.core.helpers import DEFAULT_SUCCESS_MESSAGE, DEFAULT_FORM_ERROR_MESSAGE
 from varnish_bans_manager.core.helpers.http import HttpResponseAjax
@@ -81,12 +81,29 @@ class Update(Base):
 
 class Reorder(Base):
     def post(self, request):
-        group_id = int(request.POST.get('group_id')) if request.POST.get('group_id') else None
         node_ids = [int(id) for id in request.POST.getlist('node_ids')]
-        for node in Node.objects.filter(group_id=group_id):
+        print node_ids
+        # Rearrange all nodes in the group following
+        # the order set by node_ids.
+        if request.POST.get('group_id'):
+            group = Group.objects.get(pk=int(request.POST.get('group_id')))
+            nodes_in_group = group.nodes.all()
+        else:
+            group = None
+            nodes_in_group = Node.objects.filter(group_id__isnull=True)
+        for node in nodes_in_group:
             try:
                 node.weight = node_ids.index(node.id) + 1
             except ValueError:
                 node.weight = 0
             node.save()
+        # Add to the group any other given node that was not yet on it.
+        node_ids_in_group = [node.id for node in nodes_in_group]
+        print node_ids_in_group
+        for node_id in node_ids:
+            if node_id not in node_ids_in_group:
+                node = Node.objects.get(pk=node_id)
+                node.group = group
+                node.weight = node_ids.index(node.id) + 1
+                node.save()
         return HttpResponseAjax()
