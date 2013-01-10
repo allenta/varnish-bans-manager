@@ -44,6 +44,9 @@ body.caches-browse-page {
     label {
       text-transform: uppercase;
       display: inline-block;
+      a {
+        color: #333333;
+      }
     }
     .nodes {
       overflow: hidden;

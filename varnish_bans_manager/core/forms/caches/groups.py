@@ -10,7 +10,15 @@ from django import forms
 from varnish_bans_manager.core.models import Group
 
 
-class AddForm(forms.ModelForm):
-    class Meta():
+class EditForm(forms.ModelForm):
+    class Meta:
         model = Group
         fields = ('name',)
+
+
+class AddForm(EditForm):
+    pass
+
+
+class UpdateForm(EditForm):
+    pass

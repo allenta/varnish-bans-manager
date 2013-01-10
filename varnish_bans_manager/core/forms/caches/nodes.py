@@ -11,17 +11,25 @@ from django.utils.translation import ugettext_lazy as _
 from varnish_bans_manager.core.models import Group, Node
 
 
-class AddForm(forms.ModelForm):
+class EditForm(forms.ModelForm):
     group = forms.ModelChoiceField(
         Group.objects.all(),
         label=_('Group'),
         empty_label=_('- No group -')
     )
 
-    class Meta():
+    class Meta:
         model = Node
         fields = ('name', 'host', 'port', 'secret', 'version', 'group',)
         widgets = {
             'host': forms.TextInput(attrs={'placeholder': 'Host name or IP address'}),
             'port': forms.TextInput(attrs={'placeholder': 'Port number'}),
         }
+
+
+class AddForm(EditForm):
+    pass
+
+
+class UpdateForm(EditForm):
+    pass

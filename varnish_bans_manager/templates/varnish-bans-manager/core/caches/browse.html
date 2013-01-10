@@ -31,13 +31,19 @@
           <div class="group" {% if group.id %}data-group-id="{{ group.id }}"{% endif %}>
             {% if group.id %}
               <i class="font-awesome font-awesome-reorder group-sortable-handle"></i>
+              <label>
+                <a href="{% url 'caches-groups-update' id=group.id %}" class="navigation">
+                  {{ group.human_name }}
+                </a>
+              </label>
+            {% else %}
+              <label>{{ group.human_name }}</label>
             {% endif %}
-            <label>{{ group.human_name }}</label>
             <div class="nodes">
               {% for node in nodes %}
                 <div class="node span6" data-node-id="{{ node.id }}">
                   <i class="font-awesome font-awesome-reorder node-sortable-handle"></i>
-                  <a href="#">{{ node.human_name }}</a>
+                  <a href="{% url 'caches-nodes-update' id=node.id %}" class="navigation">{{ node.human_name }}</a>
                 </div>
               {% endfor %}
               <div class="node span6 add">
