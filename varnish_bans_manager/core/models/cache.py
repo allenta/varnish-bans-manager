@@ -32,6 +32,9 @@ class Cache(Model):
         for item in self.items:
             yield item
 
+    def __unicode__(self):
+        return self.human_name
+
     class Meta:
         app_label = 'core'
         abstract = True

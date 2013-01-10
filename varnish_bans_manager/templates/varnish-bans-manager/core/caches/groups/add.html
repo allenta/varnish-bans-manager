@@ -32,6 +32,7 @@
             <label class="control-label">{{ form.name.field.label }}</label>
             <div class="controls">
               {{ form.name|add_class:"span12" }}
+              <span class="help-block">{{ form.name.field.help_text }}</span>
             </div>
             {% form_ferrors form.name 'block' %}
           {% endform_cgroup %}

@@ -6,9 +6,37 @@
 """
 
 from __future__ import absolute_import
+from django.contrib import messages
+from django.core.urlresolvers import reverse
 from varnish_bans_manager.core.models import Node
+from varnish_bans_manager.core.helpers import commands
+from varnish_bans_manager.core.helpers import DEFAULT_SUCCESS_MESSAGE, DEFAULT_FORM_ERROR_MESSAGE
 from varnish_bans_manager.core.helpers.http import HttpResponseAjax
+from varnish_bans_manager.core.forms.caches.nodes import AddForm
 from varnish_bans_manager.core.views.caches.base import Base
+
+
+class Add(Base):
+    def get(self, request):
+        form = AddForm(initial={'group': request.GET.get('group', None)})
+        return self._render(form)
+
+    def post(self, request):
+        form = AddForm(data=request.POST)
+        if form.is_valid():
+            form.save()
+            messages.success(request, DEFAULT_SUCCESS_MESSAGE)
+            return HttpResponseAjax([
+                commands.navigate(reverse('caches-browse')),
+            ], request)
+        else:
+            messages.error(request, DEFAULT_FORM_ERROR_MESSAGE)
+            return self._render(form)
+
+    def _render(self, form):
+        return {'template': 'varnish-bans-manager/core/caches/nodes/add.html', 'context': {
+            'form': form,
+        }}
 
 
 class Reorder(Base):
@@ -17,7 +45,7 @@ class Reorder(Base):
         node_ids = [int(id) for id in request.POST.getlist('node_ids')]
         for node in Node.objects.filter(group_id=group_id):
             try:
-                node.weight = node_ids.index(node.id)
+                node.weight = node_ids.index(node.id) + 1
             except ValueError:
                 node.weight = 0
             node.save()

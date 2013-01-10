@@ -13,4 +13,4 @@ from varnish_bans_manager.core.models import Group
 class AddForm(forms.ModelForm):
     class Meta():
         model = Group
-        fields = ('name', )
+        fields = ('name',)

@@ -41,7 +41,7 @@
                 </div>
               {% endfor %}
               <div class="node span6 add">
-                <a href="#">
+                <a href="{% url 'caches-nodes-add' %}{% if group.id %}?group={{ group.id }}{% endif %}" class="navigation">
                   <i class="font-awesome font-awesome-plus pull-right"></i>
                   {% trans 'Add a node' %}
                 </a>
