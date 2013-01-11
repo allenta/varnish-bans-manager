@@ -32,6 +32,87 @@
 })(jQuery);
 
 /******************************************************************************
+ * Caches > Browse.
+ ******************************************************************************/
+
+(function ($) {
+  vbm.partials.registry['caches-browse-page'] = function(options) {
+    return {
+      callback: function(context) {
+        // Keep track of everything sortable.
+        var sortables = []
+
+        // Sortable groups.
+        var groups_container = $('.groups', context);
+        groups_container.sortable({
+          axis: 'y',
+          containment: groups_container,
+          handle: '.group-sortable-handle',
+          items: '.group[data-group-id]',
+          opacity: 0.5,
+          tolerance: 'pointer',
+          stop: function(event, ui) {
+            $.each(sortables, function (index, sortable) { sortable.sortable('disable') });
+            var ids = $.map(groups_container.find('.group'), function (group) {
+              return $(group).data('group-id');
+            });
+            vbm.ajax.call({
+              url: options.groups_reorder_url,
+              type: 'POST',
+              data: { ids: ids },
+              success: function () {
+                $.each(sortables, function (index, sortable) { sortable.sortable('enable') });
+              },
+              error: function () {
+                groups_container.sortable('cancel');
+                $.each(sortables, function (index, sortable) { sortable.sortable('enable') });
+              },
+            });
+          }
+        });
+        sortables.push(groups_container);
+
+        // Sortable nodes.
+        groups_container.find('.group .nodes').each(function() {
+          var nodes_container = $(this);
+          nodes_container.sortable({
+            connectWith: '.nodes',
+            containment: groups_container,
+            handle: '.node-sortable-handle',
+            items: '.node[data-node-id]',
+            opacity: 0.5,
+            tolerance: 'pointer',
+            stop: function(event, ui) {
+              $.each(sortables, function (index, sortable) { sortable.sortable('disable') });
+              var node_ids = $.map(ui.item.closest('.nodes').find('.node'), function (node) {
+                return $(node).data('node-id');
+              });
+              vbm.ajax.call({
+                url: options.nodes_reorder_url,
+                type: 'POST',
+                data: {
+                  group_id: ui.item.closest('.group').data('group-id'),
+                  node_ids: node_ids,
+                  target_id: ui.item.data('node-id'),
+                },
+                success: function () {
+                  $.each(sortables, function (index, sortable) { sortable.sortable('enable') });
+                },
+                error: function () {
+                  nodes_container.sortable('cancel');
+                  $.each(sortables, function (index, sortable) { sortable.sortable('enable') });
+                },
+              });
+            }
+          });
+          sortables.push(nodes_container);
+        });
+      }
+    };
+  }
+})(jQuery);
+
+/******************************************************************************
  * Users > Browse.
  ******************************************************************************/
 

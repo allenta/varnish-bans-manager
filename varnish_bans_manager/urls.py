@@ -28,7 +28,9 @@ from varnish_bans_manager.filesystem import views as filesystem_views
 ## '^user/' HANDLERS.
 ###############################################################################
 
-user_patterns = patterns('varnish_bans_manager.core.views.user',
+import varnish_bans_manager.core.views.user
+
+user_patterns = patterns('',
     url(r'^login/$',
         core_views.user.Login.as_view(),
         {'login_required': False},
@@ -57,7 +59,9 @@ user_patterns = patterns('varnish_bans_manager.core.views.user',
 ## '^bans/' HANDLERS.
 ###############################################################################
 
-bans_patterns = patterns('varnish_bans_manager.core.views.bans',
+import varnish_bans_manager.core.views.bans
+
+bans_patterns = patterns('',
     url(r'^basic/$',
         core_views.bans.Basic.as_view(),
         name="bans-basic"),
@@ -79,17 +83,47 @@ bans_patterns = patterns('varnish_bans_manager.core.views.bans',
 ## '^caches/' HANDLERS.
 ###############################################################################
 
-caches_patterns = patterns('varnish_bans_manager.core.views.caches',
+import varnish_bans_manager.core.views.caches
+import varnish_bans_manager.core.views.caches.groups
+import varnish_bans_manager.core.views.caches.nodes
+
+caches_patterns = patterns('',
     url(r'^browse/$',
         core_views.caches.Browse.as_view(),
         name="caches-browse"),
+    url(r'^groups/add/$',
+        core_views.caches.groups.Add.as_view(),
+        name="caches-groups-add"),
+    url(r'^groups/(?P<id>\d+)/update/$',
+        core_views.caches.groups.Update.as_view(),
+        name="caches-groups-update"),
+    url(r'^groups/(?P<id>\d+)/delete/$',
+        core_views.caches.groups.Delete.as_view(),
+        name="caches-groups-delete"),
+    url(r'^groups/reorder/$',
+        core_views.caches.groups.Reorder.as_view(),
+        name="caches-groups-reorder"),
+    url(r'^nodes/add/$',
+        core_views.caches.nodes.Add.as_view(),
+        name="caches-nodes-add"),
+    url(r'^nodes/(?P<id>\d+)/update/$',
+        core_views.caches.nodes.Update.as_view(),
+        name="caches-nodes-update"),
+    url(r'^nodes/(?P<id>\d+)/delete/$',
+        core_views.caches.nodes.Delete.as_view(),
+        name="caches-nodes-delete"),
+    url(r'^nodes/reorder/$',
+        core_views.caches.nodes.Reorder.as_view(),
+        name="caches-nodes-reorder"),
 )
 
 ###############################################################################
 ## '^users/' HANDLERS.
 ###############################################################################
 
-users_patterns = patterns('varnish_bans_manager.core.views.users',
+import varnish_bans_manager.core.views.users
+
+users_patterns = patterns('',
     url(r'^browse/$',
         core_views.users.Browse.as_view(),
         name="users-browse"),
@@ -111,7 +145,9 @@ users_patterns = patterns('varnish_bans_manager.core.views.users',
 ## '^settings/' HANDLERS.
 ###############################################################################
 
-settings_patterns = patterns('varnish_bans_manager.core.views.settings',
+import varnish_bans_manager.core.views.settings
+
+settings_patterns = patterns('',
     url(r'^general/$',
         core_views.settings.General.as_view(),
         name="settings-general"),
@@ -121,22 +157,24 @@ settings_patterns = patterns('varnish_bans_manager.core.views.settings',
 ## '^files/' HANDLERS.
 ###############################################################################
 
-filesystem_patterns = patterns('',
+filesystem_patterns = patterns('varnish_bans_manager.filesystem.views',
     url(r'^public/(?P<path>.*)$',
-        'varnish_bans_manager.filesystem.views.public_download',
+        'public_download',
         {'login_required': False},
         name="filesystem-public-download"),
     url(r'^private/(?P<app_label>[0-9A-Za-z]+)/(?P<model_name>[0-9A-Za-z]+)/(?P<object_id>\d+)/(?P<field_name>[0-9A-Za-z]+)/(?P<filename>.*)$',
-        'varnish_bans_manager.filesystem.views.private_download',
+        'private_download',
         name="filesystem-private-download"),
     url(r'^temporary/(?P<token>[0-9A-Za-z-:_]+)/(?P<filename>.*)$',
-        'varnish_bans_manager.filesystem.views.temporary_download',
+        'temporary_download',
         name="filesystem-temporary-download"),
 )
 
 ###############################################################################
 ## '^task/' HANDLERS.
 ###############################################################################
+
+import varnish_bans_manager.core.views.task
 
 task_patterns = patterns('',
     url(r'^(?P<token>[0-9A-Za-z-:_]+)/progress/$',

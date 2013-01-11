@@ -32,6 +32,9 @@ class Cache(Model):
         for item in self.items:
             yield item
 
+    def __unicode__(self):
+        return self.human_name
+
     class Meta:
         app_label = 'core'
         abstract = True
@@ -85,14 +88,14 @@ class Node(Cache):
 
     name = models.CharField(
         _('Name'),
-        help_text=_('Some name used internally by VBM to refer to the caching node. If not provided, the host and port number of the node will be used.'),
+        help_text=_('Some name used internally by VBM to refer to the cache node. If not provided, the host and port number of the node will be used.'),
         max_length=255,
         null=True,
         blank=True
     )
     host = models.CharField(
         _('Host'),
-        help_text=_('Name or IP address of the server running the Varnish caching node.'),
+        help_text=_('Name or IP address of the server running the Varnish cache node.'),
         max_length=255,
         null=False
     )
@@ -103,14 +106,14 @@ class Node(Cache):
     )
     secret = models.TextField(
         _('Secret'),
-        help_text=_('If the -S secret-file is used in the caching node, provide here the contents of that file in order to authenticate CLI connections opened by VBM.'),
+        help_text=_('If the -S secret-file is used in the cache node, provide here the contents of that file in order to authenticate CLI connections opened by VBM.'),
         max_length=65536,
         null=True,
         blank=True,
     )
     version = models.SmallIntegerField(
         _('Version'),
-        help_text=_('Select the Varnish version running in the caching node.'),
+        help_text=_('Select the Varnish version running in the cache node.'),
         choices=VERSION_CHOICES,
         default=VERSION_30,
         null=False

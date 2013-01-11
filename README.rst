@@ -3,7 +3,7 @@ management of bans in complex `Varnish <https://www.varnish-cache.org>`_
 deployments where non-technical users need to be able to invalidate
 cached contents. Using the web interface you and your users will be able to:
 
-- Define Varnish caching nodes.
+- Define Varnish cache nodes.
 - Organize caches in groups to ease bulk operations.
 - Manage per-node and per-group bans. Basic, advanced and expert modes are available.
 - Restrict who can ban what using user permissions and predefined ban templates.
@@ -157,20 +157,6 @@ created virtualenv active.
    You'll be able to add extra users later using the web UI::
 
     www-data:~$ varnish-bans-manager users --add --administrator --email "bob@domain.com" --password "s3cr3t" --firstname "Bob" --lastname "Brown"
-
-7. Adding/removing caching nodes and groups is not yet supported in the web UI.
-   Meanwhile, you can add your nodes and groups using the command line::
-
-    www-data:~$ varnish-bans-manager groups --add --name "production"
-    www-data:~$ varnish-bans-manager groups --add --name "development"
-
-    www-data:~$ varnish-bans-manager groups --list
-    1, production
-    2, development
-
-    www-data:~$ varnish-bans-manager nodes --add --host "192.168.1.100" --port 6082 --secret-file /etc/varnish/secret --group 1
-    www-data:~$ varnish-bans-manager nodes --add --host "192.168.1.101" --port 6082 --secret-file /etc/varnish/secret --group 1
-    www-data:~$ varnish-bans-manager nodes --add --host "192.168.1.102" --port 6082 --secret-file /etc/varnish/secret --group 1
 
 Final touches
 -------------
