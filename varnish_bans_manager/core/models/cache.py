@@ -6,13 +6,21 @@
 """
 
 from __future__ import absolute_import
+from django.contrib.contenttypes import generic
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from varnish_bans_manager.core.models.base import Model, RevisionField
+from varnish_bans_manager.core.models.ban_submission import BanSubmission
 from varnish_bans_manager.core.helpers.cli import Varnish
 
 
 class Cache(Model):
+    ban_submissions = generic.GenericRelation(
+        BanSubmission,
+        content_type_field='target_content_type',
+        object_id_field='target_id'
+    )
+
     def _human_name(self):
         raise NotImplementedError('Please implement this method')
 

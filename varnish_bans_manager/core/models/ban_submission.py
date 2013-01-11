@@ -12,7 +12,6 @@ from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from varnish_bans_manager.core.models.base import Model
-from varnish_bans_manager.core.models import Node
 
 
 class BanSubmission(Model):
@@ -70,7 +69,7 @@ class BanSubmissionItem(Model):
         null=False
     )
     node = models.ForeignKey(
-        Node,
+        'core.Node',
         related_name='ban_submission_items',
         null=False
     )
