@@ -6,14 +6,13 @@
 """
 
 from __future__ import absolute_import
-from django.utils.translation import ugettext_lazy as _
 from varnish_bans_manager.core.models import Group, Node
 from varnish_bans_manager.core.views.caches.base import Base
 
 
 class Browse(Base):
     def get(self, request):
-        orphan_nodes_group = Group(name=_('Individual cache nodes'), weight=0)
+        orphan_nodes_group = Group(weight=0)
         orphan_nodes = Node.objects.filter(group__isnull=True).order_by('weight', 'created_at')
         caches = [(orphan_nodes_group, orphan_nodes)]
         groups = Group.objects.all().order_by('weight', 'created_at')

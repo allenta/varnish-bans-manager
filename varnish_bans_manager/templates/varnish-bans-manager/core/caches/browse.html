@@ -10,7 +10,7 @@
   <div class="page-header">
     <h1>
       {% trans 'Browse caches & groups' %}
-      <small>{% trans 'Browse & organize caching nodes in groups' %}</small>
+      <small>{% trans 'Browse & organize cache nodes in groups' %}</small>
     </h1>
   </div>
 
@@ -36,8 +36,6 @@
                   {{ group.human_name }}
                 </a>
               </label>
-            {% else %}
-              <label>{{ group.human_name }}</label>
             {% endif %}
             <div class="nodes">
               {% for node in nodes %}
@@ -49,7 +47,7 @@
               <div class="node span6 add">
                 <a href="{% url 'caches-nodes-add' %}{% if group.id %}?group={{ group.id }}{% endif %}" class="navigation">
                   <i class="font-awesome font-awesome-plus pull-right"></i>
-                  {% trans 'Add a node' %}
+                  {% trans 'Add node' %}
                 </a>
               </div>
             </div>

@@ -52,8 +52,8 @@
           opacity: 0.5,
           tolerance: 'pointer',
           stop: function(event, ui) {
-            jQuery.each(sortables, function (index, sortable) { sortable.sortable('disable') });
-            var ids = jQuery.map(groups_container.find('.group'), function (group) {
+            $.each(sortables, function (index, sortable) { sortable.sortable('disable') });
+            var ids = $.map(groups_container.find('.group'), function (group) {
               return $(group).data('group-id');
             });
             vbm.ajax.call({
@@ -61,11 +61,11 @@
               type: 'POST',
               data: { ids: ids },
               success: function () {
-                jQuery.each(sortables, function (index, sortable) { sortable.sortable('enable') });
+                $.each(sortables, function (index, sortable) { sortable.sortable('enable') });
               },
               error: function () {
                 groups_container.sortable('cancel');
-                jQuery.each(sortables, function (index, sortable) { sortable.sortable('enable') });
+                $.each(sortables, function (index, sortable) { sortable.sortable('enable') });
               },
             });
           }
@@ -83,8 +83,8 @@
             opacity: 0.5,
             tolerance: 'pointer',
             stop: function(event, ui) {
-              jQuery.each(sortables, function (index, sortable) { sortable.sortable('disable') });
-              var node_ids = jQuery.map(ui.item.closest('.nodes').find('.node'), function (node) {
+              $.each(sortables, function (index, sortable) { sortable.sortable('disable') });
+              var node_ids = $.map(ui.item.closest('.nodes').find('.node'), function (node) {
                 return $(node).data('node-id');
               });
               vbm.ajax.call({
@@ -96,11 +96,11 @@
                   target_id: ui.item.data('node-id'),
                 },
                 success: function () {
-                  jQuery.each(sortables, function (index, sortable) { sortable.sortable('enable') });
+                  $.each(sortables, function (index, sortable) { sortable.sortable('enable') });
                 },
                 error: function () {
                   nodes_container.sortable('cancel');
-                  jQuery.each(sortables, function (index, sortable) { sortable.sortable('enable') });
+                  $.each(sortables, function (index, sortable) { sortable.sortable('enable') });
                 },
               });
             }
