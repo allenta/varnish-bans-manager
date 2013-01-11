@@ -55,7 +55,6 @@ def hidden(value, pattern):
 def classify(value):
     return re.sub(r"_", '-', value)
 
-
 ###############################################################################
 
 

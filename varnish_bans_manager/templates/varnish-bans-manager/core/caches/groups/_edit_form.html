@@ -1,0 +1,28 @@
+{% load i18n %}
+{% load url from future %}
+{% load vbm_form_helpers %}
+{% load vbm_widget_helpers %}
+
+<form class="ajax offset1 span10" data-url="{{ form_url }}">
+  <fieldset>
+    <legend>{% trans 'Group info' %}</legend>
+    {% form_errors form %}
+    <div class="row-fluid">
+      {% form_cgroup form.name 'span12' %}
+        <label class="control-label">{{ form.name.field.label }}</label>
+        <div class="controls">
+          {{ form.name|add_class:"span12" }}
+          <span class="help-block">{{ form.name.field.help_text }}</span>
+        </div>
+        {% form_ferrors form.name 'block' %}
+      {% endform_cgroup %}
+    </div>
+  </fieldset>
+
+  <div class="form-actions pull-right">
+    {% if form.instance.id %}
+      <a href="#" class="btn btn-danger ajax confirm" data-type="post" data-url="{% url 'caches-groups-delete' id=form.instance.id %}" data-text="{% trans 'The group will be permanently deleted. All its current nodes will remain accessible but they will not be assigned to any group.' %}"><i class="icon-remove icon-white"></i> {% trans 'Delete' %}</a>
+    {% endif %}
+    <button class="btn btn-primary" type="submit"><i class="icon-ok icon-white"></i> {% trans 'Save' %}</button>
+  </div>
+</form>

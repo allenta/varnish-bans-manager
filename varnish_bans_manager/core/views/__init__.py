@@ -12,7 +12,7 @@ from django.core.urlresolvers import reverse
 from django.utils.decorators import method_decorator
 from django.views.generic import View
 from varnish_bans_manager.core.helpers.views import ajaxify
-from varnish_bans_manager.core.views import bans, caches, settings, task, user, users
+from varnish_bans_manager.core.views.bans import Basic
 
 
 class Index(View):
@@ -27,4 +27,4 @@ class Index(View):
 class Home(View):
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        return bans.Basic.as_view()(request)
+        return Basic.as_view()(request)

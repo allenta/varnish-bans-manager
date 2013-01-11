@@ -3,7 +3,7 @@ management of bans in complex `Varnish <https://www.varnish-cache.org>`_
 deployments where non-technical users need to be able to invalidate
 cached contents. Using the web interface you and your users will be able to:
 
-- Define Varnish caching nodes.
+- Define Varnish cache nodes.
 - Organize caches in groups to ease bulk operations.
 - Manage per-node and per-group bans. Basic, advanced and expert modes are available.
 - Restrict who can ban what using user permissions and predefined ban templates.
@@ -142,12 +142,12 @@ created virtualenv active.
    activate the same virtualenv environment in that terminal)::
 
     www-data:~$ source /var/www/varnish-bans-manager/bin/activate
-    www-data:~$ varnish-bans-manager celery worker --beat -s /tmp/varnish-bans-manager-celerybeat-schedule --loglevel=info
+    www-data:~$ varnish-bans-manager celery worker --no-execv --beat -s /tmp/varnish-bans-manager-celerybeat-schedule --loglevel=info
 
    Certain Celery versions include a bug that breaks execution of the previous
    command. If so, you can use the following alternative command::
 
-    www-data:~$ python -mvarnish_bans_manager.runner celery worker --beat -s /tmp/varnish-bans-manager-celerybeat-schedule --loglevel=info
+    www-data:~$ python -mvarnish_bans_manager.runner celery worker --no-execv --beat -s /tmp/varnish-bans-manager-celerybeat-schedule --loglevel=info
 
 5. If not changed in the configuration, VBM's server runs on port 9000.
    If locally installed, you should now be able to test the service by
@@ -157,20 +157,6 @@ created virtualenv active.
    You'll be able to add extra users later using the web UI::
 
     www-data:~$ varnish-bans-manager users --add --administrator --email "bob@domain.com" --password "s3cr3t" --firstname "Bob" --lastname "Brown"
-
-7. Adding/removing caching nodes and groups is not yet supported in the web UI.
-   Meanwhile, you can add your nodes and groups using the command line::
-
-    www-data:~$ varnish-bans-manager groups --add --name "production"
-    www-data:~$ varnish-bans-manager groups --add --name "development"
-
-    www-data:~$ varnish-bans-manager groups --list
-    1, production
-    2, development
-
-    www-data:~$ varnish-bans-manager nodes --add --host "192.168.1.100" --port 6082 --secret-file /etc/varnish/secret --group 1
-    www-data:~$ varnish-bans-manager nodes --add --host "192.168.1.101" --port 6082 --secret-file /etc/varnish/secret --group 1
-    www-data:~$ varnish-bans-manager nodes --add --host "192.168.1.102" --port 6082 --secret-file /etc/varnish/secret --group 1
 
 Final touches
 -------------

@@ -81,7 +81,7 @@ class Command(BaseCommand):
             node.full_clean()
             node.save()
         except ValidationError:
-            raise CommandError('Failed while validating new caching node.')
+            raise CommandError('Failed while validating new cache node.')
 
     def _delete(self, node):
         node.delete()

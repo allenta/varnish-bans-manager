@@ -18,7 +18,7 @@
     options.data = options.data || {};
     options.commands = options.commands || {};
     options.before_send = options.before_send || null;
-    options.sucess = options.success || null;
+    options.success = options.success || null;
     options.error = options.error || null;
 
     // Do it!
@@ -50,8 +50,8 @@
       },
       success: function(response, status, xhr) {
         var wait = vbm.execute_commands(response, options.context, options.commands);
-        if (options.sucess) {
-          options.sucess(response, status, xhr, wait);
+        if (options.success) {
+          options.success(response, status, xhr, wait);
         }
       },
       error: function(xhr, status, error) {

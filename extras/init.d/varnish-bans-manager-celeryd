@@ -30,6 +30,7 @@ CELERYD_DAEMON_OPTS="\
     --loglevel="$CELERYD_LOG_LEVEL" \
     --uid="$CELERYD_USER" \
     --gid="$CELERYD_GROUP" \
+    --no-execv \
     --time-limit=300 \
     --concurrency=2"
 

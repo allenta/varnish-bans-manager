@@ -14,7 +14,7 @@ from django.utils.translation import ugettext_lazy as _
 
 class Varnish(Telnet):
     """
-    Simple CLI to access a Varnish caching node management port. See:
+    Simple CLI to access a Varnish cache node management port. See:
 
         - https://www.varnish-cache.org/trac/wiki/CLI
         - https://www.varnish-cache.org/docs/3.0/tutorial/purging.html
@@ -106,7 +106,7 @@ class Varnish(Telnet):
 
     def _fetch(self, command):
         """
-        Runs a command on a Varnish caching node and return the result.
+        Runs a command on a Varnish cache node and return the result.
         Return value is a tuple of ((status, length), content).
         """
         self.write(('%s\n' % command).encode("utf8"))
