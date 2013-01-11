@@ -159,14 +159,14 @@ settings_patterns = patterns('',
 
 filesystem_patterns = patterns('varnish_bans_manager.filesystem.views',
     url(r'^public/(?P<path>.*)$',
-        'public_download',
+        filesystem_views.PublicDownload.as_view(),
         {'login_required': False},
         name="filesystem-public-download"),
     url(r'^private/(?P<app_label>[0-9A-Za-z]+)/(?P<model_name>[0-9A-Za-z]+)/(?P<object_id>\d+)/(?P<field_name>[0-9A-Za-z]+)/(?P<filename>.*)$',
-        'private_download',
+        filesystem_views.PrivateDownload.as_view(),
         name="filesystem-private-download"),
     url(r'^temporary/(?P<token>[0-9A-Za-z-:_]+)/(?P<filename>.*)$',
-        'temporary_download',
+        filesystem_views.TemporaryDownload.as_view(),
         name="filesystem-temporary-download"),
 )
 
