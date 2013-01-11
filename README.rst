@@ -142,12 +142,12 @@ created virtualenv active.
    activate the same virtualenv environment in that terminal)::
 
     www-data:~$ source /var/www/varnish-bans-manager/bin/activate
-    www-data:~$ varnish-bans-manager celery worker --beat -s /tmp/varnish-bans-manager-celerybeat-schedule --loglevel=info
+    www-data:~$ varnish-bans-manager celery worker --no-execv --beat -s /tmp/varnish-bans-manager-celerybeat-schedule --loglevel=info
 
    Certain Celery versions include a bug that breaks execution of the previous
    command. If so, you can use the following alternative command::
 
-    www-data:~$ python -mvarnish_bans_manager.runner celery worker --beat -s /tmp/varnish-bans-manager-celerybeat-schedule --loglevel=info
+    www-data:~$ python -mvarnish_bans_manager.runner celery worker --no-execv --beat -s /tmp/varnish-bans-manager-celerybeat-schedule --loglevel=info
 
 5. If not changed in the configuration, VBM's server runs on port 9000.
    If locally installed, you should now be able to test the service by
