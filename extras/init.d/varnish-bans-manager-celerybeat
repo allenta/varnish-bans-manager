@@ -29,7 +29,6 @@ CELERYBEAT_DAEMON_OPTS="\
     --schedule="$CELERYBEAT_SCHEDULE" \
     --uid="$CELERYBEAT_USER" \
     --gid="$CELERYBEAT_GROUP" \
-    --no-execv \
     --detach"
 
 ##
