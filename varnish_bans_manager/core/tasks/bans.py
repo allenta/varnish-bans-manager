@@ -77,3 +77,11 @@ class Submit(MonitoredTask):
             ban_submission.items.add(ban_submission_item)
             self.set_progress(index + 1, num_items)
         return ban_submission.id
+
+
+class Status(MonitoredTask):
+    """
+    Fetches & merges lists of bans.
+    """
+    def irun(self, cache):
+        return {}

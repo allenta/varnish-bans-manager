@@ -235,3 +235,12 @@ class SubmissionsForm(forms.Form):
                 'errors': sum(1 for item in items if not item.success),
             }
         return fn
+
+
+class StatusForm(forms.Form):
+    cache = TargetField(
+        placeholder=_('cache'))
+
+    def __init__(self, *args, **kwargs):
+        super(StatusForm, self).__init__(*args, **kwargs)
+        self.fields['cache'].load_choices(expert=True)
