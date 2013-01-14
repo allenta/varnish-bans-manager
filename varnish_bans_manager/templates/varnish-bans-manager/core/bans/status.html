@@ -12,7 +12,7 @@
   <div class="page-header">
     <h1>
       {% trans 'Ban lists' %}
-      <small>{% trans 'Check ban lists in caches & groups' %}</small>
+      <small>{% trans 'Check ban lists in nodes & groups' %}</small>
     </h1>
   </div>
 
@@ -22,5 +22,103 @@
     <a href="{% url 'bans-status' %}" class="navigation current">{% trans 'Status' %}</a>
   </div>
 
-  <p><span class="label label-info"><i class="font-awesome font-awesome-exclamation-sign"></i> {% trans 'Coming soon...' %}</span></p>
+  {% if bans == None %}
+    <div class="alert alert-info">
+      <i class="font-awesome font-awesome-info-sign"></i>
+      {% trans "Select a cache in the list below and click the 'view' button to fetch the list of ban expressions currently active in each node." %}
+    </div>
+  {% endif %}
+
+  <form class="ajax" data-url="{% url 'bans-status' %}">
+    <div class="collection-filter">
+      <div class="row-fluid">
+        <form action="#">
+          {% form_cgroup form.cache 'span10' %}
+            <div class="controls">
+              {{ form.cache|add_class:"span12" }}
+            </div>
+            {% form_ferrors form.cache 'block' %}
+          {% endform_cgroup %}
+          <div class="control-group span2">
+            <button type="submit" class="btn btn-primary span12"><i class="icon-search icon-white"></i> {% trans 'View' %}</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </form>
+
+  {% if bans != None %}
+    <div class="row-fluid">
+      {% if errors %}
+        <div class="alert alert-error">
+          <i class="font-awesome font-awesome-warning-sign"></i>
+          {%trans "Failed to fetch list of bans in some caching nodes. Please, check out the 'errors' tab por details." %}
+        </div>
+      {% endif %}
+
+      <div class="widget-box">
+        <div class="widget-title">
+          <span class="icon"><i class="icon-minus-sign"></i></span>
+          <ul class="nav nav-tabs">
+            <li class="active">
+              <a data-toggle="tab" href="#bans-status-shared">
+                {% if bans.differences %}
+                  {% trans 'Shared' %}
+                {% else %}
+                  {% trans 'Ban expressions' %}
+                {% endif %}
+              </a>
+            </li>
+            {% if bans.differences %}
+              <li>
+                <a data-toggle="tab" href="#bans-status-differences">{% trans 'Differences' %}</a>
+              </li>
+            {% endif %}
+            {% if errors %}
+              <li>
+                <a data-toggle="tab" href="#bans-status-errors">{% trans 'Errors' %}</a>
+              </li>
+            {% endif %}
+          </ul>
+          <div class="pull-right label label-info">
+            {{ cache.human_name }}
+          </div>
+        </div>
+        <div class="widget-content tab-content">
+          <div id="bans-status-shared" class="tab-pane active">
+            {% if bans.differences %}
+              <div class="alert alert-info">
+                <i class="font-awesome font-awesome-info-sign"></i>
+                {%trans 'All ban expressions shared by all the selected caching nodes.' %}
+              </div>
+            {% endif %}
+            {% for expression in bans.shared %}
+              <pre>{{ expression }}</pre>
+            {% endfor %}
+          </div>
+          {% if bans.differences %}
+            <div id="bans-status-differences" class="tab-pane">
+              <div class="alert alert-info nomargin">
+                <i class="font-awesome font-awesome-info-sign"></i>
+                {%trans 'Ban expressions not shared by all the selected caching nodes, broken down by node.' %}
+              </div>
+              {% for human_cache_name, expressions in bans.differences %}
+                <h1><code>{{ human_cache_name }}</code></h1>
+                {% for expression in expressions %}
+                  <pre>{{ expression }}</pre>
+                {% endfor %}
+              {% endfor %}
+            </div>
+          {% endif %}
+          {% if errors %}
+            <div id="bans-status-errors" class="tab-pane">
+              {% for human_cache_name, message in errors %}
+                <p><code>{{ human_cache_name }}</code> {{ message }}</p>
+              {% endfor %}
+            </div>
+          {% endif %}
+        </div>
+      </div>
+    </div>
+  {% endif %}
 {% endblock %}

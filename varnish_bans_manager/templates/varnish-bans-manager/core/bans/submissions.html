@@ -83,7 +83,7 @@
                   {% if perms.core.can_access_users_management %}
                     </a>
                   {% endif %}
-                  · {{ instance.ban_submission.human_ban_type_name }} → {{ instance.ban_submission.target.human_name }} ({{ instance.ban_submission.target.human_class_name }})
+                  · {{ instance.ban_submission.human_ban_type_name }} → {{ instance.ban_submission.target.human_name }} ({{ instance.ban_submission.target.human_class_name }})
                   {% if instance.errors > 0 %}
                     <span class="label label-important"><i class="font-awesome font-awesome-warning-sign"></i> {{ instance.errors }} {% trans 'errors' %}</span>
                   {% endif %}

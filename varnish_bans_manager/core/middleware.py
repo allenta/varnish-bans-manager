@@ -260,7 +260,7 @@ class TimerMiddleware:
         return None
 
     def process_response(self, request, response):
-        # Console & client log.
+        # Console & client log.
         if settings.DEBUG:
             # Calculate total time.
             total_time = time.time() - request.start_time

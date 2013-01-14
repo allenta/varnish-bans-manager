@@ -25,7 +25,7 @@ class TargetField(BetterChoiceField):
         'invalid': _('The selected item is no longer available. Please, refresh the page to update the list and choose another.'),
     }
 
-    def load_choices(self, expert=False):
+    def load_choices(self, initial=None, expert=False):
         """
         Build choices from current available groups and nodes.
         """
@@ -41,6 +41,9 @@ class TargetField(BetterChoiceField):
                 if expert:
                     choices.extend((self._build_choice_value(node), mark_safe('&nbsp;&nbsp;' + force_text(node.human_name))) for node in nodes_in_current_group)
         self.choices = self.choices + choices
+        # Set initial cache item.
+        if initial:
+            self.initial = self._build_choice_value(initial)
 
     def clean(self, value):
         """
@@ -235,3 +238,12 @@ class SubmissionsForm(forms.Form):
                 'errors': sum(1 for item in items if not item.success),
             }
         return fn
+
+
+class StatusForm(forms.Form):
+    cache = TargetField(
+        placeholder=_('cache'))
+
+    def __init__(self, cache=None, *args, **kwargs):
+        super(StatusForm, self).__init__(*args, **kwargs)
+        self.fields['cache'].load_choices(initial=cache, expert=True)

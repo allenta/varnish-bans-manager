@@ -77,3 +77,41 @@ class Submit(MonitoredTask):
             ban_submission.items.add(ban_submission_item)
             self.set_progress(index + 1, num_items)
         return ban_submission.id
+
+
+class Status(MonitoredTask):
+    """
+    Fetches & merges lists of bans.
+    """
+    def irun(self, cache):
+        # Init result.
+        result = {
+            'cache': cache,
+            'bans': {
+                'shared': [],
+                'differences': [],
+            },
+            'errors': [],
+        }
+
+        # Fetch expressions.
+        bans = []
+        num_items = len(cache.items)
+        for index, node in enumerate(cache.items):
+            try:
+                bans.append((node, set(node.ban_list())))
+            except Exception as e:
+                result['errors'].append((node.human_name, str(e)))
+            self.set_progress(index + 1, num_items)
+
+        # Merge expressions.
+        if bans:
+            shared = set.intersection(*[expressions for (node, expressions) in bans])
+            for (node, expressions) in bans:
+                difference = expressions.difference(shared)
+                if difference:
+                    result['bans']['differences'].append((node.human_name, sorted(list(difference))))
+            result['bans']['shared'] = sorted(list(shared))
+
+        # Done!
+        return result

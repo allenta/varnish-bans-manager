@@ -10,6 +10,7 @@ import re
 from telnetlib import Telnet
 from hashlib import sha256
 from django.utils.translation import ugettext_lazy as _
+from django.utils.encoding import force_unicode
 
 
 class Varnish(Telnet):
@@ -128,4 +129,5 @@ class Varnish(Telnet):
             })
 
     class Exception(Exception):
-        pass
+        def __init__(self, message, *args, **kwargs):
+            super(Varnish.Exception, self).__init__(force_unicode(message), *args, **kwargs)
