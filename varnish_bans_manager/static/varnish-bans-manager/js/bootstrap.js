@@ -166,11 +166,11 @@ vbm.colors = vbm.colors || {
 
   vbm.is_outdated_browser = function() {
     return (
-      (vbm.client.browser.ie >= 1 && vbm.client.browser.ie <= 8) ||
-      (vbm.client.browser.firefox >= 1 && vbm.client.browser.firefox <= 10) ||
-      (vbm.client.browser.safari >= 1 && vbm.client.browser.safari <= 5) ||
-      (vbm.client.browser.opera >= 1 && vbm.client.browser.opera <= 10) ||
-      (vbm.client.browser.chrome >= 1 && vbm.client.browser.chrome <= 10)
+      (vbm.client.browser.ie >= 1 && vbm.client.browser.ie <= 8) ||
+      (vbm.client.browser.firefox >= 1 && vbm.client.browser.firefox <= 10) ||
+      (vbm.client.browser.safari >= 1 && vbm.client.browser.safari <= 5) ||
+      (vbm.client.browser.opera >= 1 && vbm.client.browser.opera <= 10) ||
+      (vbm.client.browser.chrome >= 1 && vbm.client.browser.chrome <= 10)
     );
   };
 
