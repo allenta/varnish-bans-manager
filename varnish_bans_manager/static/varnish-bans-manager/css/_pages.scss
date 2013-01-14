@@ -30,6 +30,56 @@ body.user-password-reset-confirm-page {
 }
 
 /******************************************************************************
+ * Caches > Browse.
+ ******************************************************************************/
+
+body.caches-browse-page {
+  .group {
+    @extend .well;
+    padding-bottom: 0;
+    .group-sortable-handle {
+      cursor: move;
+      margin-right: 10px;
+    }
+    label {
+      text-transform: uppercase;
+      display: inline-block;
+      a {
+        color: #333333;
+      }
+    }
+    .nodes {
+      overflow: hidden;
+      margin-top: 10px;
+      .node {
+        @extend .box;
+        background-color: white;
+        padding: 10px;
+        &.add {
+          a {
+            color: #999999;
+            &:hover {
+              color: #333333;
+            }
+            i {
+              text-decoration: none;
+            }
+          }
+        }
+        &:nth-child(2n + 1) {
+          margin-left: 0;
+        }
+        .node-sortable-handle {
+          cursor: move;
+          color: #999999;
+          float: right;
+        }
+      }
+    }
+  }
+}
+
+/******************************************************************************
  * Users > Browse.
  ******************************************************************************/
 

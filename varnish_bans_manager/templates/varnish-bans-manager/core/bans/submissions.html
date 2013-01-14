@@ -70,7 +70,7 @@
           {% for instance in form.paginator.current_page.object_list %}
             <tr>
               <td>
-                <p><pre>{{ instance.ban_submission.expression }}</pre></p>
+                <pre>{{ instance.ban_submission.expression }}</pre>
                 <div class="description pull-right">
                   <span class="tip" title="{{ instance.ban_submission.launched_at|date:"DATETIME_FORMAT" }}"><i class="font-awesome font-awesome-time"></i> {% trans 'Submitted' %} {{ instance.ban_submission.launched_at|naturaltime }}</span>
                 </div>

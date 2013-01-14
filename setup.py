@@ -18,7 +18,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='varnish-bans-manager',
-    version='0.2.3',
+    version='0.3',
     author='dot2code Technologies',
     author_email='info@dot2code.com',
     packages=find_packages(),
@@ -40,8 +40,7 @@ setup(
     ],
     install_requires=[
         "django >= 1.4.3",
-        "django-celery == 3.0.11",  # Blocked while solving https://github.com/celery/celery/issues/1150
-        "celery == 3.0.12",  # Blocked while solving https://github.com/celery/celery/issues/1150
+        "django-celery >= 3.0.11",
         "django-mediagenerator >= 1.11",
         "django-templated-email >= 0.4.7",
         "gunicorn >= 0.14.6",

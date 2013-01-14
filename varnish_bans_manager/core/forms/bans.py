@@ -244,6 +244,3 @@ class StatusForm(forms.Form):
     def __init__(self, *args, **kwargs):
         super(StatusForm, self).__init__(*args, **kwargs)
         self.fields['cache'].load_choices(expert=True)
-
-    def execute(self):
-        pass

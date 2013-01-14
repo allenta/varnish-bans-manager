@@ -1,3 +1,9 @@
+v0.3, 11/01/2013
+----------------
+
+  - Cache nodes and groups management from the UI.
+  - Unblocked Celery version (https://github.com/celery/celery/issues/1150#issuecomment-12102949).
+
 v0.2.3, 08/01/2013
 ------------------
 

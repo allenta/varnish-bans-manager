@@ -10,7 +10,7 @@
   <div class="page-header">
     <h1>
       {% trans 'Browse caches & groups' %}
-      <small>{% trans 'Browse & organize caching nodes in groups' %}</small>
+      <small>{% trans 'Browse & organize cache nodes in groups' %}</small>
     </h1>
   </div>
 
@@ -20,5 +20,52 @@
     <a href="{% url 'caches-browse' %}" class="navigation current">{% trans 'Browse' %}</a>
   </div>
 
-  <p><span class="label label-info"><i class="font-awesome font-awesome-exclamation-sign"></i> {% trans 'Coming soon...' %}</span></p>
+  <div class="row-fluid">
+    <div class="widget-box">
+      <div class="widget-title">
+        <span class="icon"><i class="icon-cog"></i></span>
+        <h3>{% trans 'Caches map' %}</h3>
+      </div>
+      <div class="widget-content groups">
+        {% for group, nodes in caches %}
+          <div class="group" {% if group.id %}data-group-id="{{ group.id }}"{% endif %}>
+            {% if group.id %}
+              <i class="font-awesome font-awesome-reorder group-sortable-handle"></i>
+              <label>
+                <a href="{% url 'caches-groups-update' id=group.id %}" class="navigation">
+                  {{ group.human_name }}
+                </a>
+              </label>
+            {% endif %}
+            <div class="nodes">
+              {% for node in nodes %}
+                <div class="node span6" data-node-id="{{ node.id }}">
+                  <i class="font-awesome font-awesome-reorder node-sortable-handle"></i>
+                  <a href="{% url 'caches-nodes-update' id=node.id %}" class="navigation">{{ node.human_name }}</a>
+                </div>
+              {% endfor %}
+              <div class="node span6 add">
+                <a href="{% url 'caches-nodes-add' %}{% if group.id %}?group={{ group.id }}{% endif %}" class="navigation">
+                  <i class="font-awesome font-awesome-plus pull-right"></i>
+                  {% trans 'Add node' %}
+                </a>
+              </div>
+            </div>
+          </div>
+        {% endfor %}
+        <div class="pull-right">
+          <a href="{% url 'caches-groups-add' %}" class="navigation">
+            <button class="btn btn-primary" type="submit"><i class="icon-plus icon-white"></i> Add group</button>
+          </a>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    vbm.partials.ready('caches-browse-page', {
+      groups_reorder_url: '{% url 'caches-groups-reorder' %}',
+      nodes_reorder_url: '{% url 'caches-nodes-reorder' %}'
+    });
+  </script>
 {% endblock %}
