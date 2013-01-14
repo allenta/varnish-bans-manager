@@ -49,6 +49,13 @@
 
   {% if bans != None %}
     <div class="row-fluid">
+      {% if errors %}
+        <div class="alert alert-error">
+          <i class="font-awesome font-awesome-warning-sign"></i>
+          {%trans "Failed to fetch list of bans in some caching nodes. Please, check out the 'errors' tab por details." %}
+        </div>
+      {% endif %}
+
       <div class="widget-box">
         <div class="widget-title">
           <span class="icon"><i class="icon-minus-sign"></i></span>
@@ -58,13 +65,18 @@
                 {% if bans.differences %}
                   {% trans 'Shared' %}
                 {% else %}
-                  {% trans 'All ban expressions' %}
+                  {% trans 'Ban expressions' %}
                 {% endif %}
               </a>
             </li>
             {% if bans.differences %}
               <li>
                 <a data-toggle="tab" href="#bans-status-differences">{% trans 'Differences' %}</a>
+              </li>
+            {% endif %}
+            {% if errors %}
+              <li>
+                <a data-toggle="tab" href="#bans-status-errors">{% trans 'Errors' %}</a>
               </li>
             {% endif %}
           </ul>
@@ -90,11 +102,18 @@
                 <i class="font-awesome font-awesome-info-sign"></i>
                 {%trans 'Ban expressions not shared by all the selected caching nodes, broken down by node.' %}
               </div>
-              {% for node, expressions in bans.differences %}
-                <h1><code>{{ node.human_name }}</code></h1>
+              {% for human_cache_name, expressions in bans.differences %}
+                <h1><code>{{ human_cache_name }}</code></h1>
                 {% for expression in expressions %}
                   <pre>{{ expression }}</pre>
                 {% endfor %}
+              {% endfor %}
+            </div>
+          {% endif %}
+          {% if errors %}
+            <div id="bans-status-errors" class="tab-pane">
+              {% for human_cache_name, message in errors %}
+                <p><code>{{ human_cache_name }}</code> {{ message }}</p>
               {% endfor %}
             </div>
           {% endif %}

@@ -174,8 +174,6 @@ class Status(Base):
     def _render(self, form):
         return {'template': 'varnish-bans-manager/core/bans/status.html', 'context': {
             'form': form,
-            'cache': None,
-            'bans': None,
         }}
 
     @classmethod
@@ -186,6 +184,7 @@ class Status(Base):
                     'form': StatusForm(cache=result['cache']),
                     'cache': result['cache'],
                     'bans': result['bans'],
+                    'errors': result['errors'],
                 },
                 context_instance=RequestContext(request)))
         ]

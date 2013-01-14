@@ -84,22 +84,34 @@ class Status(MonitoredTask):
     Fetches & merges lists of bans.
     """
     def irun(self, cache):
-        return {
+        # Init result.
+        result = {
             'cache': cache,
             'bans': {
-                'shared': [
-                    'obj.size < 10MB && obj.http.x-host == "svn.d2c.dev" && obj.http.x-url == "/dot2code"',
-                    'obj.size < 10MB && obj.http.x-url ~ .*',
-                ],
-                'differences': [
-                    (cache, [
-                        'obj.size < 10MB && obj.http.x-url ~ .*',
-                    ]),
-                    (cache, [
-                        'obj.size < 10MB && obj.http.x-url ~ .*',
-                        'obj.size < 10MB && obj.http.x-host == "svn.d2c.dev" && obj.http.x-url == "/dot2code"',
-                        'obj.size < 10MB && obj.http.x-url ~ .*',
-                    ]),
-                ]
-            }
+                'shared': [],
+                'differences': [],
+            },
+            'errors': [],
         }
+
+        # Fetch expressions.
+        bans = []
+        num_items = len(cache.items)
+        for index, node in enumerate(cache.items):
+            try:
+                bans.append((node, set(node.ban_list())))
+            except Exception as e:
+                result['errors'].append((node.human_name, str(e)))
+            self.set_progress(index + 1, num_items)
+
+        # Merge expressions.
+        if bans:
+            shared = set.intersection(*[expressions for (node, expressions) in bans])
+            for (node, expressions) in bans:
+                difference = expressions.difference(shared)
+                if difference:
+                    result['bans']['differences'].append((node.human_name, sorted(list(difference))))
+            result['bans']['shared'] = sorted(list(shared))
+
+        # Done!
+        return result
