@@ -84,4 +84,22 @@ class Status(MonitoredTask):
     Fetches & merges lists of bans.
     """
     def irun(self, cache):
-        return {}
+        return {
+            'cache': cache,
+            'bans': {
+                'shared': [
+                    'obj.size < 10MB && obj.http.x-host == "svn.d2c.dev" && obj.http.x-url == "/dot2code"',
+                    'obj.size < 10MB && obj.http.x-url ~ .*',
+                ],
+                'differences': [
+                    (cache, [
+                        'obj.size < 10MB && obj.http.x-url ~ .*',
+                    ]),
+                    (cache, [
+                        'obj.size < 10MB && obj.http.x-url ~ .*',
+                        'obj.size < 10MB && obj.http.x-host == "svn.d2c.dev" && obj.http.x-url == "/dot2code"',
+                        'obj.size < 10MB && obj.http.x-url ~ .*',
+                    ]),
+                ]
+            }
+        }

@@ -161,6 +161,7 @@ class Status(Base):
                 form.cleaned_data.get('cache'),
                 callback={
                     'fn': ('varnish_bans_manager.core.views.bans.Status', 'callback'),
+                    'context': {},
                 }
             )
             return HttpResponseAjax([
@@ -173,6 +174,7 @@ class Status(Base):
     def _render(self, form):
         return {'template': 'varnish-bans-manager/core/bans/status.html', 'context': {
             'form': form,
+            'cache': None,
             'bans': None,
         }}
 
@@ -181,8 +183,9 @@ class Status(Base):
         return [
             commands.set_content(render_to_string(
                 'varnish-bans-manager/core/bans/status.html', {
-                    'form': StatusForm(),
-                    'bans': [],
+                    'form': StatusForm(cache=result['cache']),
+                    'cache': result['cache'],
+                    'bans': result['bans'],
                 },
                 context_instance=RequestContext(request)))
         ]

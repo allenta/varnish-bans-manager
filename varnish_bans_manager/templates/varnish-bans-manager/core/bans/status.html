@@ -22,6 +22,13 @@
     <a href="{% url 'bans-status' %}" class="navigation current">{% trans 'Status' %}</a>
   </div>
 
+  {% if bans == None %}
+    <div class="alert alert-info">
+      <i class="font-awesome font-awesome-info-sign"></i>
+      {% trans "Select a cache in the list below and click the 'view' button to fetch the list of ban expressions currently active in each node." %}
+    </div>
+  {% endif %}
+
   <form class="ajax" data-url="{% url 'bans-status' %}">
     <div class="collection-filter">
       <div class="row-fluid">
@@ -40,46 +47,59 @@
     </div>
   </form>
 
-  <div class="row-fluid">
-    <div class="widget-box">
-      <div class="widget-title">
-        <span class="icon"><i class="icon-minus-sign"></i></span>
-        <ul class="nav nav-tabs">
-          <li class="active">
-            <a data-toggle="tab" href="#bans-status-shared">Shared</a>
-          </li>
-          <li>
-            <a data-toggle="tab" href="#bans-status-differences">Differences</a>
-          </li>
-        </ul>
-        <div class="pull-right label label-info">
-          production
+  {% if bans != None %}
+    <div class="row-fluid">
+      <div class="widget-box">
+        <div class="widget-title">
+          <span class="icon"><i class="icon-minus-sign"></i></span>
+          <ul class="nav nav-tabs">
+            <li class="active">
+              <a data-toggle="tab" href="#bans-status-shared">
+                {% if bans.differences %}
+                  {% trans 'Shared' %}
+                {% else %}
+                  {% trans 'All ban expressions' %}
+                {% endif %}
+              </a>
+            </li>
+            {% if bans.differences %}
+              <li>
+                <a data-toggle="tab" href="#bans-status-differences">{% trans 'Differences' %}</a>
+              </li>
+            {% endif %}
+          </ul>
+          <div class="pull-right label label-info">
+            {{ cache.human_name }}
+          </div>
         </div>
-      </div>
-      <div class="widget-content tab-content">
-        <div id="bans-status-shared" class="tab-pane active">
-          <div class="alert alert-info">All ban expressions shared by all the selected caching nodes.</div>
-
-          <pre>obj.size < 10MB && obj.http.x-url ~ .*</pre>
-          <pre>obj.size < 10MB && obj.http.x-host == "svn.d2c.dev" && obj.http.x-url == "/dot2code"</pre>
-          <pre>obj.size < 10MB && obj.http.x-host == "domain.com" && obj.http.x-url == "/files/private/core/code/1866/file/406623211.png"</pre>
-          <pre>obj.size < 10MB && obj.http.x-url ~ .*</pre>
-        </div>
-        <div id="bans-status-differences" class="tab-pane">
-          <div class="alert alert-info nomargin">Ban expressions not shared by all the selected caching nodes, broken down by node.</div>
-
-          <h1><code>127.0.0.1:6082</code></h1>
-          <pre>obj.size < 10MB && obj.http.x-host == "svn.d2c.dev" && obj.http.x-url == "/dot2code"</pre>
-          <pre>obj.size < 10MB && obj.http.x-host == "domain.com" && obj.http.x-url == "/files/private/core/code/1866/file/406623211.png"</pre>
-          <pre>obj.size < 10MB && obj.http.x-url ~ .*</pre>
-          <pre>obj.size < 10MB && obj.http.x-host == "domain.com" && obj.http.x-url == "/files/private/core/code/1866/file/406623211.png"</pre>
-
-          <h1><code>127.0.0.1:6083</code></h1>
-          <pre>obj.size < 10MB && obj.http.x-host == "domain.com" && obj.http.x-url == "/files/private/core/code/1866/file/406623211.png"</pre>
-          <pre>obj.size < 10MB && obj.http.x-url ~ .*</pre>
-          <pre>obj.size < 10MB && obj.http.x-host == "svn.d2c.dev" && obj.http.x-url == "/dot2code"</pre>
+        <div class="widget-content tab-content">
+          <div id="bans-status-shared" class="tab-pane active">
+            {% if bans.differences %}
+              <div class="alert alert-info">
+                <i class="font-awesome font-awesome-info-sign"></i>
+                {%trans 'All ban expressions shared by all the selected caching nodes.' %}
+              </div>
+            {% endif %}
+            {% for expression in bans.shared %}
+              <pre>{{ expression }}</pre>
+            {% endfor %}
+          </div>
+          {% if bans.differences %}
+            <div id="bans-status-differences" class="tab-pane">
+              <div class="alert alert-info nomargin">
+                <i class="font-awesome font-awesome-info-sign"></i>
+                {%trans 'Ban expressions not shared by all the selected caching nodes, broken down by node.' %}
+              </div>
+              {% for node, expressions in bans.differences %}
+                <h1><code>{{ node.human_name }}</code></h1>
+                {% for expression in expressions %}
+                  <pre>{{ expression }}</pre>
+                {% endfor %}
+              {% endfor %}
+            </div>
+          {% endif %}
         </div>
       </div>
     </div>
-  </div>
+  {% endif %}
 {% endblock %}
