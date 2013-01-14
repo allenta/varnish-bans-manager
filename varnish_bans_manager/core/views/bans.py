@@ -13,6 +13,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.core.urlresolvers import reverse
 from django.http import HttpResponseForbidden
 from django.template import RequestContext
+from django.template.loader import render_to_string
 from django.utils.decorators import method_decorator
 from django.utils.translation import ungettext, ugettext as _
 from django.views.generic import View
@@ -23,6 +24,7 @@ from varnish_bans_manager.core.helpers.http import HttpResponseAjax
 from varnish_bans_manager.core.forms.bans import BasicForm, AdvancedForm, ExpertForm, SubmissionsForm, StatusForm
 from varnish_bans_manager.core.models import BanSubmission
 from varnish_bans_manager.core.tasks.bans import Submit as SubmitTask
+from varnish_bans_manager.core.tasks.bans import Status as StatusTask
 
 
 class Base(View):
@@ -153,7 +155,17 @@ class Status(Base):
     def post(self, request):
         form = StatusForm(data=request.POST)
         if form.is_valid():
-            pass
+            token = tasks.enqueue(
+                request,
+                StatusTask(),
+                form.cleaned_data.get('cache'),
+                callback={
+                    'fn': ('varnish_bans_manager.core.views.bans.Status', 'callback'),
+                }
+            )
+            return HttpResponseAjax([
+                commands.show_progress(token, title=_('Fetching lists of bans...')),
+            ], request)
         else:
             messages.error(request, DEFAULT_FORM_ERROR_MESSAGE)
             return self._render(form=form)
@@ -161,4 +173,16 @@ class Status(Base):
     def _render(self, form):
         return {'template': 'varnish-bans-manager/core/bans/status.html', 'context': {
             'form': form,
+            'bans': None,
         }}
+
+    @classmethod
+    def callback(cls, request, result, context):
+        return [
+            commands.set_content(render_to_string(
+                'varnish-bans-manager/core/bans/status.html', {
+                    'form': StatusForm(),
+                    'bans': [],
+                },
+                context_instance=RequestContext(request)))
+        ]
