@@ -579,7 +579,7 @@ msgstr[1] ""
 
 #: core/views/users.py:186
 msgid "Removing user..."
-msgstr ""
+msgstr "Borrando usuario..."
 
 #: core/views/users.py:192
 msgid "The user has been successfully deleted."
