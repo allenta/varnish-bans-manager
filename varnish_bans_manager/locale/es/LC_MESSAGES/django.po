@@ -544,7 +544,7 @@ msgstr "Generando CSV..."
 #, python-format
 msgid "%(count)d user has been deleted."
 msgid_plural "%(count)d users have been deleted."
-msgstr[0] "Se han borrado %(count)d usuario."
+msgstr[0] "Se ha borrado %(count)d usuario."
 msgstr[1] "Se han borrado %(count)d usuarios."
 
 #: core/views/users.py:100
@@ -561,20 +561,23 @@ msgid ""
 "in your computer. If not, you can download it manually by simply clicking <a "
 "href=\"%(url)s\" target=\"_blank\">this link</a>."
 msgstr ""
+"Ahora deberías ver un popup preguntándote dónde guardar el archivo exportado "
+"en tu ordenador. En caso contrario, puedes descargar manualmente el archivo "
+"simplemente haciendo clic en href=\"%(url)s\" target=\"_blank\">este enlace</a>."
 
 #: core/views/users.py:114
 #, python-format
 msgid "%(count)d user has been exported."
 msgid_plural "%(count)d users have been exported."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Se ha exportado %(count)d usuario."
+msgstr[1] "Se han exportado %(count)d usuarios."
 
 #: core/views/users.py:119
 #, python-format
 msgid "Failed to export %(count)d user."
 msgid_plural "Failed to export %(count)d users."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "No se ha podido exportar %(count)d usuario."
+msgstr[1] "No se han podido exportar %(count)d usuarios."
 
 #: core/views/users.py:186
 msgid "Removing user..."
@@ -582,54 +585,55 @@ msgstr "Borrando usuario..."
 
 #: core/views/users.py:192
 msgid "The user has been deleted."
-msgstr ""
+msgstr "El usuario ha sido borrado."
 
 #: core/views/caches/groups.py:87
 msgid ""
 "The group has been deleted. Its nodes are no longer assigned to "
 "any group."
 msgstr ""
+"El grupo ha sido borrado. Sus nodos ya no están asignados a nigún grupo."
 
 #: core/views/caches/nodes.py:87
 msgid "The node has been deleted."
-msgstr ""
+msgstr "El nodo ha sido borrado."
 
 #: filesystem/models.py:54
 msgid "File type not supported."
-msgstr ""
+msgstr "Formato de archivo no soportado."
 
 #: filesystem/models.py:56
 #, python-format
 msgid "Please keep filesize under %(max)s. Current filesize %(current)s."
-msgstr ""
+msgstr "Por favor mantén el tamaño del archivo bajo %(max)s. El tamaño actual es %(current)s."
 
 #: filesystem/models.py:61
 msgid "Invalid file."
-msgstr ""
+msgstr "Archivo no válido."
 
 #: templates/403.html:5
 msgid "You are not authorized to see the the requested page."
-msgstr ""
+msgstr "No estás autorizado a ver la página solicitada."
 
 #: templates/403.html:6
 msgid "Please, contact us if you have any questions."
-msgstr ""
+msgstr "Por favor, contáctanos si tienes alguna duda."
 
 #: templates/404.html:5
 msgid "The page you were looking for doesn't exist."
-msgstr ""
+msgstr "La página que estás buscando no existe."
 
 #: templates/404.html:6
 msgid "You may have mistyped the address or the page may have been moved."
-msgstr ""
+msgstr "Puede que hayas tecleado la dirección incorrectamente o tal vez la página haya sido movida."
 
 #: templates/500.html:5
 msgid "Your request couldn't be processed."
-msgstr ""
+msgstr "Tu petición no ha podido ser procesada."
 
 #: templates/500.html:6
 msgid "Please, try again later."
-msgstr ""
+msgstr "Por favor, vuele a intentarlo más tarde."
 
 #: templates/authenticated.html:18
 #: templates/varnish-bans-manager/core/bans/advanced.html:8
@@ -667,13 +671,13 @@ msgstr "Enviar ban"
 #: templates/varnish-bans-manager/core/bans/basic.html:16
 #: templates/varnish-bans-manager/core/bans/expert.html:15
 msgid "Invalidate contents currently in the cache"
-msgstr ""
+msgstr "Invalidar contenidos actualmente en la caché"
 
 #: templates/varnish-bans-manager/core/bans/advanced.html:30
 #: templates/varnish-bans-manager/core/bans/basic.html:30
 #: templates/varnish-bans-manager/core/bans/expert.html:29
 msgid "Set and submit your ban"
-msgstr ""
+msgstr "Establece y envía tu ban"
 
 #: templates/varnish-bans-manager/core/bans/advanced.html:54
 #: templates/varnish-bans-manager/core/bans/basic.html:54
@@ -683,7 +687,7 @@ msgstr "Enviar"
 
 #: templates/varnish-bans-manager/core/bans/advanced.html:61
 msgid "Regular expressions"
-msgstr ""
+msgstr "Expresiones regulares"
 
 #: templates/varnish-bans-manager/core/bans/advanced.html:65
 #, python-format
