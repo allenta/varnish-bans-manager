@@ -53,7 +53,10 @@ def _clean_content_types_and_max_upload_size(self, data):
         if self.content_types and not file.content_type in self.content_types:
             raise forms.ValidationError(_('File type not supported.'))
         elif self.max_upload_size and file._size > self.max_upload_size:
-            raise forms.ValidationError(_('Please keep filesize under %s. Current filesize %s.') % (filesizeformat(self.max_upload_size), filesizeformat(file._size)))
+            raise forms.ValidationError(_('Please keep filesize under %(max)s. Current filesize %(current)s.') % {
+                'max': filesizeformat(self.max_upload_size),
+                'current': filesizeformat(file._size),
+            })
     except IOError:
         raise forms.ValidationError(_('Invalid file.'))
     except AttributeError:
