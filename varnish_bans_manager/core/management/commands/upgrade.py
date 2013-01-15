@@ -22,6 +22,8 @@ class Command(NoArgsCommand):
     def _syncdb(self):
         # Synchronize DB.
         call_command('syncdb')
+        # And apply all pending migrations.
+        call_command('migrate')
 
     def _createcachetable(self):
         # Check cache is enabled in settings.
