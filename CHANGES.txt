@@ -1,3 +1,8 @@
+v0.4.1, 15/01/2013
+------------------
+
+  - Migrations support using South (http://south.aeracode.org/).
+
 v0.4, 14/01/2013
 ----------------
 

@@ -18,7 +18,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='varnish-bans-manager',
-    version='0.4',
+    version='0.4.1',
     author='dot2code Technologies',
     author_email='info@dot2code.com',
     packages=find_packages(),
