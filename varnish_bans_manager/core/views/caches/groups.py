@@ -84,7 +84,7 @@ class Delete(Base):
     def post(self, request, group):
         try:
             group.delete()
-            messages.success(request, _('The group has been successfully deleted. Its nodes are no longer assigned to any group.'))
+            messages.success(request, _('The group has been deleted. Its nodes are no longer assigned to any group.'))
         except:
             messages.error(request, DEFAULT_ERROR_MESSAGE)
         return HttpResponseAjax([

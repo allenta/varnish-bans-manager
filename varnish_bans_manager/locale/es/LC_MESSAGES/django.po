@@ -250,8 +250,8 @@ msgid "- No group -"
 msgstr "- Sin grupo -"
 
 #: core/helpers/__init__.py:11
-msgid "All changes have been successfully saved!"
-msgstr "¡Se han guardado satisfactoriamente todos los cambios!"
+msgid "All changes have been saved!"
+msgstr "¡Se han guardado todos los cambios!"
 
 #: core/helpers/__init__.py:12
 msgid ""
@@ -502,58 +502,57 @@ msgid "Fetching lists of bans..."
 msgstr "Recuperando listado de bans..."
 
 #: core/views/task.py:85
-msgid "The task execution has been successfully aborted."
-msgstr "La ejecución de la tarea ha sido cancelada satisfactoriamente."
+msgid "The task execution has been aborted."
+msgstr "La ejecución de la tarea ha sido cancelada."
 
 #: core/views/user.py:75
 msgid "Welcome back!"
 msgstr "¡Bienvenido de nuevo!"
 
 #: core/views/user.py:91
-msgid "You have been successfully disconnected. See you soon!"
-msgstr "Has sido satisfactoriamente desconectado. ¡Hasta pronto!"
+msgid "You have been disconnected. See you soon!"
+msgstr "Has sido desconectado. ¡Hasta pronto!"
 
 #: core/views/user.py:107
 #, python-format
 msgid ""
-"An e-mail with password reset instructions has been                 "
+"An e-mail with password reset instructions has been "
 "delivered to %(email)s. Please, check your inbox and follow the instructions."
 msgstr ""
+"Se ha enviado a %(email)s un e-mail con instrucciones para reiniciar la "
+"contraseña. Por favor, echa un vistazo a tu buzón y sigue las instrucciones."
 
 #: core/views/user.py:139
 msgid ""
 "The password reset link is not valid anymore. Please, request a new one."
 msgstr ""
+"El enlace para el reinicio de la contraseña ya no es valido, Por favor, solicita uno nuevo."
 
 #: core/views/user.py:153
-msgid "Your user password has been successfully updated."
-msgstr ""
-
-#: core/views/user.py:199
-msgid "Your password has been successfully updated."
-msgstr ""
+msgid "Your password has been updated."
+msgstr "Tu contraseña ha sido actualizada."
 
 #: core/views/users.py:68
 msgid "Removing users..."
-msgstr ""
+msgstr "Borrando usuarios..."
 
 #: core/views/users.py:74
 msgid "Generating CSV..."
-msgstr ""
+msgstr "Generando CSV..."
 
 #: core/views/users.py:95
 #, python-format
-msgid "%(count)d user has been successfully deleted."
-msgid_plural "%(count)d users have been successfully deleted."
-msgstr[0] ""
-msgstr[1] ""
+msgid "%(count)d user has been deleted."
+msgid_plural "%(count)d users have been deleted."
+msgstr[0] "Se han borrado %(count)d usuario."
+msgstr[1] "Se han borrado %(count)d usuarios."
 
 #: core/views/users.py:100
 #, python-format
 msgid "Failed to delete %(count)d user."
 msgid_plural "Failed to delete %(count)d users."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "No se ha podido borrar %(count)d usuario."
+msgstr[1] "No se han podido borrar %(count)d usuarios."
 
 #: core/views/users.py:109
 #, python-format
@@ -565,8 +564,8 @@ msgstr ""
 
 #: core/views/users.py:114
 #, python-format
-msgid "%(count)d user has been successfully exported."
-msgid_plural "%(count)d users have been successfully exported."
+msgid "%(count)d user has been exported."
+msgid_plural "%(count)d users have been exported."
 msgstr[0] ""
 msgstr[1] ""
 
@@ -582,17 +581,17 @@ msgid "Removing user..."
 msgstr "Borrando usuario..."
 
 #: core/views/users.py:192
-msgid "The user has been successfully deleted."
+msgid "The user has been deleted."
 msgstr ""
 
 #: core/views/caches/groups.py:87
 msgid ""
-"The group has been successfully deleted. Its nodes are no longer assigned to "
+"The group has been deleted. Its nodes are no longer assigned to "
 "any group."
 msgstr ""
 
 #: core/views/caches/nodes.py:87
-msgid "The node has been successfully deleted."
+msgid "The node has been deleted."
 msgstr ""
 
 #: filesystem/models.py:54
@@ -652,17 +651,17 @@ msgstr "Bans"
 #: templates/varnish-bans-manager/core/user/profile.html:7
 #: templates/varnish-bans-manager/core/user/profile.html:21
 msgid "Profile"
-msgstr ""
+msgstr "Perfil"
 
 #: templates/authenticated.html:45
 msgid "Disconnect"
-msgstr ""
+msgstr "Desconectar"
 
 #: templates/varnish-bans-manager/core/bans/advanced.html:15
 #: templates/varnish-bans-manager/core/bans/basic.html:15
 #: templates/varnish-bans-manager/core/bans/expert.html:14
 msgid "Submit ban"
-msgstr ""
+msgstr "Enviar ban"
 
 #: templates/varnish-bans-manager/core/bans/advanced.html:16
 #: templates/varnish-bans-manager/core/bans/basic.html:16
@@ -680,7 +679,7 @@ msgstr ""
 #: templates/varnish-bans-manager/core/bans/basic.html:54
 #: templates/varnish-bans-manager/core/bans/expert.html:52
 msgid "Submit"
-msgstr ""
+msgstr "Enviar"
 
 #: templates/varnish-bans-manager/core/bans/advanced.html:61
 msgid "Regular expressions"
@@ -840,11 +839,11 @@ msgstr ""
 #: templates/varnish-bans-manager/core/user/layout.html:29
 #: templates/varnish-bans-manager/core/users/layout.html:29
 msgid "More"
-msgstr ""
+msgstr "Más"
 
 #: templates/varnish-bans-manager/core/bans/status.html:14
 msgid "Ban lists"
-msgstr ""
+msgstr "Listados de bans"
 
 #: templates/varnish-bans-manager/core/bans/status.html:15
 msgid "Check ban lists in nodes & groups"

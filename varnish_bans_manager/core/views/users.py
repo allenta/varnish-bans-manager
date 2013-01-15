@@ -92,8 +92,8 @@ class Bulk(Base):
     def delete_callback(cls, request, result, context):
         if result['errors'] == 0:
             messages.success(request, ungettext(
-                '%(count)d user has been successfully deleted.',
-                '%(count)d users have been successfully deleted.',
+                '%(count)d user has been deleted.',
+                '%(count)d users have been deleted.',
                 result['deleted']) % {'count': result['deleted']})
         else:
             messages.error(request, ungettext(
@@ -111,8 +111,8 @@ class Bulk(Base):
         }
         if result['errors'] == 0:
             messages.success(request, (ungettext(
-                '%(count)d user has been successfully exported.',
-                '%(count)d users have been successfully exported.',
+                '%(count)d user has been exported.',
+                '%(count)d users have been exported.',
                 result['exported']) % {'count': result['exported']}) + ' ' + instructions)
         else:
             messages.error(request, (ungettext(
@@ -189,7 +189,7 @@ class Delete(Base):
     @classmethod
     def callback(cls, request, result, context):
         if result['deleted'] == 1:
-            messages.success(request, _('The user has been successfully deleted.'))
+            messages.success(request, _('The user has been deleted.'))
         else:
             messages.error(request, DEFAULT_ERROR_MESSAGE)
         return [
