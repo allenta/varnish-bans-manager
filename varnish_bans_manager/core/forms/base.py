@@ -10,7 +10,7 @@ from django.core.exceptions import ValidationError
 from django.core import validators
 from django.forms import IntegerField, CharField, BooleanField, ChoiceField, Field
 from django.utils.translation import ugettext_lazy as _
-from django.utils.encoding import force_unicode
+from django.utils.translation import string_concat
 from django.forms.widgets import SelectMultiple
 
 
@@ -47,7 +47,7 @@ class SortDirectionField(FallbackCharField):
 
 class BetterChoiceField(ChoiceField):
     def __init__(self, choices=(), placeholder=None, *args, **kwargs):
-        choices = tuple([(u'', (u'- %s -' % force_unicode(placeholder)) if placeholder else u'')] + list(choices))
+        choices = tuple([(u'', string_concat('- ', placeholder, ' -') if placeholder else u'')] + list(choices))
         super(BetterChoiceField, self).__init__(choices=choices, *args, **kwargs)
 
     def clean(self, value):
