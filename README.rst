@@ -261,9 +261,12 @@ of a sample VBM configuration::
 Upgrade
 =======
 
-No migration mechanism is currently supported by VBM (yet). To upgrade from one
-version to another, please make sure you delete the whole database contents before
-installing the new version. To get the list of queries to be run on your database
-to accomplish this, you may execute the following command::
+Simply execute in a terminal with the proper active virtualenv::
 
-  www-data:~$ varnish-bans-manager sqlclear core
+  www-data:~$ pip install --upgrade varnish-bans-manager
+
+VBM transparently supports migrations since version 0.4.1 by using
+`South <http://south.aeracode.org/>`_ so you don't need to do anything
+special to keep the database up to date. To upgrade from a previous version,
+the easiest solution is to clear the whole database prior to restarting
+VBM's webserver.

@@ -50,5 +50,6 @@ setup(
         "ordereddict >= 1.1",
         "pytz",
         "pil",
+        "south >= 0.7.6",
     ],
 )

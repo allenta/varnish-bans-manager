@@ -20,6 +20,7 @@ from django.template.defaultfilters import filesizeformat
 from django.core.urlresolvers import reverse
 from django.forms import forms
 from django.utils.translation import ugettext_lazy as _
+from south.modelsinspector import add_introspection_rules
 from varnish_bans_manager.filesystem.forms import ImageField as FormImageField
 from varnish_bans_manager.filesystem import tasks
 
@@ -36,15 +37,16 @@ def _default_attachment_filename(request, instance, field):
 
 
 def _set_common_options(self, kwargs):
-    self.private = kwargs.pop('private') if 'private' in kwargs else True
-    self.condition = kwargs.pop('condition') if 'condition' in kwargs else _default_condition
-    self.attachment = kwargs.pop('attachment') if 'attachment' in kwargs else False
-    self.attachment_filename = kwargs.pop('attachment_filename') if 'attachment_filename' in kwargs else _default_attachment_filename
-    self.content_types = kwargs.pop('content_types') if 'content_types' in kwargs else None
-    self.max_upload_size = kwargs.pop('max_upload_size') if 'max_upload_size' in kwargs else None
-    self.strong_caching = kwargs.pop('strong_caching') if 'strong_caching' in kwargs else True
-    self.path_generator = kwargs.pop('path_generator') if 'path_generator' in kwargs else None
-    self.contents_generator = _wrapped_contents_generator(kwargs.pop('contents_generator')) if 'contents_generator' in kwargs else None
+    self.private = kwargs.pop('private', True)
+    self.condition = kwargs.pop('condition', _default_condition)
+    self.attachment = kwargs.pop('attachment', False)
+    self.attachment_filename = kwargs.pop('attachment_filename', _default_attachment_filename)
+    self.content_types = kwargs.pop('content_types', None)
+    self.max_upload_size = kwargs.pop('max_upload_size', None)
+    self.strong_caching = kwargs.pop('strong_caching', True)
+    self.path_generator = kwargs.pop('path_generator', None)
+    self.original_contents_generator = kwargs.pop('contents_generator', None)
+    self.contents_generator = _wrapped_contents_generator(self.original_contents_generator) if self.original_contents_generator else None
 
 
 def _clean_content_types_and_max_upload_size(self, data):
@@ -153,13 +155,32 @@ class FieldFile(BaseFieldFile):
 class FileField(BaseFileField):
     attr_class = FieldFile
 
-    def __init__(self, verbose_name=None, name=None, upload_to='', storage=None, **kwargs):
+    def __init__(self, verbose_name=None, name=None, upload_to='', **kwargs):
         _set_common_options(self, kwargs)
-        super(FileField, self).__init__(verbose_name, name, _wrapped_upload_to(upload_to, self.private, self.path_generator), storage, **kwargs)
+        upload_to = _wrapped_upload_to(upload_to, self.private, self.path_generator)
+        super(FileField, self).__init__(verbose_name, name, upload_to, **kwargs)
 
     def clean(self, *args, **kwargs):
         data = super(FileField, self).clean(*args, **kwargs)
         return _clean_content_types_and_max_upload_size(self, data)
+
+
+add_introspection_rules([(
+        (FileField, ),
+        [],
+        {
+            'private': ['private', {}],
+            'attachment': ['attachment', {}],
+            'content_types': ['content_types', {}],
+            'max_upload_size': ['max_upload_size', {}],
+            'strong_caching': ['strong_caching', {}],
+            'path_generator': ['path_generator', {}],
+            'contents_generator': ['original_contents_generator', {}],
+            # These args accept a callable and therefore can
+            # not be included in south introspection rules:
+            # attachment_filename, condition, upload_to.
+        },
+    )], ["^varnish_bans_manager\.filesystem\.models\.FileField"])
 
 
 ###############################################################################
@@ -202,12 +223,12 @@ class ImageFieldFile(BaseImageFieldFile):
 class ImageField(BaseImageField):
     attr_class = ImageFieldFile
 
-    def __init__(self, verbose_name=None, name=None, width_field=None, height_field=None, **kwargs):
+    def __init__(self, verbose_name=None, name=None, upload_to='', max_width=None, max_height=None, **kwargs):
         _set_common_options(self, kwargs)
-        self.max_width = kwargs.pop('max_width') if 'max_width' in kwargs else None
-        self.max_height = kwargs.pop('max_height') if 'max_height' in kwargs else None
-        kwargs['upload_to'] = _wrapped_upload_to(kwargs.pop('upload_to') if 'upload_to' in kwargs else '', self.private, self.path_generator)
-        super(ImageField, self).__init__(verbose_name, name, width_field, height_field, **kwargs)
+        upload_to = _wrapped_upload_to(upload_to, self.private, self.path_generator)
+        self.max_width = max_width
+        self.max_height = max_height
+        super(ImageField, self).__init__(verbose_name, name, upload_to=upload_to, **kwargs)
 
     def clean(self, *args, **kwargs):
         data = super(ImageField, self).clean(*args, **kwargs)
@@ -223,3 +244,23 @@ class ImageField(BaseImageField):
         if add:
             file.generate()
         return file
+
+
+add_introspection_rules([(
+        (ImageField, ),
+        [],
+        {
+            'private': ['private', {}],
+            'attachment': ['attachment', {}],
+            'content_types': ['content_types', {}],
+            'max_upload_size': ['max_upload_size', {}],
+            'strong_caching': ['strong_caching', {}],
+            'path_generator': ['path_generator', {}],
+            'contents_generator': ['original_contents_generator', {}],
+            'max_width': ['max_width', {}],
+            'max_height': ['max_height', {}],
+            # These args accept a callable and therefore can
+            # not be included in south introspection rules:
+            # attachment_filename, condition, upload_to.
+        },
+    )], ["^varnish_bans_manager\.filesystem\.models\.ImageField"])
