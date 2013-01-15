@@ -14,6 +14,7 @@ from django.db.models.signals import post_delete
 from django.db.utils import DatabaseError
 from django.utils.translation import ugettext as _
 from django.forms.widgets import HiddenInput
+from south.modelsinspector import add_introspection_rules
 
 
 class RevisionedQuerySet(models.query.QuerySet):
@@ -272,6 +273,9 @@ class RevisionField(models.IntegerField):
         return clean_with_revision
 
 
+add_introspection_rules([], ["^varnish_bans_manager\.core\.models\.base\.RevisionField"])
+
+
 ###############################################################################
 
 
@@ -300,3 +304,6 @@ class JSONField(models.Field):
 
     def get_internal_type(self):
         return 'TextField'
+
+
+add_introspection_rules([], ["^varnish_bans_manager\.core\.models\.base\.JSONField"])

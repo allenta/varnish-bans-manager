@@ -201,6 +201,9 @@ INSTALLED_APPS = (
     'djcelery',
     'kombu.transport.django',
 
+    # See http://south.aeracode.org.
+    'south',
+
     # VBM.
     'varnish_bans_manager.filesystem',
     'varnish_bans_manager.core',
