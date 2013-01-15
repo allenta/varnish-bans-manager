@@ -644,7 +644,7 @@ msgstr ""
 #: templates/varnish-bans-manager/core/bans/submissions.html:8
 #: templates/varnish-bans-manager/core/bans/submissions.html:23
 msgid "Bans"
-msgstr ""
+msgstr "Bans"
 
 #: templates/authenticated.html:43
 #: templates/varnish-bans-manager/core/user/password.html:7
