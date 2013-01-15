@@ -15,17 +15,11 @@ from varnish_bans_manager.core.models import Setting
 class GeneralForm(forms.Form):
     host_matching_variable = forms.CharField(
         label=_('Host matching variable'),
-        help_text=_(
-            'If not specified, defaults to <code>%s</code> for lurker friendly bans.' %
-            Setting.DEFAULT_HOST_MATCHING_VARIABLE),
         max_length=128,
         required=False)
 
     url_matching_variable = forms.CharField(
         label=_('URL matching variable'),
-        help_text=_(
-            'If not specified, defaults to <code>%s</code> for lurker friendly bans.' %
-            Setting.DEFAULT_URL_MATCHING_VARIABLE),
         max_length=128,
         required=False)
 
@@ -39,14 +33,20 @@ class GeneralForm(forms.Form):
         required=False)
 
     notify_bans = forms.BooleanField(
-        label=_(
-            'Deliver periodical ban submission reports to <code>%s</code>.' %
-            settings.VBM_NOTIFICATIONS_EMAIL),
         help_text=_('Adjust VBM settings file to use a different e-mail address.'),
         required=False)
 
     def __init__(self, *args, **kwargs):
         super(GeneralForm, self).__init__(*args, **kwargs)
+        self.fields['host_matching_variable'].help_text = _(
+            'If not specified, defaults to <code>%s</code> for lurker friendly bans.'
+        ) % Setting.DEFAULT_HOST_MATCHING_VARIABLE
+        self.fields['url_matching_variable'].help_text = _(
+            'If not specified, defaults to <code>%s</code> for lurker friendly bans.'
+        ) % Setting.DEFAULT_URL_MATCHING_VARIABLE
+        self.fields['notify_bans'].label = _(
+            'Deliver periodical ban submission reports to <code>%s</code>.'
+        ) % settings.VBM_NOTIFICATIONS_EMAIL
         for field_name in self.fields.keys():
             self.initial[field_name] = getattr(Setting, field_name)
 

@@ -85,138 +85,145 @@ msgstr "caché"
 
 #: core/forms/base.py:61
 msgid "Enter a list of integer values."
-msgstr ""
+msgstr "Introduce una lista de valores enteros"
 
 #: core/forms/base.py:62
 #, python-format
 msgid "Ensure all values are greater than or equal to %s."
-msgstr ""
+msgstr "Asegúrate de que todos los valores sean mayores que o iguales a %s."
 
 #: core/forms/base.py:63
 #, python-format
 msgid "Ensure all values are less than or equal to %s."
-msgstr ""
+msgstr "Asegúrate de que todos los valores sean menores que o iguales a %s."
 
 #: core/forms/settings.py:17
 msgid "Host matching variable"
-msgstr ""
+msgstr "Variable matching host"
 
-#: core/forms/settings.py:19 core/forms/settings.py:27
-#, python-format
+#: core/forms/settings.py:20 core/forms/settings.py:30
 msgid "If not specified, defaults to <code>%s</code> for lurker friendly bans."
-msgstr ""
+msgstr "En caso de no especificarse, por defecto se usa <code>%s</code> para bans lurker friendly."
 
 #: core/forms/settings.py:25
 msgid "URL matching variable"
-msgstr ""
+msgstr "Variable matching URL"
 
 #: core/forms/settings.py:33
 msgid "Base ban expression"
-msgstr ""
+msgstr "Expresión base del ban"
 
 #: core/forms/settings.py:35
 msgid ""
 "Restrict bans submitted using the basic and advanced forms writing here a "
 "base ban expression which will be merged with user defined expressions."
 msgstr ""
+"Restringe los bans que se envían desde los formularios básico y avanzado escribiendo "
+"aquí una expresión base que será concatenada con las expresiones definidas por los usuarios."
 
-#: core/forms/settings.py:43
+#: core/forms/settings.py:53
 #, python-format
 msgid "Deliver periodical ban submission reports to <code>%s</code>."
-msgstr ""
+msgstr "Enviar periódicamente a <code>%s</code> informes con los bans enviados."
 
 #: core/forms/settings.py:45
 msgid "Adjust VBM settings file to use a different e-mail address."
-msgstr ""
+msgstr "Ajusta el fichero de configuración de VBM para usar una dirección de e-mail diferente."
 
 #: core/forms/user.py:25 core/forms/user.py:26 core/forms/user.py:61
 #: core/forms/user.py:62 core/forms/users.py:38 core/tasks/users.py:42
 #: templates/varnish-bans-manager/core/user/profile.html:48
 msgid "e-mail address"
-msgstr ""
+msgstr "dirección de e-mail"
 
 #: core/forms/user.py:29 core/forms/user.py:30 core/forms/users.py:121
 #: core/forms/users.py:122
 msgid "password"
-msgstr ""
+msgstr "contraseña"
 
 #: core/forms/user.py:36
 msgid ""
 "Please enter a correct e-mail and password. Note that both fields are case-"
 "sensitive."
 msgstr ""
+"Por favor introduce un e-mail y contraseña correctos. Ten en cuenta que ambos "
+"campos diferencian entre mayúsculas y minúsculas."
 
 #: core/forms/user.py:39
 msgid "This account is inactive."
-msgstr ""
+msgstr "Esta cuenta está inactiva."
 
 #: core/forms/user.py:67
 msgid ""
 "That e-mail address doesn't have an associated user account. Are you sure "
 "you've registered?"
 msgstr ""
+"Esa dirección de e-mail no está vinculada a ninguna cuenta de usuario. ¿Estás "
+"seguro de haberte registrado?"
 
 #: core/forms/user.py:70
 msgid ""
 "The user account associated with this e-mail address cannot reset the "
 "password."
 msgstr ""
+"La cuenta de usuario vinculada con esta dirección de e-mail no puede reiniciar "
+"la contraseña."
 
 #: core/forms/user.py:119 core/forms/user.py:120 core/forms/user.py:184
 msgid "new password"
-msgstr ""
+msgstr "nueva contraseña"
 
 #: core/forms/user.py:122 core/forms/user.py:123
 msgid "new password confirmation"
-msgstr ""
+msgstr "confirmación nueva contraseña"
 
 #: core/forms/user.py:127 core/forms/user.py:194 core/forms/users.py:129
 msgid "The two password fields didn't match."
-msgstr ""
+msgstr "Los dos campos de contraseña no coinciden."
 
 #: core/forms/user.py:151 core/forms/users.py:42 core/forms/users.py:115
 msgid "first name"
-msgstr ""
+msgstr "nombre"
 
 #: core/forms/user.py:154 core/forms/users.py:46 core/forms/users.py:118
 msgid "last name"
-msgstr ""
+msgstr "apellidos"
 
 #: core/forms/user.py:180
 msgid "Old password"
-msgstr ""
+msgstr "Contraseña antigua"
 
 #: core/forms/user.py:181
 msgid "current password"
-msgstr ""
+msgstr "Contraseña actual"
 
 #: core/forms/user.py:183
 msgid "New password"
-msgstr ""
+msgstr "Nueva contraseña"
 
 #: core/forms/user.py:186
 msgid "New password confirmation"
-msgstr ""
+msgstr "Confirmación nuevo contraseña"
 
 #: core/forms/user.py:187
 msgid "confirm new password"
-msgstr ""
+msgstr "confirmar nueva contraseña"
 
 #: core/forms/user.py:191
 msgid "Your old password was entered incorrectly. Please enter it again."
-msgstr ""
+msgstr "Has introducido una contraseña antigua incorrecta. Por favor introdúcela de nuevo."
 
 #: core/forms/users.py:29 core/tasks/users.py:44
 msgid "Last name"
-msgstr ""
+msgstr "Apellidos"
 
 #: core/forms/users.py:30
 msgid "Creation date"
-msgstr ""
+msgstr "Fecha creación"
 
 #: core/forms/users.py:33
 msgid "Download CSV"
-msgstr ""
+msgstr "Descargar CSV"
 
 #: core/forms/users.py:34
 #: templates/varnish-bans-manager/core/caches/groups/_edit_form.html:24
@@ -224,27 +231,27 @@ msgstr ""
 #: templates/varnish-bans-manager/core/users/_edit_form.html:83
 #: templates/varnish-bans-manager/core/users/browse.html:117
 msgid "Delete"
-msgstr ""
+msgstr "Borrar"
 
 #: core/forms/users.py:124 core/forms/users.py:125
 msgid "password confirmation"
-msgstr ""
+msgstr "confirmación contraseña"
 
 #: core/forms/users.py:131
 msgid "This e-mail address is already in use."
-msgstr ""
+msgstr "Esta dirección de e-mail ya se está usando."
 
 #: core/forms/caches/nodes.py:17
 msgid "Group"
-msgstr ""
+msgstr "Grupo"
 
 #: core/forms/caches/nodes.py:18
 msgid "- No group -"
-msgstr ""
+msgstr "- Sin grupo -"
 
 #: core/helpers/__init__.py:11
 msgid "All changes have been successfully saved!"
-msgstr ""
+msgstr "¡Se han guardado satisfactoriamente todos los cambios!"
 
 #: core/helpers/__init__.py:12
 msgid ""
@@ -254,131 +261,140 @@ msgstr ""
 
 #: core/helpers/__init__.py:13
 msgid "Form contains errors! Please review it and try again."
-msgstr ""
+msgstr "¡El formulario contiene errores! Por favor revísalo y vuelve a intentarlo."
 
 #: core/helpers/cli.py:29
 msgid "Cache has requested authentication but a secret key was not provided."
-msgstr ""
+msgstr "La caché ha solicitado autenticación pero no se ha proporcionado una clave secreta."
 
 #: core/helpers/cli.py:31
 #, python-format
 msgid "Connection to cache failed with status %(status)d."
-msgstr ""
+msgstr "La conexión con la caché ha fallado con el código %(status)d."
 
 #: core/helpers/cli.py:33
 #, python-format
 msgid "Execution of command failed with status %(status)d: '%(text)s'."
-msgstr ""
+msgstr "La ejecución del comando ha fallado con el código %(status)d: '%(text)s'."
 
 #: core/helpers/commands.py:86
 msgid "Applying changes..."
-msgstr ""
+msgstr "Aplicando cambios..."
 
 #: core/models/ban_submission.py:23
 msgid "basic"
-msgstr ""
+msgstr "básico"
 
 #: core/models/ban_submission.py:24
 msgid "advanced"
-msgstr ""
+msgstr "avanzado"
 
 #: core/models/ban_submission.py:25
 msgid "expert"
-msgstr ""
+msgstr "experto"
 
 #: core/models/base.py:241
 msgid ""
 "This item has been updated by other user while you were editing it. Please "
 "reload the page and redo all necessary changes so no edition gets lost."
 msgstr ""
+"Este elemento ha sido actualizado por otro usuario mientras tu lo estabas "
+"editando. Por favor recarga la página y rehaz los cambios necesarios de forma "
+"que nada se pierda."
 
 #: core/models/cache.py:53 core/models/cache.py:98
 #: templates/varnish-bans-manager/core/user/profile.html:35
 #: templates/varnish-bans-manager/core/users/_edit_form.html:50
 msgid "Name"
-msgstr ""
+msgstr "Nombre"
 
 #: core/models/cache.py:54
 msgid ""
 "Some name used internally by VBM to refer to the group of caching nodes."
 msgstr ""
+"Algún nombre que VBM usará internamente para referirse al grupo de nodos de caché."
 
 #: core/models/cache.py:85
 msgid "cache group"
-msgstr ""
+msgstr "grupo de cachés"
 
 #: core/models/cache.py:86
 msgid "cache groups"
-msgstr ""
+msgstr "grupos de cachés"
 
 #: core/models/cache.py:99
 msgid ""
 "Some name used internally by VBM to refer to the cache node. If not "
 "provided, the host and port number of the node will be used."
 msgstr ""
+"Algún nombre que VBM usará internamente para referirse al nodo de caché. "
+"Si no se proporciona, se usarán el nombre del host y el número del puerto del nodo."
 
 #: core/models/cache.py:105
 msgid "Host"
-msgstr ""
+msgstr "Host"
 
 #: core/models/cache.py:106
 msgid "Name or IP address of the server running the Varnish cache node."
-msgstr ""
+msgstr "Nombre o dirección IP del servidor ejecutando el nodo de caché Varnish."
 
 #: core/models/cache.py:111
 msgid "Port"
-msgstr ""
+msgstr "Puerto"
 
 #: core/models/cache.py:112
 msgid "Varnish management port number."
-msgstr ""
+msgstr "Número del puerto de gestión de Varnish."
 
 #: core/models/cache.py:116
 msgid "Secret"
-msgstr ""
+msgstr "Secreto"
 
 #: core/models/cache.py:117
 msgid ""
 "If the -S secret-file is used in the cache node, provide here the contents "
 "of that file in order to authenticate CLI connections opened by VBM."
 msgstr ""
+"Si el acceso al nodo de caché está restringido usando un secreto compartido, "
+"facilita aquí los contenidos del archivo con ese secreto de forma que VBM pueda "
+"autenticar las conexiones con la consola de gestión."
 
 #: core/models/cache.py:123
 msgid "Version"
-msgstr ""
+msgstr "Versión"
 
 #: core/models/cache.py:124
 msgid "Select the Varnish version running in the cache node."
-msgstr ""
+msgstr "Selecciona la versión de Varnish ejecutándose en el nodo de caché."
 
 #: core/models/cache.py:180
 msgid "cache node"
-msgstr ""
+msgstr "nodo de caché"
 
 #: core/models/cache.py:181
 msgid "cache nodes"
-msgstr ""
+msgstr "nodos de caché"
 
 #: core/models/user_profile.py:20
 #: templates/varnish-bans-manager/core/bans/advanced.html:8
 #: templates/varnish-bans-manager/core/bans/advanced.html:23
 #: templates/varnish-bans-manager/core/bans/layout.html:23
 msgid "Advanced"
-msgstr ""
+msgstr "Avanzado"
 
 #: core/models/user_profile.py:21
 #: templates/varnish-bans-manager/core/bans/expert.html:7
 #: templates/varnish-bans-manager/core/bans/expert.html:22
 #: templates/varnish-bans-manager/core/bans/layout.html:32
 msgid "Expert"
-msgstr ""
+msgstr "Experto"
 
 #: core/models/user_profile.py:22
 #: templates/varnish-bans-manager/core/bans/layout.html:41
 #: templates/varnish-bans-manager/core/bans/submissions.html:8
 #: templates/varnish-bans-manager/core/bans/submissions.html:24
 msgid "Submissions"
-msgstr ""
+msgstr "Envíos"
 
 #: core/models/user_profile.py:23
 #: templates/varnish-bans-manager/core/bans/layout.html:50
@@ -386,7 +402,7 @@ msgstr ""
 #: templates/varnish-bans-manager/core/bans/status.html:22
 #: templates/varnish-bans-manager/core/users/update.html:29
 msgid "Status"
-msgstr ""
+msgstr "Estado"
 
 #: core/models/user_profile.py:24 templates/authenticated.html:22
 #: templates/varnish-bans-manager/core/caches/browse.html:5
@@ -400,7 +416,7 @@ msgstr ""
 #: templates/varnish-bans-manager/core/caches/nodes/update.html:5
 #: templates/varnish-bans-manager/core/caches/nodes/update.html:19
 msgid "Caches"
-msgstr ""
+msgstr "Cachés"
 
 #: core/models/user_profile.py:25 templates/authenticated.html:27
 #: templates/varnish-bans-manager/core/users/add.html:5
@@ -410,7 +426,7 @@ msgstr ""
 #: templates/varnish-bans-manager/core/users/update.html:7
 #: templates/varnish-bans-manager/core/users/update.html:22
 msgid "Users"
-msgstr ""
+msgstr "Usuarios"
 
 #: core/models/user_profile.py:26 templates/authenticated.html:32
 #: templates/varnish-bans-manager/core/settings/general.html:7
@@ -420,82 +436,82 @@ msgstr ""
 #: templates/varnish-bans-manager/core/users/update.html:7
 #: templates/varnish-bans-manager/core/users/update.html:21
 msgid "Settings"
-msgstr ""
+msgstr "Opciones"
 
 #: core/models/user_profile.py:62
 msgid "Photo"
-msgstr ""
+msgstr "Fotografía"
 
 #: core/models/user_profile.py:63
 msgid "Upload a photo. It will only be visible by administrators."
-msgstr ""
+msgstr "Sube una fotografía. Será visible únicamente para los administradores."
 
 #: core/models/user_profile.py:85
 msgid "Access advanced ban submission form"
-msgstr ""
+msgstr "Acceso al formulario avanzado de envío de bans"
 
 #: core/models/user_profile.py:86
 msgid "Access expert ban submission form"
-msgstr ""
+msgstr "Acceso al formulario experto de envío de bans"
 
 #: core/models/user_profile.py:87
 msgid "Access bans submissions"
-msgstr ""
+msgstr "Acceso al envío de bans"
 
 #: core/models/user_profile.py:88
 msgid "Access bans status"
-msgstr ""
+msgstr "Acceso al estado de los bans"
 
 #: core/models/user_profile.py:89
 msgid "Access caches management"
-msgstr ""
+msgstr "Acceso a la gestión de las cachés"
 
 #: core/models/user_profile.py:90
 msgid "Access users management"
-msgstr ""
+msgstr "Acceso a la gestión de las usuarios"
 
 #: core/models/user_profile.py:91
 msgid "Access settings"
-msgstr ""
+msgstr "Acceso a las opciones"
 
 #: core/tasks/users.py:37
 msgid "users.csv"
-msgstr ""
+msgstr "usuarios.csv"
 
 #: core/tasks/users.py:41
 msgid "Identifier"
-msgstr ""
+msgstr "Identificador"
 
 #: core/tasks/users.py:43
 msgid "First name"
-msgstr ""
+msgstr "Nombre"
 
 #: core/views/bans.py:67
 msgid "Submitting ban..."
-msgstr ""
+msgstr "Enviando ban..."
 
 #: core/views/bans.py:96
 #, python-format
 msgid "Your ban has been successfully submitted to %(count)d cache."
 msgid_plural "Your ban has been successfully submitted to %(count)d caches."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "Tu ban ha sido enviado con éxito a %(count)d caché."
+msgstr[1] "Tu ban ha sido enviado con éxito a %(count)d cachés."
 
 #: core/views/bans.py:168
 msgid "Fetching lists of bans..."
-msgstr ""
+msgstr "Recuperando listado de bans..."
 
 #: core/views/task.py:85
 msgid "The task execution has been successfully aborted."
-msgstr ""
+msgstr "La ejecución de la tarea ha sido cancelada satisfactoriamente."
 
 #: core/views/user.py:75
 msgid "Welcome back!"
-msgstr ""
+msgstr "¡Bienvenido de nuevo!"
 
 #: core/views/user.py:91
 msgid "You have been successfully disconnected. See you soon!"
-msgstr ""
+msgstr "Has sido satisfactoriamente desconectado. ¡Hasta pronto!"
 
 #: core/views/user.py:107
 #, python-format
@@ -709,27 +725,27 @@ msgstr ""
 #: templates/varnish-bans-manager/core/bans/advanced.html:94
 #: templates/varnish-bans-manager/core/bans/expert.html:99
 msgid "References"
-msgstr ""
+msgstr "Referencias"
 
 #: templates/varnish-bans-manager/core/bans/advanced.html:98
 msgid "Regular expressions guide"
-msgstr ""
+msgstr "Guía expresiones regulares"
 
 #: templates/varnish-bans-manager/core/bans/advanced.html:99
 #: templates/varnish-bans-manager/core/bans/expert.html:106
 msgid "Varnish users guide"
-msgstr ""
+msgstr "Guía de usuario Varnish"
 
 #: templates/varnish-bans-manager/core/bans/advanced.html:100
 #: templates/varnish-bans-manager/core/bans/expert.html:107
 msgid "Varnish reference"
-msgstr ""
+msgstr "Referencia Varnish"
 
 #: templates/varnish-bans-manager/core/bans/basic.html:8
 #: templates/varnish-bans-manager/core/bans/basic.html:23
 #: templates/varnish-bans-manager/core/bans/layout.html:15
 msgid "Basic"
-msgstr ""
+msgstr "Básico"
 
 #: templates/varnish-bans-manager/core/bans/expert.html:59
 #: templates/varnish-bans-manager/core/bans/expert.html:104
