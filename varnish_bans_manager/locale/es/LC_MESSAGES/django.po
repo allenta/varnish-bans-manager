@@ -8,78 +8,80 @@ msgstr ""
 
 #: settings.py:438
 msgid "Spanish"
-msgstr ""
+msgstr "Español"
 
 #: settings.py:439
 msgid "English"
-msgstr ""
+msgstr "Inglés"
 
 #: urls.py:234
 msgid ""
 "We are sorry, but you are not authorized to see the the requested contents."
-msgstr ""
+msgstr "Lo sentimos pero no estás autorizado a ver los contenidos solicitados."
 
 #: urls.py:235
 msgid "We are sorry, but the requested content could not be found."
-msgstr ""
+msgstr "Lo sentimos pero no ha sido posible encontrar el contenido solicitado."
 
 #: core/forms/bans.py:25
 msgid ""
 "The selected item is no longer available. Please, refresh the page to update "
 "the list and choose another."
 msgstr ""
+"El elemento seleccionado ya no está disponible. Por favor, recarga la página "
+"para actualizar la lista y escoger otro."
 
 #: core/forms/bans.py:75
 msgid "Target"
-msgstr ""
+msgstr "Destino"
 
 #: core/forms/bans.py:76
 msgid "select"
-msgstr ""
+msgstr "elegir"
 
 #: core/forms/bans.py:102
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: core/forms/bans.py:103
 msgid "URL to be removed from caches"
-msgstr ""
+msgstr "URL a borrar de las cachés"
 
 #: core/forms/bans.py:107
 msgid "Only http:// and https:// schemes are supported."
-msgstr ""
+msgstr "http:// y https:// son los únicos esquemas soportados."
 
 #: core/forms/bans.py:136
 msgid "Regular expression"
-msgstr ""
+msgstr "Expresión regular"
 
 #: core/forms/bans.py:137 core/forms/bans.py:159
 msgid "match contents to be removed from caches"
-msgstr ""
+msgstr "contenidos a borrar de las cachés"
 
 #: core/forms/bans.py:158
 msgid "Ban expression"
-msgstr ""
+msgstr "Expresión del ban"
 
 #: core/forms/bans.py:175
 msgid "Submission date"
-msgstr ""
+msgstr "Fecha de envío"
 
 #: core/forms/bans.py:181
-msgid "all submitters"
-msgstr ""
+msgid "all users"
+msgstr "todos los usuarios"
 
 #: core/forms/bans.py:185
 msgid "all types"
-msgstr ""
+msgstr "todos los tipos"
 
 #: core/forms/bans.py:188
 msgid "all targets"
-msgstr ""
+msgstr "todos los destinos"
 
 #: core/forms/bans.py:245
 msgid "cache"
-msgstr ""
+msgstr "caché"
 
 #: core/forms/base.py:61
 msgid "Enter a list of integer values."
