@@ -72,7 +72,7 @@ class Submit(MonitoredTask):
                 ban_submission_item.success = True
             except Exception as e:
                 ban_submission_item.success = False
-                ban_submission_item.message = str(e)
+                ban_submission_item.message = unicode(e)
             # Save ban submission item and update progress.
             ban_submission.items.add(ban_submission_item)
             self.set_progress(index + 1, num_items)
