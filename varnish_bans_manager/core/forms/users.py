@@ -139,7 +139,7 @@ class EditForm(object):
                 widget=CheckboxSelectMultiple,
                 initial=list(set(permissions) & set(PERMISSIONS.keys())),
                 choices=[
-                    (permission, Permission.objects.get(codename=permission).name)
+                    (permission, _(Permission.objects.get(codename=permission).name))
                     for permission in PERMISSIONS.keys()
                 ])
 

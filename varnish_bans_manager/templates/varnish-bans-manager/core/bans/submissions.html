@@ -51,7 +51,7 @@
 
     <div class="btn-toolbar pull-right">
       <div class="btn-group collection-sort">
-        <button class="btn dropdown-toggle" data-toggle="dropdown"><i class="font-awesome font-awesome-sort"></i> Sort by <span class="caret"></span></button>
+        <button class="btn dropdown-toggle" data-toggle="dropdown"><i class="font-awesome font-awesome-sort"></i> {% trans 'Sort by' %} <span class="caret"></span></button>
         <ul class="dropdown-menu">
           {% for id, name in form.SORT_CRITERIA_CHOICES %}
             {% with sort_criteria=form.cleaned_data.sort_criteria sort_direction=form.cleaned_data.sort_direction %}

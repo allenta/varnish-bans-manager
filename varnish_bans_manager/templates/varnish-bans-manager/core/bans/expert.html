@@ -60,35 +60,17 @@
   <div class="row-fluid">
     <div class="span8">
       <p>
-        {% blocktrans with 'https://www.varnish-cache.org/docs/trunk/reference/varnish-cli.html#ban-expressions' as exprs %}
-          A <a href="{{ exprs }}">ban expression</a> may be composed of several
-          conditions combined using a logical AND operator (<code>&&</code>).
-          Each condition should consist of a field, an operator and an argument.
-        {% endblocktrans %}
+        {% blocktrans with 'https://www.varnish-cache.org/docs/trunk/reference/varnish-cli.html#ban-expressions' as exprs %}A <a href="{{ exprs }}">ban expression</a> may be composed of several conditions combined using a logical AND operator (<code>&&</code>). Each condition should consist of a field, an operator and an argument.{% endblocktrans %}
       </p>
       <ul>
         <li>
-          {% blocktrans with 'https://www.varnish-cache.org/docs/trunk/reference/vcl.html#variables' as vars %}
-            A field can be any of the <a href={{ vars }}"">variables from VCL</a>, for instance
-            <code>req.url</code> (requested URL), <code>req.http.host</code>
-            (requested host) or <code>obj.http.set-cookie</code> (returned value
-            for the HTTP Set-Cookie header).
-          {% endblocktrans %}
+          {% blocktrans with 'https://www.varnish-cache.org/docs/trunk/reference/vcl.html#variables' as vars %}A field can be any of the <a href={{ vars }}"">variables from VCL</a>, for instance <code>req.url</code> (requested URL), <code>req.http.host</code> (requested host) or <code>obj.http.set-cookie</code> (returned value for the HTTP Set-Cookie header).{% endblocktrans %}
         </li>
         <li>
-          {% blocktrans %}
-            Operators are <code>==</code> for direct comparision, <code>~</code> for
-            a regular expression match, and <code>&gt;</code> or <code>&lt;</code>
-            for size comparisons. Prepending an operator with <code>!</code> negates
-            the expression.
-          {% endblocktrans %}
+          {% blocktrans %}Operators are <code>==</code> for direct comparision, <code>~</code> for a regular expression match, and <code>&gt;</code> or <code>&lt;</code> for size comparisons. Prepending an operator with <code>!</code> negates the expression.{% endblocktrans %}
         </li>
         <li>
-          {% blocktrans %}
-            The argument could be a quoted string, a regular expression or an
-            integer. Integers can have <code>KB</code>, <code>MB</code>,
-            <code>GB</code> or <code>TB</code> appended for size related fields.
-          {% endblocktrans %}
+          {% blocktrans %}The argument could be a quoted string, a regular expression or an integer. Integers can have <code>KB</code>, <code>MB</code>, <code>GB</code> or <code>TB</code> appended for size related fields.{% endblocktrans %}
         </li>
       </ul>
     </div>
@@ -122,9 +104,7 @@
       <p><pre>req.url ~ "\.pdf$" && req.http.host == example.com</pre></p>
     </li>
     <li>
-      {% blocktrans with 'https://www.varnish-software.com/blog/ban-lurker' as lurker %}
-        Same as before but using a <a href="{{ lurker }}">lurker friendly ban</a> (recommended approach that requires some tunning of the VCL):
-      {% endblocktrans %}
+      {% blocktrans with 'https://www.varnish-software.com/blog/ban-lurker' as lurker %}Same as before but using a <a href="{{ lurker }}">lurker friendly ban</a> (recommended approach that requires some tunning of the VCL):{% endblocktrans %}
       <p><pre>obj.http.x-url ~ "\.pdf$" && obj.http.x-host == example.com</pre></p>
     </li>
   </ol>

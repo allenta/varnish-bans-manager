@@ -82,7 +82,7 @@ class Cancel(Base):
         async_result = tasks.find(request, token)
         if async_result and async_result.task_id:
             revoke(async_result.task_id, terminate=True, signal='SIGKILL')
-            messages.info(request, _("The task execution has been successfully aborted."))
+            messages.info(request, _("The task execution has been aborted."))
         else:
             messages.error(request, DEFAULT_ERROR_MESSAGE)
         return HttpResponseAjax([

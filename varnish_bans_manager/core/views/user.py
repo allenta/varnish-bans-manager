@@ -88,7 +88,7 @@ class Login(AnonymousBase):
 class Logout(Base):
     def get(self, request):
         auth.logout(request)
-        messages.success(request, _('You have been successfully disconnected. See you soon!'))
+        messages.success(request, _('You have been disconnected. See you soon!'))
         return HttpResponseRedirect(reverse('index'))
 
 
@@ -104,8 +104,8 @@ class PasswordReset(AnonymousBase):
             form.save(request)
 
             # Done!
-            messages.success(request, _('An e-mail with password reset instructions has been \
-                delivered to %(email)s. Please, check your inbox and follow the instructions.') %
+            messages.success(request, _('An e-mail with password reset instructions has been '
+                'delivered to %(email)s. Please, check your inbox and follow the instructions.') %
                 {'email': form.user.email})
             return HttpResponseAjax([
                 commands.navigate(reverse('user-login')),
@@ -150,7 +150,7 @@ class PasswordResetConfirm(AnonymousBase):
             form.save(request)
 
             # Done!
-            messages.success(request, _('Your user password has been successfully updated.'))
+            messages.success(request, _('Your password has been updated.'))
             return HttpResponseAjax([
                 commands.navigate(reverse('user-login')),
             ], request)
@@ -196,7 +196,7 @@ class Password(AuthenticatedBase):
         form = PasswordChangeForm(request.user, data=request.POST)
         if form.is_valid():
             form.save(request)
-            messages.success(request, _("Your password has been successfully updated."))
+            messages.success(request, _("Your password has been updated."))
             return HttpResponseAjax([
                 commands.reload(request),
             ], request)

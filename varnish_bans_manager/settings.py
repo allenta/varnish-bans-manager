@@ -420,6 +420,13 @@ LOGGING = {
         },
     },
     'loggers': {
+        # Including this logger, the usage of the 'django' fallback
+        # logger with a NullHandler that Django creates is avoided.
+        'django.request': {
+            'handlers': ['mail_admins'],
+            'level': 'ERROR',
+            'propagate': False,
+        },
         'vbm': {
             'handlers': ['logfile'],
             'level': 'DEBUG',
@@ -552,7 +559,7 @@ CELERY_TIMEZONE = TIME_ZONE
 
 CELERY_SEND_TASK_ERROR_EMAILS = IS_PRODUCTION
 
-CELERYD_HIJACK_ROOT_LOGGER = not IS_PRODUCTION
+CELERYD_HIJACK_ROOT_LOGGER = True
 
 # See http://docs.celeryproject.org/en/latest/userguide/periodic-tasks.html
 CELERYBEAT_SCHEDULE = {

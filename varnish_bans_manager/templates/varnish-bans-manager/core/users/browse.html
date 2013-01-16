@@ -57,7 +57,7 @@
 
     <div class="btn-toolbar pull-right">
       <div class="btn-group collection-sort">
-        <button class="btn dropdown-toggle" data-toggle="dropdown"><i class="font-awesome font-awesome-sort"></i> Sort by <span class="caret"></span></button>
+        <button class="btn dropdown-toggle" data-toggle="dropdown"><i class="font-awesome font-awesome-sort"></i> {% trans 'Sort by' %} <span class="caret"></span></button>
         <ul class="dropdown-menu">
           {% for id, name in form.SORT_CRITERIA_CHOICES %}
             {% with sort_criteria=form.cleaned_data.sort_criteria sort_direction=form.cleaned_data.sort_direction %}
@@ -84,11 +84,7 @@
           <tr>
             <th class="collection-selector"><input type="checkbox" data-id="all"/></th>
             <th colspan="4">
-              {% blocktrans count rows=form.paginator.count %}
-                Select the row
-              {% plural %}
-                Select all {{ rows }} rows in all pages
-              {% endblocktrans %}
+              {% blocktrans count rows=form.paginator.count %}Select the row{% plural %}Select all {{ rows }} rows in all pages{% endblocktrans %}
             </th>
           </tr>
         </thead>
@@ -100,7 +96,7 @@
               <td class="name">
                 <a href="{% url 'users-update' user.id %}" class="navigation"><strong>{{ user.human_name }}</strong><br/></a>
                 {% if user.is_superuser %}
-                  <span class="label label-important">ADMINISTRATOR</span>
+                  <span class="label label-important">{% trans 'ADMINISTRATOR' %}</span>
                 {% else %}
                   {% for label in user.get_profile.editable_user_permission_labels %}
                     <span class="label label-info">{{ label }}</span>

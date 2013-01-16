@@ -40,6 +40,12 @@ development environment.
 - While developing, press ``CTRL+ALT+A`` in your browser to display the
   VBM debug console.
 
+- Remember .po files can be regenerated and compiled using the following
+  commands::
+
+    $ python runner.py makemessages -l es -e "html,txt,email,py"
+    $ python varnish_bans_manager/runner.py compilemessages
+
 Source Distribution Package
 ===========================
 
@@ -69,9 +75,6 @@ Note that the site building phase has some extra system requirements:
 TODO
 ====
 
-- Bans & groups management.
-- List of recent ban submissions.
-- Access to current status of bans.
 - Ban templates.
 - Refactor ``varnish_bans_manager.filesystem.models``.
 - Locale-aware application level ordering.

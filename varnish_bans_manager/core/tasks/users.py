@@ -47,7 +47,7 @@ class DownloadCSV(MonitoredTask):
                 try:
                     user = User.objects.get(pk=id)
                     writer.writerow([
-                        str(user.id),
+                        unicode(user.id),
                         user.email,
                         user.first_name,
                         user.last_name,
