@@ -101,7 +101,7 @@ class Status(MonitoredTask):
             try:
                 bans.append((node, set(node.ban_list())))
             except Exception as e:
-                result['errors'].append((node.human_name, str(e)))
+                result['errors'].append((node.human_name, unicode(e)))
             self.set_progress(index + 1, num_items)
 
         # Merge expressions.

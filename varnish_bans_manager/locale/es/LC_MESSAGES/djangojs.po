@@ -10,7 +10,7 @@ msgid "We are sorry, but the request couldn't be processed. Please, try again la
 msgstr "Lo sentimos pero no ha sido posible procesar la petición. Por favor, vuelve a intentarlo en un rato."
 
 msgid "Please, be patient. <strong>Do not close or reload the page!</strong>"
-msgstr "Por favor, se paciente. <strong>¡No cierres ni recargues la página!</strong>"
+msgstr "Por favor, sé paciente. <strong>¡No cierres ni recargues la página!</strong>"
 
 msgid "Abort"
 msgstr "Abortar"
@@ -34,4 +34,4 @@ msgid "Your browser is outdated! Please, download an updated version now and imp
 msgstr "¡Tu navegador está obsoleto! Por favor, descarga una versión actual ahora y mejora tu experiencia de usuario."
 
 msgid "Choose your new browser"
-msgstr "Elije tu nuevo navegador"
+msgstr "Elige tu nuevo navegador"

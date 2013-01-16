@@ -361,6 +361,12 @@ msgstr ""
 msgid "Port"
 msgstr "Puerto"
 
+msgid "Port number"
+msgstr "Número del puerto"
+
+msgid "Host name or IP address"
+msgstr "Nombre del host o dirección IP"
+
 #: core/models/cache.py:112
 msgid "Varnish management port number."
 msgstr "Número del puerto de gestión de Varnish."
@@ -585,7 +591,7 @@ msgid ""
 msgstr ""
 "Ahora deberías ver un popup preguntándote dónde guardar el archivo exportado "
 "en tu ordenador. En caso contrario, puedes descargar manualmente el archivo "
-"simplemente haciendo clic en href=\"%(url)s\" target=\"_blank\">este enlace</"
+"simplemente haciendo clic en <a href=\"%(url)s\" target=\"_blank\">este enlace</"
 "a>."
 
 #: core/views/users.py:114
@@ -879,7 +885,7 @@ msgid ""
 "condition should consist of a field, an operator and an argument."
 msgstr ""
 "La <a href=\"%(exprs)s\">expresión de un ban</a> está compuesta por varias "
-"condiciones combinadas usando el operador lógico AND (<code>&&</code>).Cada "
+"condiciones combinadas usando el operador lógico AND (<code>&&</code>). Cada "
 "condición consiste en un campo, un operador y un argumento."
 
 #: templates/varnish-bans-manager/core/bans/expert.html:67
@@ -905,7 +911,7 @@ msgstr ""
 "Los operadores son <code>==</code> para la comparación directa, <code>~</"
 "code> para la comparación usando expresiones regulares, y <code>&gt;</code>  "
 "o <code>&lt;</code> para comparaciones de tamaño. Usando <code>!</code> "
-"antes de un operador niega la expresión."
+"antes de un operador se niega la expresión."
 
 #: templates/varnish-bans-manager/core/bans/expert.html:73
 msgid ""
@@ -1059,7 +1065,7 @@ msgstr "cachés han procesado correctamente tu ban."
 
 #: templates/varnish-bans-manager/core/bans/submit_errors.html:21
 msgid "caches have been unable to process your ban:"
-msgstr "cachés no han podido proesar tu ban:"
+msgstr "cachés no han podido procesar tu ban:"
 
 #: templates/varnish-bans-manager/core/bans/submit_errors.html:40
 msgid "Accept"
@@ -1185,7 +1191,7 @@ msgstr "Contraseña"
 #: templates/varnish-bans-manager/core/user/login.html:7
 #: templates/varnish-bans-manager/core/user/login.html:12
 msgid "Login"
-msgstr "Nombre de usuario"
+msgstr "Entrar"
 
 #: templates/varnish-bans-manager/core/user/login.html:33
 msgid "Forgot password?"
@@ -1240,7 +1246,7 @@ msgstr "Información personal"
 
 #: templates/varnish-bans-manager/core/user/profile.html:44
 msgid "Write your full name. It will only be visible by administrators."
-msgstr "Escribe tu nombre completo. Sólo será visibe para administradores."
+msgstr "Escribe tu nombre completo. Sólo será visible para administradores."
 
 #: templates/varnish-bans-manager/core/user/profile.html:54
 msgid ""
