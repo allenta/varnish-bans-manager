@@ -22,6 +22,7 @@ CELERYBEAT_LOG_DIR="/var/log/varnish-bans-manager"
 CELERYBEAT_LOG_FILE="$CELERYBEAT_LOG_DIR/celerybeat.log"
 CELERYBEAT_LOG_LEVEL="WARNING"
 CELERYBEAT_SCHEDULE="/var/www/varnish-bans-manager/celerybeat-schedule"
+CELERYBEAT_CHDIR="/tmp"
 CELERYBEAT_DAEMON_OPTS="\
     --pidfile="$CELERYBEAT_PID_FILE" \
     --logfile="$CELERYBEAT_LOG_FILE" \
@@ -29,6 +30,7 @@ CELERYBEAT_DAEMON_OPTS="\
     --schedule="$CELERYBEAT_SCHEDULE" \
     --uid="$CELERYBEAT_USER" \
     --gid="$CELERYBEAT_GROUP" \
+    --workdir="$CELERYBEAT_CHDIR" \
     --detach"
 
 ##
@@ -85,6 +87,7 @@ mkdir -p "$CELERYBEAT_PID_DIR"
 chown $CELERYBEAT_USER:$CELERYBEAT_GROUP "$CELERYBEAT_PID_DIR"
 mkdir -p "$CELERYBEAT_LOG_DIR"
 chown $CELERYBEAT_USER:$CELERYBEAT_GROUP "$CELERYBEAT_LOG_DIR"
+cd "$CELERYBEAT_CHDIR"
 
 ##
 ##
