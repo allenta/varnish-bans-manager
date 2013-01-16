@@ -1,18 +1,16 @@
 msgid ""
 msgstr ""
-"Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2013-01-16 11:40+0100\n"
 "Last-Translator: dot2code Technologies <info@dot2code.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
-#: settings.py:441
+#: settings.py:448
 msgid "Spanish"
 msgstr "Español"
 
-#: settings.py:442
+#: settings.py:449
 msgid "English"
 msgstr "Inglés"
 
@@ -260,6 +258,14 @@ msgstr "Grupo"
 msgid "- No group -"
 msgstr "- Sin grupo -"
 
+#: core/forms/caches/nodes.py:26
+msgid "Host name or IP address"
+msgstr "Nombre del host o dirección IP"
+
+#: core/forms/caches/nodes.py:27
+msgid "Port number"
+msgstr "Número del puerto"
+
 #: core/helpers/__init__.py:11
 msgid "All changes have been saved!"
 msgstr "¡Se han guardado todos los cambios!"
@@ -360,12 +366,6 @@ msgstr ""
 #: core/models/cache.py:111
 msgid "Port"
 msgstr "Puerto"
-
-msgid "Port number"
-msgstr "Número del puerto"
-
-msgid "Host name or IP address"
-msgstr "Nombre del host o dirección IP"
 
 #: core/models/cache.py:112
 msgid "Varnish management port number."
@@ -591,8 +591,8 @@ msgid ""
 msgstr ""
 "Ahora deberías ver un popup preguntándote dónde guardar el archivo exportado "
 "en tu ordenador. En caso contrario, puedes descargar manualmente el archivo "
-"simplemente haciendo clic en <a href=\"%(url)s\" target=\"_blank\">este enlace</"
-"a>."
+"simplemente haciendo clic en <a href=\"%(url)s\" target=\"_blank\">este "
+"enlace</a>."
 
 #: core/views/users.py:114
 #, python-format
@@ -1099,6 +1099,7 @@ msgstr "Mapa de cachés"
 msgid "Add node"
 msgstr "Agregar nodo"
 
+#: templates/varnish-bans-manager/core/caches/browse.html:58
 #: templates/varnish-bans-manager/core/caches/layout.html:22
 #: templates/varnish-bans-manager/core/caches/groups/add.html:5
 #: templates/varnish-bans-manager/core/caches/groups/add.html:12
