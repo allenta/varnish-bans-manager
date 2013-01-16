@@ -163,13 +163,14 @@ Final touches
 
 1. If you want to bind VBM's HTTP frontend to port 80, simply set up
    a reverse proxy using your preferred web server. Always avoid running
-   VBM as a privileged user for this! Check out the sample configuration
-   files in ``extras/proxies/`` for extra information.
+   VBM as a privileged user for this! Check out the `sample configuration
+   files <https://github.com/dot2code/varnish-bans-manager/tree/master/extras/proxies/>`_
+   for extra information.
 
 2. In a production environment you should run VBM HTTP frontend,
    celeryd and celerybeat as OS services. Use whatever software you
    are most familiar with, such as upstart, supervisord or a simple
-   init.d script. Check out the sample init.d scripts in ``extras/init.d/``
+   init.d script. Check out the `sample init.d scripts <https://github.com/dot2code/varnish-bans-manager/tree/master/extras/init.d/>`_
    if you need some inspiration.
 
 Configuration
