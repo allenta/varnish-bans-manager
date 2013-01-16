@@ -6,13 +6,13 @@
 """
 
 from __future__ import absolute_import
-from django.utils.translation import get_language_from_request
+from django.utils.translation import get_language
 from django.core.signing import TimestampSigner, b64_encode, b64_decode
 from celery.result import AsyncResult
 
 
 def enqueue(request, task, *args, **kwargs):
-    result = task.delay(language=get_language_from_request(request), *args, **kwargs)
+    result = task.delay(language=get_language(), *args, **kwargs)
     signer = TimestampSigner(key=request.session.session_key, sep=':')
     return signer.sign(b64_encode(result.id))
 
