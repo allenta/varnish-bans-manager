@@ -1,382 +1,419 @@
 msgid ""
 msgstr ""
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: 2013-01-16 11:40+0100\n"
 "Last-Translator: dot2code Technologies <info@dot2code.com>\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
-#: settings.py:438
+#: settings.py:441
 msgid "Spanish"
-msgstr ""
+msgstr "Español"
 
-#: settings.py:439
+#: settings.py:442
 msgid "English"
-msgstr ""
+msgstr "Inglés"
 
 #: urls.py:234
 msgid ""
 "We are sorry, but you are not authorized to see the the requested contents."
-msgstr ""
+msgstr "Lo sentimos pero no estás autorizado a ver los contenidos solicitados."
 
 #: urls.py:235
 msgid "We are sorry, but the requested content could not be found."
-msgstr ""
+msgstr "Lo sentimos pero no ha sido posible encontrar el contenido solicitado."
 
 #: core/forms/bans.py:25
 msgid ""
 "The selected item is no longer available. Please, refresh the page to update "
 "the list and choose another."
 msgstr ""
+"El elemento seleccionado ya no está disponible. Por favor, recarga la página "
+"para actualizar la lista y escoger otro."
 
 #: core/forms/bans.py:75
 msgid "Target"
-msgstr ""
+msgstr "Destino"
 
 #: core/forms/bans.py:76
 msgid "select"
-msgstr ""
+msgstr "elegir"
 
 #: core/forms/bans.py:102
 msgid "URL"
-msgstr ""
+msgstr "URL"
 
 #: core/forms/bans.py:103
 msgid "URL to be removed from caches"
-msgstr ""
+msgstr "URL a borrar de las cachés"
 
 #: core/forms/bans.py:107
 msgid "Only http:// and https:// schemes are supported."
-msgstr ""
+msgstr "http:// y https:// son los únicos esquemas soportados."
 
 #: core/forms/bans.py:136
 msgid "Regular expression"
-msgstr ""
+msgstr "Expresión regular"
 
 #: core/forms/bans.py:137 core/forms/bans.py:159
 msgid "match contents to be removed from caches"
-msgstr ""
+msgstr "contenidos a borrar de las cachés"
 
 #: core/forms/bans.py:158
 msgid "Ban expression"
-msgstr ""
+msgstr "Expresión del ban"
 
 #: core/forms/bans.py:175
 msgid "Submission date"
-msgstr ""
+msgstr "Fecha de envío"
 
 #: core/forms/bans.py:181
-msgid "all submitters"
-msgstr ""
+msgid "all users"
+msgstr "todos los usuarios"
 
 #: core/forms/bans.py:185
 msgid "all types"
-msgstr ""
+msgstr "todos los tipos"
 
 #: core/forms/bans.py:188
 msgid "all targets"
-msgstr ""
+msgstr "todos los destinos"
 
 #: core/forms/bans.py:245
 msgid "cache"
-msgstr ""
-
-#: core/forms/base.py:61
-msgid "Enter a list of integer values."
-msgstr ""
+msgstr "caché"
 
 #: core/forms/base.py:62
-#, python-format
-msgid "Ensure all values are greater than or equal to %s."
-msgstr ""
+msgid "Enter a list of integer values."
+msgstr "Introduce una lista de valores enteros"
 
 #: core/forms/base.py:63
 #, python-format
+msgid "Ensure all values are greater than or equal to %s."
+msgstr "Asegúrate de que todos los valores sean mayores que o iguales a %s."
+
+#: core/forms/base.py:64
+#, python-format
 msgid "Ensure all values are less than or equal to %s."
-msgstr ""
+msgstr "Asegúrate de que todos los valores sean menores que o iguales a %s."
 
 #: core/forms/settings.py:17
 msgid "Host matching variable"
-msgstr ""
+msgstr "Variable matching host"
 
-#: core/forms/settings.py:19 core/forms/settings.py:27
-#, python-format
-msgid "If not specified, defaults to <code>%s</code> for lurker friendly bans."
-msgstr ""
-
-#: core/forms/settings.py:25
+#: core/forms/settings.py:22
 msgid "URL matching variable"
-msgstr ""
+msgstr "Variable matching URL"
 
-#: core/forms/settings.py:33
+#: core/forms/settings.py:27
 msgid "Base ban expression"
-msgstr ""
+msgstr "Expresión base del ban"
 
-#: core/forms/settings.py:35
+#: core/forms/settings.py:29
 msgid ""
 "Restrict bans submitted using the basic and advanced forms writing here a "
 "base ban expression which will be merged with user defined expressions."
 msgstr ""
+"Restringe los bans que se envían desde los formularios básico y avanzado "
+"escribiendo aquí una expresión base que será concatenada con las expresiones "
+"definidas por los usuarios."
 
-#: core/forms/settings.py:43
+#: core/forms/settings.py:36
+msgid "Adjust VBM settings file to use a different e-mail address."
+msgstr ""
+"Ajusta el fichero de configuración de VBM para usar una dirección de e-mail "
+"diferente."
+
+#: core/forms/settings.py:42 core/forms/settings.py:45
+#, python-format
+msgid "If not specified, defaults to <code>%s</code> for lurker friendly bans."
+msgstr ""
+"En caso de no especificarse, por defecto se usa <code>%s</code> para bans "
+"lurker friendly."
+
+#: core/forms/settings.py:48
 #, python-format
 msgid "Deliver periodical ban submission reports to <code>%s</code>."
 msgstr ""
-
-#: core/forms/settings.py:45
-msgid "Adjust VBM settings file to use a different e-mail address."
-msgstr ""
+"Enviar periódicamente a <code>%s</code> informes con los bans enviados."
 
 #: core/forms/user.py:25 core/forms/user.py:26 core/forms/user.py:61
 #: core/forms/user.py:62 core/forms/users.py:38 core/tasks/users.py:42
 #: templates/varnish-bans-manager/core/user/profile.html:48
 msgid "e-mail address"
-msgstr ""
+msgstr "dirección de e-mail"
 
 #: core/forms/user.py:29 core/forms/user.py:30 core/forms/users.py:121
 #: core/forms/users.py:122
 msgid "password"
-msgstr ""
+msgstr "contraseña"
 
 #: core/forms/user.py:36
 msgid ""
 "Please enter a correct e-mail and password. Note that both fields are case-"
 "sensitive."
 msgstr ""
+"Por favor introduce un e-mail y contraseña correctos. Ten en cuenta que "
+"ambos campos diferencian entre mayúsculas y minúsculas."
 
 #: core/forms/user.py:39
 msgid "This account is inactive."
-msgstr ""
+msgstr "Esta cuenta está inactiva."
 
 #: core/forms/user.py:67
 msgid ""
 "That e-mail address doesn't have an associated user account. Are you sure "
 "you've registered?"
 msgstr ""
+"Esa dirección de e-mail no está vinculada a ninguna cuenta de usuario. "
+"¿Estás seguro de haberte registrado?"
 
 #: core/forms/user.py:70
 msgid ""
 "The user account associated with this e-mail address cannot reset the "
 "password."
 msgstr ""
+"La cuenta de usuario vinculada con esta dirección de e-mail no puede "
+"reiniciar la contraseña."
 
 #: core/forms/user.py:119 core/forms/user.py:120 core/forms/user.py:184
 msgid "new password"
-msgstr ""
+msgstr "nueva contraseña"
 
 #: core/forms/user.py:122 core/forms/user.py:123
 msgid "new password confirmation"
-msgstr ""
+msgstr "confirmación nueva contraseña"
 
 #: core/forms/user.py:127 core/forms/user.py:194 core/forms/users.py:129
 msgid "The two password fields didn't match."
-msgstr ""
+msgstr "Los dos campos de contraseña no coinciden."
 
 #: core/forms/user.py:151 core/forms/users.py:42 core/forms/users.py:115
 msgid "first name"
-msgstr ""
+msgstr "nombre"
 
 #: core/forms/user.py:154 core/forms/users.py:46 core/forms/users.py:118
 msgid "last name"
-msgstr ""
+msgstr "apellidos"
 
 #: core/forms/user.py:180
 msgid "Old password"
-msgstr ""
+msgstr "Contraseña antigua"
 
 #: core/forms/user.py:181
 msgid "current password"
-msgstr ""
+msgstr "Contraseña actual"
 
 #: core/forms/user.py:183
 msgid "New password"
-msgstr ""
+msgstr "Nueva contraseña"
 
 #: core/forms/user.py:186
 msgid "New password confirmation"
-msgstr ""
+msgstr "Confirmación nuevo contraseña"
 
 #: core/forms/user.py:187
 msgid "confirm new password"
-msgstr ""
+msgstr "confirmar nueva contraseña"
 
 #: core/forms/user.py:191
 msgid "Your old password was entered incorrectly. Please enter it again."
 msgstr ""
+"Has introducido una contraseña antigua incorrecta. Por favor introdúcela de "
+"nuevo."
 
 #: core/forms/users.py:29 core/tasks/users.py:44
 msgid "Last name"
-msgstr ""
+msgstr "Apellidos"
 
 #: core/forms/users.py:30
 msgid "Creation date"
-msgstr ""
+msgstr "Fecha creación"
 
 #: core/forms/users.py:33
 msgid "Download CSV"
-msgstr ""
+msgstr "Descargar CSV"
 
 #: core/forms/users.py:34
 #: templates/varnish-bans-manager/core/caches/groups/_edit_form.html:24
 #: templates/varnish-bans-manager/core/caches/nodes/_edit_form.html:75
 #: templates/varnish-bans-manager/core/users/_edit_form.html:83
-#: templates/varnish-bans-manager/core/users/browse.html:117
+#: templates/varnish-bans-manager/core/users/browse.html:113
 msgid "Delete"
-msgstr ""
+msgstr "Borrar"
 
 #: core/forms/users.py:124 core/forms/users.py:125
 msgid "password confirmation"
-msgstr ""
+msgstr "confirmación contraseña"
 
 #: core/forms/users.py:131
 msgid "This e-mail address is already in use."
-msgstr ""
+msgstr "Esta dirección de e-mail ya se está usando."
 
 #: core/forms/caches/nodes.py:17
 msgid "Group"
-msgstr ""
+msgstr "Grupo"
 
 #: core/forms/caches/nodes.py:18
 msgid "- No group -"
-msgstr ""
+msgstr "- Sin grupo -"
 
 #: core/helpers/__init__.py:11
-msgid "All changes have been successfully saved!"
-msgstr ""
+msgid "All changes have been saved!"
+msgstr "¡Se han guardado todos los cambios!"
 
 #: core/helpers/__init__.py:12
 msgid ""
 "We are sorry, but the request couldn't be processed. Please, try again later."
 msgstr ""
-"Lo sentimos pero no ha sido posible procesar la petición. Por favor, vuelve a intentarlo en un rato."
+"Lo sentimos pero no ha sido posible procesar la petición. Por favor, vuelve "
+"a intentarlo en un rato."
 
 #: core/helpers/__init__.py:13
 msgid "Form contains errors! Please review it and try again."
 msgstr ""
+"¡El formulario contiene errores! Por favor revísalo y vuelve a intentarlo."
 
 #: core/helpers/cli.py:29
 msgid "Cache has requested authentication but a secret key was not provided."
 msgstr ""
+"La caché ha solicitado autenticación pero no se ha proporcionado una clave "
+"secreta."
 
 #: core/helpers/cli.py:31
 #, python-format
 msgid "Connection to cache failed with status %(status)d."
-msgstr ""
+msgstr "La conexión con la caché ha fallado con el código %(status)d."
 
 #: core/helpers/cli.py:33
 #, python-format
 msgid "Execution of command failed with status %(status)d: '%(text)s'."
 msgstr ""
+"La ejecución del comando ha fallado con el código %(status)d: '%(text)s'."
 
 #: core/helpers/commands.py:86
 msgid "Applying changes..."
-msgstr ""
+msgstr "Aplicando cambios..."
 
 #: core/models/ban_submission.py:23
 msgid "basic"
-msgstr ""
+msgstr "básico"
 
 #: core/models/ban_submission.py:24
 msgid "advanced"
-msgstr ""
+msgstr "avanzado"
 
 #: core/models/ban_submission.py:25
 msgid "expert"
-msgstr ""
+msgstr "experto"
 
-#: core/models/base.py:241
+#: core/models/base.py:242
 msgid ""
 "This item has been updated by other user while you were editing it. Please "
 "reload the page and redo all necessary changes so no edition gets lost."
 msgstr ""
+"Este elemento ha sido actualizado por otro usuario mientras tu lo estabas "
+"editando. Por favor recarga la página y rehaz los cambios necesarios de "
+"forma que nada se pierda."
 
 #: core/models/cache.py:53 core/models/cache.py:98
 #: templates/varnish-bans-manager/core/user/profile.html:35
 #: templates/varnish-bans-manager/core/users/_edit_form.html:50
 msgid "Name"
-msgstr ""
+msgstr "Nombre"
 
 #: core/models/cache.py:54
 msgid ""
 "Some name used internally by VBM to refer to the group of caching nodes."
 msgstr ""
+"Algún nombre que VBM usará internamente para referirse al grupo de nodos de "
+"caché."
 
 #: core/models/cache.py:85
 msgid "cache group"
-msgstr ""
+msgstr "grupo de cachés"
 
 #: core/models/cache.py:86
 msgid "cache groups"
-msgstr ""
+msgstr "grupos de cachés"
 
 #: core/models/cache.py:99
 msgid ""
 "Some name used internally by VBM to refer to the cache node. If not "
 "provided, the host and port number of the node will be used."
 msgstr ""
+"Algún nombre que VBM usará internamente para referirse al nodo de caché. Si "
+"no se proporciona, se usarán el nombre del host y el número del puerto del "
+"nodo."
 
 #: core/models/cache.py:105
 msgid "Host"
-msgstr ""
+msgstr "Host"
 
 #: core/models/cache.py:106
 msgid "Name or IP address of the server running the Varnish cache node."
 msgstr ""
+"Nombre o dirección IP del servidor ejecutando el nodo de caché Varnish."
 
 #: core/models/cache.py:111
 msgid "Port"
-msgstr ""
+msgstr "Puerto"
 
 #: core/models/cache.py:112
 msgid "Varnish management port number."
-msgstr ""
+msgstr "Número del puerto de gestión de Varnish."
 
 #: core/models/cache.py:116
 msgid "Secret"
-msgstr ""
+msgstr "Secreto"
 
 #: core/models/cache.py:117
 msgid ""
 "If the -S secret-file is used in the cache node, provide here the contents "
 "of that file in order to authenticate CLI connections opened by VBM."
 msgstr ""
+"Si el acceso al nodo de caché está restringido usando un secreto compartido, "
+"facilita aquí los contenidos del archivo con ese secreto de forma que VBM "
+"pueda autenticar las conexiones con la consola de gestión."
 
 #: core/models/cache.py:123
 msgid "Version"
-msgstr ""
+msgstr "Versión"
 
 #: core/models/cache.py:124
 msgid "Select the Varnish version running in the cache node."
-msgstr ""
+msgstr "Selecciona la versión de Varnish ejecutándose en el nodo de caché."
 
 #: core/models/cache.py:180
 msgid "cache node"
-msgstr ""
+msgstr "nodo de caché"
 
 #: core/models/cache.py:181
 msgid "cache nodes"
-msgstr ""
+msgstr "nodos de caché"
 
 #: core/models/user_profile.py:20
 #: templates/varnish-bans-manager/core/bans/advanced.html:8
 #: templates/varnish-bans-manager/core/bans/advanced.html:23
 #: templates/varnish-bans-manager/core/bans/layout.html:23
 msgid "Advanced"
-msgstr ""
+msgstr "Avanzado"
 
 #: core/models/user_profile.py:21
 #: templates/varnish-bans-manager/core/bans/expert.html:7
 #: templates/varnish-bans-manager/core/bans/expert.html:22
 #: templates/varnish-bans-manager/core/bans/layout.html:32
 msgid "Expert"
-msgstr ""
+msgstr "Experto"
 
 #: core/models/user_profile.py:22
 #: templates/varnish-bans-manager/core/bans/layout.html:41
 #: templates/varnish-bans-manager/core/bans/submissions.html:8
 #: templates/varnish-bans-manager/core/bans/submissions.html:24
 msgid "Submissions"
-msgstr ""
+msgstr "Envíos"
 
 #: core/models/user_profile.py:23
 #: templates/varnish-bans-manager/core/bans/layout.html:50
@@ -384,7 +421,7 @@ msgstr ""
 #: templates/varnish-bans-manager/core/bans/status.html:22
 #: templates/varnish-bans-manager/core/users/update.html:29
 msgid "Status"
-msgstr ""
+msgstr "Estado"
 
 #: core/models/user_profile.py:24 templates/authenticated.html:22
 #: templates/varnish-bans-manager/core/caches/browse.html:5
@@ -392,13 +429,13 @@ msgstr ""
 #: templates/varnish-bans-manager/core/caches/groups/add.html:5
 #: templates/varnish-bans-manager/core/caches/groups/add.html:19
 #: templates/varnish-bans-manager/core/caches/groups/update.html:5
-#: templates/varnish-bans-manager/core/caches/groups/update.html:19
+#: templates/varnish-bans-manager/core/caches/groups/update.html:18
 #: templates/varnish-bans-manager/core/caches/nodes/add.html:5
 #: templates/varnish-bans-manager/core/caches/nodes/add.html:19
 #: templates/varnish-bans-manager/core/caches/nodes/update.html:5
-#: templates/varnish-bans-manager/core/caches/nodes/update.html:19
+#: templates/varnish-bans-manager/core/caches/nodes/update.html:18
 msgid "Caches"
-msgstr ""
+msgstr "Cachés"
 
 #: core/models/user_profile.py:25 templates/authenticated.html:27
 #: templates/varnish-bans-manager/core/users/add.html:5
@@ -408,7 +445,7 @@ msgstr ""
 #: templates/varnish-bans-manager/core/users/update.html:7
 #: templates/varnish-bans-manager/core/users/update.html:22
 msgid "Users"
-msgstr ""
+msgstr "Usuarios"
 
 #: core/models/user_profile.py:26 templates/authenticated.html:32
 #: templates/varnish-bans-manager/core/settings/general.html:7
@@ -418,124 +455,126 @@ msgstr ""
 #: templates/varnish-bans-manager/core/users/update.html:7
 #: templates/varnish-bans-manager/core/users/update.html:21
 msgid "Settings"
-msgstr ""
+msgstr "Opciones"
 
 #: core/models/user_profile.py:62
 msgid "Photo"
-msgstr ""
+msgstr "Fotografía"
 
 #: core/models/user_profile.py:63
 msgid "Upload a photo. It will only be visible by administrators."
-msgstr ""
+msgstr "Sube una fotografía. Será visible únicamente para los administradores."
 
 #: core/models/user_profile.py:85
 msgid "Access advanced ban submission form"
-msgstr ""
+msgstr "Acceso al formulario avanzado de envío de bans"
 
 #: core/models/user_profile.py:86
 msgid "Access expert ban submission form"
-msgstr ""
+msgstr "Acceso al formulario experto de envío de bans"
 
 #: core/models/user_profile.py:87
 msgid "Access bans submissions"
-msgstr ""
+msgstr "Acceso al envío de bans"
 
 #: core/models/user_profile.py:88
 msgid "Access bans status"
-msgstr ""
+msgstr "Acceso al estado de los bans"
 
 #: core/models/user_profile.py:89
 msgid "Access caches management"
-msgstr ""
+msgstr "Acceso a la gestión de las cachés"
 
 #: core/models/user_profile.py:90
 msgid "Access users management"
-msgstr ""
+msgstr "Acceso a la gestión de las usuarios"
 
 #: core/models/user_profile.py:91
 msgid "Access settings"
-msgstr ""
+msgstr "Acceso a las opciones"
 
 #: core/tasks/users.py:37
 msgid "users.csv"
-msgstr ""
+msgstr "usuarios.csv"
 
 #: core/tasks/users.py:41
 msgid "Identifier"
-msgstr ""
+msgstr "Identificador"
 
 #: core/tasks/users.py:43
 msgid "First name"
-msgstr ""
+msgstr "Nombre"
 
 #: core/views/bans.py:67
 msgid "Submitting ban..."
-msgstr ""
+msgstr "Enviando ban..."
 
 #: core/views/bans.py:96
 #, python-format
-msgid "Your ban has been successfully submitted to %(count)d cache."
-msgid_plural "Your ban has been successfully submitted to %(count)d caches."
-msgstr[0] ""
-msgstr[1] ""
+msgid ""
+"Your ban has been submitted and successfully processed by %(count)d cache."
+msgid_plural ""
+"Your ban has been submitted and successfully processed by %(count)d caches."
+msgstr[0] "Tu ban ha sido enviado y procesado con éxito por %(count)d caché."
+msgstr[1] "Tu ban ha sido enviado y procesado con éxito por %(count)d cachés."
 
 #: core/views/bans.py:168
 msgid "Fetching lists of bans..."
-msgstr ""
+msgstr "Recuperando listado de bans..."
 
 #: core/views/task.py:85
-msgid "The task execution has been successfully aborted."
-msgstr ""
+msgid "The task execution has been aborted."
+msgstr "La ejecución de la tarea ha sido cancelada."
 
 #: core/views/user.py:75
 msgid "Welcome back!"
-msgstr ""
+msgstr "¡Bienvenido de nuevo!"
 
 #: core/views/user.py:91
-msgid "You have been successfully disconnected. See you soon!"
-msgstr ""
+msgid "You have been disconnected. See you soon!"
+msgstr "Has sido desconectado. ¡Hasta pronto!"
 
 #: core/views/user.py:107
 #, python-format
 msgid ""
-"An e-mail with password reset instructions has been                 "
-"delivered to %(email)s. Please, check your inbox and follow the instructions."
+"An e-mail with password reset instructions has been delivered to %(email)s. "
+"Please, check your inbox and follow the instructions."
 msgstr ""
+"Se ha enviado a %(email)s un e-mail con instrucciones para reiniciar la "
+"contraseña. Por favor, echa un vistazo a tu buzón y sigue las instrucciones."
 
 #: core/views/user.py:139
 msgid ""
 "The password reset link is not valid anymore. Please, request a new one."
 msgstr ""
+"El enlace para el reinicio de la contraseña ya no es valido, Por favor, "
+"solicita uno nuevo."
 
-#: core/views/user.py:153
-msgid "Your user password has been successfully updated."
-msgstr ""
-
-#: core/views/user.py:199
-msgid "Your password has been successfully updated."
-msgstr ""
+#: core/views/user.py:153 core/views/user.py:199
+msgid "Your password has been updated."
+msgstr "Tu contraseña ha sido actualizada."
 
 #: core/views/users.py:68
 msgid "Removing users..."
-msgstr ""
+msgstr "Borrando usuarios..."
 
 #: core/views/users.py:74
 msgid "Generating CSV..."
-msgstr ""
+msgstr "Generando CSV..."
 
 #: core/views/users.py:95
 #, python-format
-msgid "%(count)d user has been successfully deleted."
-msgid_plural "%(count)d users have been successfully deleted."
-msgstr[0] ""
-msgstr[1] ""
+msgid "%(count)d user has been deleted."
+msgid_plural "%(count)d users have been deleted."
+msgstr[0] "Se ha borrado %(count)d usuario."
+msgstr[1] "Se han borrado %(count)d usuarios."
 
 #: core/views/users.py:100
 #, python-format
 msgid "Failed to delete %(count)d user."
 msgid_plural "Failed to delete %(count)d users."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "No se ha podido borrar %(count)d usuario."
+msgstr[1] "No se han podido borrar %(count)d usuarios."
 
 #: core/views/users.py:109
 #, python-format
@@ -544,75 +583,83 @@ msgid ""
 "in your computer. If not, you can download it manually by simply clicking <a "
 "href=\"%(url)s\" target=\"_blank\">this link</a>."
 msgstr ""
+"Ahora deberías ver un popup preguntándote dónde guardar el archivo exportado "
+"en tu ordenador. En caso contrario, puedes descargar manualmente el archivo "
+"simplemente haciendo clic en href=\"%(url)s\" target=\"_blank\">este enlace</"
+"a>."
 
 #: core/views/users.py:114
 #, python-format
-msgid "%(count)d user has been successfully exported."
-msgid_plural "%(count)d users have been successfully exported."
-msgstr[0] ""
-msgstr[1] ""
+msgid "%(count)d user has been exported."
+msgid_plural "%(count)d users have been exported."
+msgstr[0] "Se ha exportado %(count)d usuario."
+msgstr[1] "Se han exportado %(count)d usuarios."
 
 #: core/views/users.py:119
 #, python-format
 msgid "Failed to export %(count)d user."
 msgid_plural "Failed to export %(count)d users."
-msgstr[0] ""
-msgstr[1] ""
+msgstr[0] "No se ha podido exportar %(count)d usuario."
+msgstr[1] "No se han podido exportar %(count)d usuarios."
 
 #: core/views/users.py:186
 msgid "Removing user..."
-msgstr ""
+msgstr "Borrando usuario..."
 
 #: core/views/users.py:192
-msgid "The user has been successfully deleted."
-msgstr ""
+msgid "The user has been deleted."
+msgstr "El usuario ha sido borrado."
 
 #: core/views/caches/groups.py:87
 msgid ""
-"The group has been successfully deleted. Its nodes are no longer assigned to "
-"any group."
+"The group has been deleted. Its nodes are no longer assigned to any group."
 msgstr ""
+"El grupo ha sido borrado. Sus nodos ya no están asignados a nigún grupo."
 
 #: core/views/caches/nodes.py:87
-msgid "The node has been successfully deleted."
-msgstr ""
-
-#: filesystem/models.py:54
-msgid "File type not supported."
-msgstr ""
+msgid "The node has been deleted."
+msgstr "El nodo ha sido borrado."
 
 #: filesystem/models.py:56
+msgid "File type not supported."
+msgstr "Formato de archivo no soportado."
+
+#: filesystem/models.py:58
 #, python-format
 msgid "Please keep filesize under %(max)s. Current filesize %(current)s."
 msgstr ""
+"Por favor mantén el tamaño del archivo bajo %(max)s. El tamaño actual es %"
+"(current)s."
 
-#: filesystem/models.py:61
+#: filesystem/models.py:63
 msgid "Invalid file."
-msgstr ""
+msgstr "Archivo no válido."
 
 #: templates/403.html:5
 msgid "You are not authorized to see the the requested page."
-msgstr ""
+msgstr "No estás autorizado a ver la página solicitada."
 
 #: templates/403.html:6
 msgid "Please, contact us if you have any questions."
-msgstr ""
+msgstr "Por favor, contáctanos si tienes alguna duda."
 
 #: templates/404.html:5
 msgid "The page you were looking for doesn't exist."
-msgstr ""
+msgstr "La página que estás buscando no existe."
 
 #: templates/404.html:6
 msgid "You may have mistyped the address or the page may have been moved."
 msgstr ""
+"Puede que hayas tecleado la dirección incorrectamente o tal vez la página "
+"haya sido movida."
 
 #: templates/500.html:5
 msgid "Your request couldn't be processed."
-msgstr ""
+msgstr "Tu petición no ha podido ser procesada."
 
 #: templates/500.html:6
 msgid "Please, try again later."
-msgstr ""
+msgstr "Por favor, vuele a intentarlo más tarde."
 
 #: templates/authenticated.html:18
 #: templates/varnish-bans-manager/core/bans/advanced.html:8
@@ -626,7 +673,7 @@ msgstr ""
 #: templates/varnish-bans-manager/core/bans/submissions.html:8
 #: templates/varnish-bans-manager/core/bans/submissions.html:23
 msgid "Bans"
-msgstr ""
+msgstr "Bans"
 
 #: templates/authenticated.html:43
 #: templates/varnish-bans-manager/core/user/password.html:7
@@ -634,187 +681,273 @@ msgstr ""
 #: templates/varnish-bans-manager/core/user/profile.html:7
 #: templates/varnish-bans-manager/core/user/profile.html:21
 msgid "Profile"
-msgstr ""
+msgstr "Perfil"
 
 #: templates/authenticated.html:45
 msgid "Disconnect"
+msgstr "Desconectar"
+
+#: templates/emails/base.email:15
+msgid ""
+"Please do not reply to this message; it was sent from an unmonitored e-mail\n"
+"address. To ensure reliable email delivery in the future, please add our\n"
+"e-mail address to your address book."
 msgstr ""
+"Por favor no respondas a este mensaje; ha sido enviado desde una dirección\n"
+"de e-mail no monitorizada. Para asegurar la correcta recepción de futuros\n"
+"e-mails, por favor agrega nuestra dirección de e-mail a tu libreta de\n"
+"direcciones."
+
+#: templates/emails/base.email:19
+#, python-format
+msgid ""
+"This message is a service e-mail related to the Varnish Bans Manager\n"
+"service. For general inquiries or to request support with your account,\n"
+"please contact us directly at %(contact_email)s."
+msgstr ""
+"Este es un mensaje de servicio relacionado con el servicio Varnish Bans\n"
+"Manager. Para cuestiones generales o para solicitar soporte con tu cuenta,\n"
+"por favor, contacta con nosotros directamente en %(contact_email)s."
+
+#: templates/emails/base.email:50
+msgid ""
+"Please do not reply to this message; it was sent from an unmonitored e-mail "
+"address. To ensure reliable email delivery in the future, please add our e-"
+"mail address to your address book."
+msgstr ""
+"Por favor no respondas a este mensaje; ha sido enviado desde una dirección "
+"de e-mail no monitorizada. Para asegurar la correcta recepción de futuros e-"
+"mails, por favor agrega nuestra dirección de e-mail a tu libreta de "
+"direcciones."
+
+#: templates/emails/base.email:53
+#, python-format
+msgid ""
+"This message is a service e-mail related to the Varnish Bans Manager "
+"service. For general inquiries or to request support with your account, "
+"please contact us directly at <a href=\"mailto:%(contact_email)s\">%"
+"(contact_email)s</a>."
+msgstr ""
+"Este es un mensaje de servicio relacionado con el servicio Varnish Bans "
+"Manager. Para cuestiones generales o para solicitar soporte con tu cuenta, "
+"por favor, contacta con nosotros directamente en <a href=\"mailto:%"
+"(contact_email)s\">%(contact_email)s</a>."
+
+#: templates/emails/varnish-bans-manager/core/bans/submissions.email:4
+msgid "Ban submissions notification"
+msgstr "Notificación de envío de bans"
+
+#: templates/emails/varnish-bans-manager/core/bans/submissions.email:7
+msgid "Please, check out the HTML version of this e-mail ;)"
+msgstr "Por favor, consulta la versión HTML de este e-mail ;)"
+
+#: templates/emails/varnish-bans-manager/core/user/password_reset.email:4
+msgid "Password reset request"
+msgstr "Solicitud nueva contraseña"
+
+#: templates/emails/varnish-bans-manager/core/user/password_reset.email:7
+#: templates/emails/varnish-bans-manager/core/user/password_reset.email:19
+#, python-format
+msgid "Hi %(name)s,"
+msgstr "Hola %(name)s,"
+
+#: templates/emails/varnish-bans-manager/core/user/password_reset.email:9
+msgid ""
+"You're receiving this e-mail because you requested a password reset\n"
+"for your user account. Please, go to the following page and choose\n"
+"a new password:"
+msgstr ""
+"Has recibido este e-mail porque has solicitado un reinicio de la\n"
+"contraseña de tu cuenta de usuario. Por favor, visita la página\n"
+"siguiente y elige una nueva contraseña:"
+
+#: templates/emails/varnish-bans-manager/core/user/password_reset.email:15
+#: templates/emails/varnish-bans-manager/core/user/password_reset.email:23
+msgid "Thanks for using our site!"
+msgstr "¡Gracias por usar la web!"
+
+#: templates/emails/varnish-bans-manager/core/user/password_reset.email:21
+#, python-format
+msgid ""
+"You're receiving this e-mail because you requested a password reset for your "
+"user account. Please, follow <a href=\"%(reset_url)s\">this password reset "
+"link</a> and choose a new password."
+msgstr ""
+"Has recibido este e-mail porque has solicitado un reinicio de la contraseña "
+"de tu cuenta de usuario. Por favor, visita <a href=\"%(reset_url)s\">este "
+"enlace</a> y elige una nueva contraseña."
 
 #: templates/varnish-bans-manager/core/bans/advanced.html:15
 #: templates/varnish-bans-manager/core/bans/basic.html:15
 #: templates/varnish-bans-manager/core/bans/expert.html:14
 msgid "Submit ban"
-msgstr ""
+msgstr "Enviar ban"
 
 #: templates/varnish-bans-manager/core/bans/advanced.html:16
 #: templates/varnish-bans-manager/core/bans/basic.html:16
 #: templates/varnish-bans-manager/core/bans/expert.html:15
 msgid "Invalidate contents currently in the cache"
-msgstr ""
+msgstr "Invalidar contenidos actualmente en la caché"
 
 #: templates/varnish-bans-manager/core/bans/advanced.html:30
 #: templates/varnish-bans-manager/core/bans/basic.html:30
 #: templates/varnish-bans-manager/core/bans/expert.html:29
 msgid "Set and submit your ban"
-msgstr ""
+msgstr "Define y envía tu ban"
 
 #: templates/varnish-bans-manager/core/bans/advanced.html:54
 #: templates/varnish-bans-manager/core/bans/basic.html:54
 #: templates/varnish-bans-manager/core/bans/expert.html:52
 msgid "Submit"
-msgstr ""
+msgstr "Enviar"
 
 #: templates/varnish-bans-manager/core/bans/advanced.html:61
 msgid "Regular expressions"
-msgstr ""
+msgstr "Expresiones regulares"
 
 #: templates/varnish-bans-manager/core/bans/advanced.html:65
 #, python-format
 msgid ""
-"\n"
-"          A <a href=\"%(regex)s\">regular expression</a> provides a concise "
-"and flexible means to match\n"
-"          strings of text, such as particular characters, words, or patterns "
-"of\n"
-"          characters.\n"
-"        "
+"A <a href=\"%(regex)s\">regular expression</a> provides a concise and "
+"flexible means to match strings of text, such as particular characters, "
+"words, or patterns of characters."
 msgstr ""
+"Una <a href=\"%(regex)s\">expresión regular</a> proporciona un mecanismo "
+"conciso y flexible para buscar cadenas de texto, como por ejemplo ciertos "
+"caracteres, palabras, o patrones de caracteres. "
 
-#: templates/varnish-bans-manager/core/bans/advanced.html:72
+#: templates/varnish-bans-manager/core/bans/advanced.html:68
 msgid ""
-"\n"
-"          When using the advanced bans submission method, all documents in "
-"the selected\n"
-"          target, whose URL matches the specified regular expression, are\n"
-"          invalidated. Note that the host part of the URL is always ignored, "
-"so if\n"
-"          the selected target handles several virtual hosts, <strong>all of "
-"them</strong>\n"
-"          will be banned.\n"
-"        "
+"When using the advanced bans submission method, all documents in the "
+"selected target, whose URL matches the specified regular expression, are "
+"invalidated. Note that the host part of the URL is always ignored, so if the "
+"selected target handles several virtual hosts, <strong>all of them</strong> "
+"will be banned."
 msgstr ""
+"Al usar el envío de bans avanzado se invalidan todos los documentos en el "
+"destino seleccionado cuya URL concuerde con la expresión regular indicada. "
+"Ten en cuenta que la parte del host de la URL siempre se va a ignorar, de "
+"forma que si el destino seleccionado gestiona varios hosts virtuales, "
+"<strong> todos ellos</strong> serán invalidados."
 
-#: templates/varnish-bans-manager/core/bans/advanced.html:83
+#: templates/varnish-bans-manager/core/bans/advanced.html:73
 #, python-format
 msgid ""
-"\n"
-"            Use the <a href=\"%(expert)s\" class=\"navigation\">expert bans "
-"submission</a>\n"
-"            if you are looking for extra document filtering options.\n"
-"          "
+"Use the <a href=\"%(expert)s\" class=\"navigation\">expert bans submission</"
+"a> if you are looking for extra document filtering options."
 msgstr ""
+"Usa el <a href=\"%(expert)s\" class=\"navigation\">envío experto de bans</a> "
+"si necesitas opciones adicionales para el filtrado de documentos."
 
-#: templates/varnish-bans-manager/core/bans/advanced.html:94
-#: templates/varnish-bans-manager/core/bans/expert.html:99
+#: templates/varnish-bans-manager/core/bans/advanced.html:81
+#: templates/varnish-bans-manager/core/bans/expert.html:81
 msgid "References"
-msgstr ""
+msgstr "Referencias"
 
-#: templates/varnish-bans-manager/core/bans/advanced.html:98
+#: templates/varnish-bans-manager/core/bans/advanced.html:85
 msgid "Regular expressions guide"
-msgstr ""
+msgstr "Guía expresiones regulares"
 
-#: templates/varnish-bans-manager/core/bans/advanced.html:99
-#: templates/varnish-bans-manager/core/bans/expert.html:106
+#: templates/varnish-bans-manager/core/bans/advanced.html:86
+#: templates/varnish-bans-manager/core/bans/expert.html:88
 msgid "Varnish users guide"
-msgstr ""
+msgstr "Guía de usuario Varnish"
 
-#: templates/varnish-bans-manager/core/bans/advanced.html:100
-#: templates/varnish-bans-manager/core/bans/expert.html:107
+#: templates/varnish-bans-manager/core/bans/advanced.html:87
+#: templates/varnish-bans-manager/core/bans/expert.html:89
 msgid "Varnish reference"
-msgstr ""
+msgstr "Referencia Varnish"
 
 #: templates/varnish-bans-manager/core/bans/basic.html:8
 #: templates/varnish-bans-manager/core/bans/basic.html:23
 #: templates/varnish-bans-manager/core/bans/layout.html:15
 msgid "Basic"
-msgstr ""
+msgstr "Básico"
 
 #: templates/varnish-bans-manager/core/bans/expert.html:59
-#: templates/varnish-bans-manager/core/bans/expert.html:104
+#: templates/varnish-bans-manager/core/bans/expert.html:86
 #: templates/varnish-bans-manager/core/bans/status.html:68
 #: templates/varnish-bans-manager/core/settings/general.html:28
 msgid "Ban expressions"
-msgstr ""
+msgstr "Expresiones de bans"
 
 #: templates/varnish-bans-manager/core/bans/expert.html:63
 #, python-format
 msgid ""
-"\n"
-"          A <a href=\"%(exprs)s\">ban expression</a> may be composed of "
-"several\n"
-"          conditions combined using a logical AND operator (<code>&&</"
-"code>).\n"
-"          Each condition should consist of a field, an operator and an "
-"argument.\n"
-"        "
+"A <a href=\"%(exprs)s\">ban expression</a> may be composed of several "
+"conditions combined using a logical AND operator (<code>&&</code>). Each "
+"condition should consist of a field, an operator and an argument."
 msgstr ""
+"La <a href=\"%(exprs)s\">expresión de un ban</a> está compuesta por varias "
+"condiciones combinadas usando el operador lógico AND (<code>&&</code>).Cada "
+"condición consiste en un campo, un operador y un argumento."
 
-#: templates/varnish-bans-manager/core/bans/expert.html:71
+#: templates/varnish-bans-manager/core/bans/expert.html:67
 #, python-format
 msgid ""
-"\n"
-"            A field can be any of the <a href=%(vars)s\"\">variables from "
-"VCL</a>, for instance\n"
-"            <code>req.url</code> (requested URL), <code>req.http.host</"
-"code>\n"
-"            (requested host) or <code>obj.http.set-cookie</code> (returned "
-"value\n"
-"            for the HTTP Set-Cookie header).\n"
-"          "
+"A field can be any of the <a href=%(vars)s\"\">variables from VCL</a>, for "
+"instance <code>req.url</code> (requested URL), <code>req.http.host</code> "
+"(requested host) or <code>obj.http.set-cookie</code> (returned value for the "
+"HTTP Set-Cookie header)."
 msgstr ""
+"Un campo puede ser cualquiera de <a href=%(vars)s\"\">las variables del VCL</"
+"a>, como por ejemplo <code>req.url</code> (URL de la petición), <code>req."
+"http.host</code> (host de la petición) o <code>obj.http.set-cookie</code> "
+"(valor devuelto en la cabecera HTTP Set-Cookie)."
 
-#: templates/varnish-bans-manager/core/bans/expert.html:79
+#: templates/varnish-bans-manager/core/bans/expert.html:70
 msgid ""
-"\n"
-"            Operators are <code>==</code> for direct comparision, <code>~</"
-"code> for\n"
-"            a regular expression match, and <code>&gt;</code> or <code>&lt;</"
-"code>\n"
-"            for size comparisons. Prepending an operator with <code>!</code> "
-"negates\n"
-"            the expression.\n"
-"          "
+"Operators are <code>==</code> for direct comparision, <code>~</code> for a "
+"regular expression match, and <code>&gt;</code> or <code>&lt;</code> for "
+"size comparisons. Prepending an operator with <code>!</code> negates the "
+"expression."
 msgstr ""
+"Los operadores son <code>==</code> para la comparación directa, <code>~</"
+"code> para la comparación usando expresiones regulares, y <code>&gt;</code>  "
+"o <code>&lt;</code> para comparaciones de tamaño. Usando <code>!</code> "
+"antes de un operador niega la expresión."
+
+#: templates/varnish-bans-manager/core/bans/expert.html:73
+msgid ""
+"The argument could be a quoted string, a regular expression or an integer. "
+"Integers can have <code>KB</code>, <code>MB</code>, <code>GB</code> or "
+"<code>TB</code> appended for size related fields."
+msgstr ""
+"El argumento puede ser una cadena entre comillas, una expresión regular o un "
+"entero. Los enteros pueden incluir los sufijos <code>KB</code>, <code>MB</"
+"code>, <code>GB</code> o <code>TB</code> para campos relativos a tamaños."
+
+#: templates/varnish-bans-manager/core/bans/expert.html:85
+msgid "Bans overview"
+msgstr "Visión general bans"
 
 #: templates/varnish-bans-manager/core/bans/expert.html:87
-msgid ""
-"\n"
-"            The argument could be a quoted string, a regular expression or "
-"an\n"
-"            integer. Integers can have <code>KB</code>, <code>MB</code>,\n"
-"            <code>GB</code> or <code>TB</code> appended for size related "
-"fields.\n"
-"          "
-msgstr ""
+msgid "Ban variables"
+msgstr "Variables en bans"
+
+#: templates/varnish-bans-manager/core/bans/expert.html:96
+msgid "Examples"
+msgstr "Ejemplos"
+
+#: templates/varnish-bans-manager/core/bans/expert.html:99
+msgid "To ban a particular content (requested URL):"
+msgstr "Un ban para invalidar un contenido concreto (una URL):"
 
 #: templates/varnish-bans-manager/core/bans/expert.html:103
-msgid "Bans overview"
-msgstr ""
-
-#: templates/varnish-bans-manager/core/bans/expert.html:105
-msgid "Ban variables"
-msgstr ""
-
-#: templates/varnish-bans-manager/core/bans/expert.html:114
-msgid "Examples"
-msgstr ""
-
-#: templates/varnish-bans-manager/core/bans/expert.html:117
-msgid "To ban a particular content (requested URL):"
-msgstr ""
-
-#: templates/varnish-bans-manager/core/bans/expert.html:121
 msgid "To ban all PDF files in the virtual host <code>example.com</code>:"
 msgstr ""
+"Un ban para invalidar todos los archivos PDF en el host virtual "
+"<code>example.com</code>:"
 
-#: templates/varnish-bans-manager/core/bans/expert.html:125
+#: templates/varnish-bans-manager/core/bans/expert.html:107
 #, python-format
 msgid ""
-"\n"
-"        Same as before but using a <a href=\"%(lurker)s\">lurker friendly "
-"ban</a> (recommended approach that requires some tunning of the VCL):\n"
-"      "
+"Same as before but using a <a href=\"%(lurker)s\">lurker friendly ban</a> "
+"(recommended approach that requires some tunning of the VCL):"
 msgstr ""
+"Lo mismo que antes pero usando un <a href=\"%(lurker)s\">ban lurker "
+"friendly</a> (que es el modo de trabajo recomendado y que requiere de "
+"ciertos ajustes del VCL)"
 
 #: templates/varnish-bans-manager/core/bans/layout.html:58
 #: templates/varnish-bans-manager/core/caches/layout.html:36
@@ -822,103 +955,115 @@ msgstr ""
 #: templates/varnish-bans-manager/core/user/layout.html:29
 #: templates/varnish-bans-manager/core/users/layout.html:29
 msgid "More"
-msgstr ""
+msgstr "Más"
 
 #: templates/varnish-bans-manager/core/bans/status.html:14
 msgid "Ban lists"
-msgstr ""
+msgstr "Listados de bans"
 
 #: templates/varnish-bans-manager/core/bans/status.html:15
 msgid "Check ban lists in nodes & groups"
-msgstr ""
+msgstr "Revisar listados de bans en nodos y grupos"
 
 #: templates/varnish-bans-manager/core/bans/status.html:28
 msgid ""
 "Select a cache in the list below and click the 'view' button to fetch the "
 "list of ban expressions currently active in each node."
 msgstr ""
+"Selecciona una caché en el listado siguiente y haz clic sobre el botón 'ver' "
+"para recuperar el listado de expresiones de bans actualmente activas en cada "
+"nodo."
 
 #: templates/varnish-bans-manager/core/bans/status.html:43
 msgid "View"
-msgstr ""
+msgstr "Ver"
 
 #: templates/varnish-bans-manager/core/bans/status.html:55
 msgid ""
 "Failed to fetch list of bans in some caching nodes. Please, check out the "
-"'errors' tab por details."
+"'errors' tab for details."
 msgstr ""
+"No se ha podido recuperar el listado de bans en algunos nodos. Por favor, "
+"echa un vistazo a la solapa 'errores' para detalles."
 
 #: templates/varnish-bans-manager/core/bans/status.html:66
 msgid "Shared"
-msgstr ""
+msgstr "Compartidos"
 
 #: templates/varnish-bans-manager/core/bans/status.html:74
 msgid "Differences"
-msgstr ""
+msgstr "Diferencias"
 
 #: templates/varnish-bans-manager/core/bans/status.html:79
 msgid "Errors"
-msgstr ""
+msgstr "Errores"
 
 #: templates/varnish-bans-manager/core/bans/status.html:92
-msgid "All ban expressions shared by all the selected caching nodes."
-msgstr ""
+msgid "Ban expressions shared by all the selected caching nodes."
+msgstr "Expresiones de bans compartidas por todos los nodos seleccionados."
 
 #: templates/varnish-bans-manager/core/bans/status.html:103
 msgid ""
 "Ban expressions not shared by all the selected caching nodes, broken down by "
 "node."
 msgstr ""
+"Expresiones de bans no compartidas por todos los nodos seleccionados, "
+"desglosadas por nodo."
 
 #: templates/varnish-bans-manager/core/bans/submissions.html:16
 msgid "Recent submissions"
-msgstr ""
+msgstr "Envíos recientes"
 
 #: templates/varnish-bans-manager/core/bans/submissions.html:17
 msgid "Browse recently submited bans"
-msgstr ""
+msgstr "Explorar bans enviados recientemente"
 
 #: templates/varnish-bans-manager/core/bans/submissions.html:46
 #: templates/varnish-bans-manager/core/users/browse.html:52
 msgid "Search"
-msgstr ""
+msgstr "Buscar"
+
+#: templates/varnish-bans-manager/core/bans/submissions.html:54
+#: templates/varnish-bans-manager/core/users/browse.html:60
+msgid "Sort by"
+msgstr "Ordenar por"
 
 #: templates/varnish-bans-manager/core/bans/submissions.html:75
 msgid "Submitted"
-msgstr ""
+msgstr "Enviado"
 
 #: templates/varnish-bans-manager/core/bans/submissions.html:88
 msgid "errors"
-msgstr ""
+msgstr "errores"
 
 #: templates/varnish-bans-manager/core/bans/submissions.html:93
 msgid "expand"
-msgstr ""
+msgstr "expandir"
 
 #: templates/varnish-bans-manager/core/bans/submissions.html:115
 msgid "collapse"
-msgstr ""
+msgstr "colapsar"
 
 #: templates/varnish-bans-manager/core/bans/submissions.html:125
-#: templates/varnish-bans-manager/core/users/browse.html:127
+#: templates/varnish-bans-manager/core/users/browse.html:123
 msgid "Items per page"
-msgstr ""
+msgstr "Elementos por página"
 
 #: templates/varnish-bans-manager/core/bans/submit_errors.html:6
 msgid "Ban submission report"
-msgstr ""
+msgstr "Informe de envío de bans"
 
 #: templates/varnish-bans-manager/core/bans/submit_errors.html:14
 msgid "caches have properly processed your ban."
-msgstr ""
+msgstr "cachés han procesado correctamente tu ban."
 
 #: templates/varnish-bans-manager/core/bans/submit_errors.html:21
 msgid "caches have been unable to process your ban:"
-msgstr ""
+msgstr "cachés no han podido proesar tu ban:"
 
 #: templates/varnish-bans-manager/core/bans/submit_errors.html:40
 msgid "Accept"
-msgstr ""
+msgstr "Aceptar"
 
 #: templates/varnish-bans-manager/core/caches/browse.html:5
 #: templates/varnish-bans-manager/core/caches/browse.html:20
@@ -926,42 +1071,46 @@ msgstr ""
 #: templates/varnish-bans-manager/core/users/browse.html:27
 #: templates/varnish-bans-manager/core/users/layout.html:15
 msgid "Browse"
-msgstr ""
+msgstr "Explorar"
 
 #: templates/varnish-bans-manager/core/caches/browse.html:12
 msgid "Browse caches & groups"
-msgstr ""
+msgstr "Explorar cachés y grupos"
 
 #: templates/varnish-bans-manager/core/caches/browse.html:13
 msgid "Browse & organize cache nodes in groups"
-msgstr ""
+msgstr "Explorar y organizar nodos de cachés y grupos"
 
 #: templates/varnish-bans-manager/core/caches/browse.html:27
 msgid "Caches map"
-msgstr ""
+msgstr "Mapa de cachés"
 
 #: templates/varnish-bans-manager/core/caches/browse.html:50
 #: templates/varnish-bans-manager/core/caches/layout.html:29
 #: templates/varnish-bans-manager/core/caches/nodes/add.html:5
+#: templates/varnish-bans-manager/core/caches/nodes/add.html:12
 #: templates/varnish-bans-manager/core/caches/nodes/add.html:20
 msgid "Add node"
-msgstr ""
+msgstr "Agregar nodo"
 
 #: templates/varnish-bans-manager/core/caches/layout.html:22
 #: templates/varnish-bans-manager/core/caches/groups/add.html:5
+#: templates/varnish-bans-manager/core/caches/groups/add.html:12
 #: templates/varnish-bans-manager/core/caches/groups/add.html:20
 msgid "Add group"
-msgstr ""
+msgstr "Agregar grupo"
 
 #: templates/varnish-bans-manager/core/caches/groups/_edit_form.html:8
 msgid "Group info"
-msgstr ""
+msgstr "Información del grupo"
 
 #: templates/varnish-bans-manager/core/caches/groups/_edit_form.html:24
 msgid ""
 "The group will be permanently deleted. All its current nodes will remain "
 "accessible but they will not be assigned to any group."
 msgstr ""
+"El grupo se borrará permanentemente. Todos sus nodos seguirán siendo "
+"accesibles, pero no estarán asignados a ningún grupo."
 
 #: templates/varnish-bans-manager/core/caches/groups/_edit_form.html:26
 #: templates/varnish-bans-manager/core/caches/nodes/_edit_form.html:77
@@ -970,82 +1119,60 @@ msgstr ""
 #: templates/varnish-bans-manager/core/user/profile.html:72
 #: templates/varnish-bans-manager/core/users/_edit_form.html:85
 msgid "Save"
-msgstr ""
-
-#: templates/varnish-bans-manager/core/caches/groups/add.html:12
-msgid "Add cache group"
-msgstr ""
+msgstr "Guardar"
 
 #: templates/varnish-bans-manager/core/caches/groups/add.html:13
-msgid "Create groups to organize your cache nodes"
-msgstr ""
+msgid "Create groups to organize cache nodes"
+msgstr "Crear grupos para organizar los nodos de caché"
 
 #: templates/varnish-bans-manager/core/caches/groups/update.html:5
-#: templates/varnish-bans-manager/core/caches/groups/update.html:20
-msgid "Edit group"
-msgstr ""
-
 #: templates/varnish-bans-manager/core/caches/groups/update.html:12
-msgid "Edit cache group"
-msgstr ""
-
-#: templates/varnish-bans-manager/core/caches/groups/update.html:13
-msgid "Update your group configuration"
-msgstr ""
+#: templates/varnish-bans-manager/core/caches/groups/update.html:19
+msgid "Edit group"
+msgstr "Editar grupo"
 
 #: templates/varnish-bans-manager/core/caches/nodes/_edit_form.html:8
 msgid "Node configuration"
-msgstr ""
+msgstr "Configuración del nodo"
 
 #: templates/varnish-bans-manager/core/caches/nodes/_edit_form.html:31
 msgid "Address"
-msgstr ""
-
-#: templates/varnish-bans-manager/core/caches/nodes/add.html:12
-msgid "Add cache node"
-msgstr ""
+msgstr "Dirección"
 
 #: templates/varnish-bans-manager/core/caches/nodes/add.html:13
-msgid "Set up your cache nodes"
-msgstr ""
+msgid "Set up cache nodes"
+msgstr "Configurar nodos de caché"
 
 #: templates/varnish-bans-manager/core/caches/nodes/update.html:5
-#: templates/varnish-bans-manager/core/caches/nodes/update.html:20
-msgid "Edit node"
-msgstr ""
-
 #: templates/varnish-bans-manager/core/caches/nodes/update.html:12
-msgid "Edit cache node"
-msgstr ""
-
-#: templates/varnish-bans-manager/core/caches/nodes/update.html:13
-msgid "Update your cache node configuration"
-msgstr ""
+#: templates/varnish-bans-manager/core/caches/nodes/update.html:19
+msgid "Edit node"
+msgstr "Editar nodo"
 
 #: templates/varnish-bans-manager/core/settings/general.html:7
 #: templates/varnish-bans-manager/core/settings/general.html:22
 #: templates/varnish-bans-manager/core/settings/layout.html:15
 msgid "General"
-msgstr ""
+msgstr "General"
 
 #: templates/varnish-bans-manager/core/settings/general.html:14
 msgid "General settings"
-msgstr ""
+msgstr "Opciones generales"
 
 #: templates/varnish-bans-manager/core/settings/general.html:15
 msgid "Adjust general Varnish Bans Manager settings"
-msgstr ""
+msgstr "Ajustar opciones generales de Varnish Bans Manager"
 
 #: templates/varnish-bans-manager/core/settings/general.html:72
 msgid "Notifications"
-msgstr ""
+msgstr "Notificaciones"
 
 #: templates/varnish-bans-manager/core/user/layout.html:15
 #: templates/varnish-bans-manager/core/user/profile.html:7
 #: templates/varnish-bans-manager/core/user/profile.html:14
 #: templates/varnish-bans-manager/core/user/profile.html:22
 msgid "Preferences"
-msgstr ""
+msgstr "Preferencias"
 
 #: templates/varnish-bans-manager/core/user/layout.html:22
 #: templates/varnish-bans-manager/core/user/password.html:7
@@ -1053,135 +1180,131 @@ msgstr ""
 #: templates/varnish-bans-manager/core/user/password.html:22
 #: templates/varnish-bans-manager/core/users/_edit_form.html:24
 msgid "Password"
-msgstr ""
+msgstr "Contraseña"
 
 #: templates/varnish-bans-manager/core/user/login.html:7
 #: templates/varnish-bans-manager/core/user/login.html:12
 msgid "Login"
-msgstr ""
+msgstr "Nombre de usuario"
 
 #: templates/varnish-bans-manager/core/user/login.html:33
 msgid "Forgot password?"
-msgstr ""
+msgstr "¿Contraseña olvidada?"
 
 #: templates/varnish-bans-manager/core/user/login.html:34
 msgid "Sign in"
-msgstr ""
+msgstr "Entrar"
 
 #: templates/varnish-bans-manager/core/user/password.html:15
 msgid "Manage your password"
-msgstr ""
+msgstr "Gestionar tu contraseña"
 
 #: templates/varnish-bans-manager/core/user/password.html:29
 msgid "Change"
-msgstr ""
+msgstr "Cambiar"
 
 #: templates/varnish-bans-manager/core/user/password_reset.html:7
 #: templates/varnish-bans-manager/core/user/password_reset.html:12
 msgid "Password reset"
-msgstr ""
+msgstr "Reiniciar contraseña"
 
 #: templates/varnish-bans-manager/core/user/password_reset.html:25
 #: templates/varnish-bans-manager/core/user/password_reset_confirm.html:32
 msgid "Cancel"
-msgstr ""
+msgstr "Cancelar"
 
 #: templates/varnish-bans-manager/core/user/password_reset.html:26
 msgid "Request password reset"
-msgstr ""
+msgstr "Solicitar contraseña"
 
 #: templates/varnish-bans-manager/core/user/password_reset_confirm.html:7
 msgid "Password reset confirm"
-msgstr ""
+msgstr "Confirmar reinicio"
 
 #: templates/varnish-bans-manager/core/user/password_reset_confirm.html:12
 msgid "Select new password"
-msgstr ""
+msgstr "Seleccionar nueva contraseña"
 
 #: templates/varnish-bans-manager/core/user/password_reset_confirm.html:33
 msgid "Change password"
-msgstr ""
+msgstr "Cambiar contraseña"
 
 #: templates/varnish-bans-manager/core/user/profile.html:15
 msgid "Set your profile preferences"
-msgstr ""
+msgstr "Establece las preferencias de tu perfil"
 
 #: templates/varnish-bans-manager/core/user/profile.html:30
 #: templates/varnish-bans-manager/core/users/_edit_form.html:46
 msgid "Personal info"
-msgstr ""
+msgstr "Información personal"
 
 #: templates/varnish-bans-manager/core/user/profile.html:44
 msgid "Write your full name. It will only be visible by administrators."
-msgstr ""
+msgstr "Escribe tu nombre completo. Sólo será visibe para administradores."
 
 #: templates/varnish-bans-manager/core/user/profile.html:54
 msgid ""
 "Want to change your e-mail address? Ask an administrator to do it for you."
 msgstr ""
+"¿Quieres cambiar tu dirección de e-mail? Pide a un administrador que lo haga "
+"por ti."
 
 #: templates/varnish-bans-manager/core/users/_edit_form.html:10
 msgid "Access"
-msgstr ""
+msgstr "Acceso"
 
 #: templates/varnish-bans-manager/core/users/_edit_form.html:74
 msgid "Permissions"
-msgstr ""
+msgstr "Permisos"
 
 #: templates/varnish-bans-manager/core/users/add.html:5
 #: templates/varnish-bans-manager/core/users/add.html:19
 #: templates/varnish-bans-manager/core/users/layout.html:22
 msgid "Add"
-msgstr ""
+msgstr "Añadir"
 
 #: templates/varnish-bans-manager/core/users/add.html:12
 msgid "Add new user"
-msgstr ""
+msgstr "Añadir nuevo usuario"
 
 #: templates/varnish-bans-manager/core/users/browse.html:19
 msgid "Browse users"
-msgstr ""
+msgstr "Explorar usuarios"
 
 #: templates/varnish-bans-manager/core/users/browse.html:20
 msgid "Find and manage authorized users and their permissions"
-msgstr ""
+msgstr "Encontrar y gestionar usuarios autorizados y sus permisos"
 
 #: templates/varnish-bans-manager/core/users/browse.html:72
-#: templates/varnish-bans-manager/core/users/browse.html:114
+#: templates/varnish-bans-manager/core/users/browse.html:110
 msgid "Action"
-msgstr ""
+msgstr "Acción"
 
 #: templates/varnish-bans-manager/core/users/browse.html:87
 #, python-format
-msgid ""
-"\n"
-"                Select the row\n"
-"              "
-msgid_plural ""
-"\n"
-"                Select all %(rows)s rows in all pages\n"
-"              "
-msgstr[0] ""
-msgstr[1] ""
+msgid "Select the row"
+msgid_plural "Select all %(rows)s rows in all pages"
+msgstr[0] "Seleccionar la fila"
+msgstr[1] "Seleccionar las %(rows)s filas en todas las páginas"
 
-#: templates/varnish-bans-manager/core/users/browse.html:109
+#: templates/varnish-bans-manager/core/users/browse.html:105
 msgid "Sign up date"
-msgstr ""
+msgstr "Fecha alta"
 
-#: templates/varnish-bans-manager/core/users/browse.html:116
+#: templates/varnish-bans-manager/core/users/browse.html:112
 #: templates/varnish-bans-manager/core/users/update.html:7
 #: templates/varnish-bans-manager/core/users/update.html:23
 msgid "Edit"
-msgstr ""
+msgstr "Editar"
 
 #: templates/varnish-bans-manager/core/users/update.html:14
 msgid "Edit user"
-msgstr ""
+msgstr "Editar usuario"
 
 #: templates/varnish-bans-manager/core/users/update.html:38
 msgid "Sign up"
-msgstr ""
+msgstr "Alta"
 
 #: templates/varnish-bans-manager/core/users/update.html:42
 msgid "Last sign in"
-msgstr ""
+msgstr "Último acceso"

@@ -93,8 +93,8 @@ class Submit(Base):
             ]
         else:
             messages.success(request, ungettext(
-                'Your ban has been successfully submitted to %(count)d cache.',
-                'Your ban has been successfully submitted to %(count)d caches.',
+                'Your ban has been submitted and successfully processed by %(count)d cache.',
+                'Your ban has been submitted and successfully processed by %(count)d caches.',
                 successful_items_count) % {'count': successful_items_count})
             return [
                 commands.navigate(destination),

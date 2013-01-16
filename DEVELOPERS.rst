@@ -40,6 +40,12 @@ development environment.
 - While developing, press ``CTRL+ALT+A`` in your browser to display the
   VBM debug console.
 
+- Remember .po files can be regenerated and compiled using the following
+  commands::
+
+    $ python runner.py makemessages -l es -e "html,txt,email,py"
+    $ python varnish_bans_manager/runner.py compilemessages
+
 Source Distribution Package
 ===========================
 

@@ -178,7 +178,7 @@ class SubmissionsForm(forms.Form):
     user = BetterChoiceField(
         choices=(),
         required=False,
-        placeholder=_('all submitters'))
+        placeholder=_('all users'))
     ban_type = BetterChoiceField(
         choices=BanSubmission.BAN_TYPE_CHOICES,
         required=False,

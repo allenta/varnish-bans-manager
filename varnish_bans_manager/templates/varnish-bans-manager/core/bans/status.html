@@ -52,7 +52,7 @@
       {% if errors %}
         <div class="alert alert-error">
           <i class="font-awesome font-awesome-warning-sign"></i>
-          {%trans "Failed to fetch list of bans in some caching nodes. Please, check out the 'errors' tab por details." %}
+          {%trans "Failed to fetch list of bans in some caching nodes. Please, check out the 'errors' tab for details." %}
         </div>
       {% endif %}
 
@@ -89,7 +89,7 @@
             {% if bans.differences %}
               <div class="alert alert-info">
                 <i class="font-awesome font-awesome-info-sign"></i>
-                {%trans 'All ban expressions shared by all the selected caching nodes.' %}
+                {%trans 'Ban expressions shared by all the selected caching nodes.' %}
               </div>
             {% endif %}
             {% for expression in bans.shared %}

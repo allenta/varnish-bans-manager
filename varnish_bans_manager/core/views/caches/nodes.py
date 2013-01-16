@@ -84,7 +84,7 @@ class Delete(Base):
     def post(self, request, node):
         try:
             node.delete()
-            messages.success(request, _('The node has been successfully deleted.'))
+            messages.success(request, _('The node has been deleted.'))
         except:
             messages.error(request, DEFAULT_ERROR_MESSAGE)
         return HttpResponseAjax([

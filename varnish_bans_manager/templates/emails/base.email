@@ -13,12 +13,12 @@
   Varnish Bans Manager
 
   {% blocktrans %}Please do not reply to this message; it was sent from an unmonitored e-mail
-  address. To ensure reliable email delivery in the future, please add our
-  e-mail address to your address book.{% endblocktrans %}
+address. To ensure reliable email delivery in the future, please add our
+e-mail address to your address book.{% endblocktrans %}
 
   {% blocktrans %}This message is a service e-mail related to the Varnish Bans Manager
-  service. For general inquiries or to request support with your account, please
-  contact us directly at {{contact_email}}.{% endblocktrans %}
+service. For general inquiries or to request support with your account,
+please contact us directly at {{contact_email}}.{% endblocktrans %}
 {% endblock %}
 
 {% block html %}
@@ -47,18 +47,10 @@
                 <br/>
                 <div style="margin-top:25px; font-size:11px; color:#888;">
                   <p>
-                    {% blocktrans %}
-                      Please do not reply to this message; it was sent from an unmonitored e-mail
-                      address. To ensure reliable email delivery in the future, please add our
-                      e-mail address to your address book.
-                    {% endblocktrans %}
+                    {% blocktrans %}Please do not reply to this message; it was sent from an unmonitored e-mail address. To ensure reliable email delivery in the future, please add our e-mail address to your address book.{% endblocktrans %}
                   </p>
                   <p>
-                    {% blocktrans %}
-                      This message is a service e-mail related to the Varnish Bans Manager service.
-                      For general inquiries or to request support with your account, please
-                      contact us directly at <a href="mailto:{{contact_email}}">{{contact_email}}</a>.
-                    {% endblocktrans %}
+                    {% blocktrans %}This message is a service e-mail related to the Varnish Bans Manager service. For general inquiries or to request support with your account, please contact us directly at <a href="mailto:{{contact_email}}">{{contact_email}}</a>.{% endblocktrans %}
                   </p>
                 </div>
               </font>
