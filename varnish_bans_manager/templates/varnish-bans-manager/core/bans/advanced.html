@@ -62,28 +62,15 @@
   <div class="row-fluid">
     <div class="span8">
       <p>
-        {% blocktrans with 'http://www.regular-expressions.info/reference.html' as regex %}
-          A <a href="{{ regex }}">regular expression</a> provides a concise and flexible means to match
-          strings of text, such as particular characters, words, or patterns of
-          characters.
-        {% endblocktrans %}
+        {% blocktrans with 'http://www.regular-expressions.info/reference.html' as regex %}A <a href="{{ regex }}">regular expression</a> provides a concise and flexible means to match strings of text, such as particular characters, words, or patterns of characters.{% endblocktrans %}
       </p>
       <p>
-        {% blocktrans %}
-          When using the advanced bans submission method, all documents in the selected
-          target, whose URL matches the specified regular expression, are
-          invalidated. Note that the host part of the URL is always ignored, so if
-          the selected target handles several virtual hosts, <strong>all of them</strong>
-          will be banned.
-        {% endblocktrans %}
+        {% blocktrans %}When using the advanced bans submission method, all documents in the selected target, whose URL matches the specified regular expression, are invalidated. Note that the host part of the URL is always ignored, so if the selected target handles several virtual hosts, <strong>all of them</strong> will be banned.{% endblocktrans %}
       </p>
       {% if perms.core.can_access_expert_ban_submission %}
         <p>
           {% capture expert %}{% url 'bans-expert' %}{% endcapture %}
-          {% blocktrans %}
-            Use the <a href="{{ expert }}" class="navigation">expert bans submission</a>
-            if you are looking for extra document filtering options.
-          {% endblocktrans %}
+          {% blocktrans %}Use the <a href="{{ expert }}" class="navigation">expert bans submission</a> if you are looking for extra document filtering options.{% endblocktrans %}
         </p>
       {% endif %}
     </div>
