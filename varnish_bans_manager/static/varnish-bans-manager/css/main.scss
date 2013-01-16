@@ -319,7 +319,7 @@ body.authenticated-layout .with-sidebar > .container {
         @include border-radius(none);
         text-align: center;
         font-size: 11px;
-        height: 60px;
+        padding-bottom: 3px;
         display: block;
         color: #555;
       }
