@@ -1294,6 +1294,10 @@ msgid_plural "Select all %(rows)s rows in all pages"
 msgstr[0] "Seleccionar la fila"
 msgstr[1] "Seleccionar las %(rows)s filas en todas las páginas"
 
+#: templates/varnish-bans-manager/core/users/browse.html:99
+msgid "ADMINISTRATOR"
+msgstr "ADMINISTRADOR"
+
 #: templates/varnish-bans-manager/core/users/browse.html:105
 msgid "Sign up date"
 msgstr "Fecha alta"

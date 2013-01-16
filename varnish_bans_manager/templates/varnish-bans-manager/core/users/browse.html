@@ -96,7 +96,7 @@
               <td class="name">
                 <a href="{% url 'users-update' user.id %}" class="navigation"><strong>{{ user.human_name }}</strong><br/></a>
                 {% if user.is_superuser %}
-                  <span class="label label-important">ADMINISTRATOR</span>
+                  <span class="label label-important">{% trans 'ADMINISTRATOR' %}</span>
                 {% else %}
                   {% for label in user.get_profile.editable_user_permission_labels %}
                     <span class="label label-info">{{ label }}</span>
