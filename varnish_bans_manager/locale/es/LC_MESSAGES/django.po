@@ -743,7 +743,7 @@ msgstr "Por favor, consulta la versión HTML de este e-mail ;)"
 
 #: templates/emails/varnish-bans-manager/core/user/password_reset.email:4
 msgid "Password reset request"
-msgstr "Solicitar reinicio de la contraseña"
+msgstr "Solicitud nueva contraseña"
 
 #: templates/emails/varnish-bans-manager/core/user/password_reset.email:7
 #: templates/emails/varnish-bans-manager/core/user/password_reset.email:19
@@ -1215,11 +1215,11 @@ msgstr "Cancelar"
 
 #: templates/varnish-bans-manager/core/user/password_reset.html:26
 msgid "Request password reset"
-msgstr "Solicitar reinicio contraseña"
+msgstr "Solicitar contraseña"
 
 #: templates/varnish-bans-manager/core/user/password_reset_confirm.html:7
 msgid "Password reset confirm"
-msgstr "Confirmar reinicio contraseña"
+msgstr "Confirmar reinicio"
 
 #: templates/varnish-bans-manager/core/user/password_reset_confirm.html:12
 msgid "Select new password"
