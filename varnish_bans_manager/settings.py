@@ -420,13 +420,6 @@ LOGGING = {
         },
     },
     'loggers': {
-        # Including this logger, the usage of the 'django' fallback
-        # logger with a NullHandler that Django creates is avoided.
-        'django.request': {
-            'handlers': ['mail_admins'],
-            'level': 'ERROR',
-            'propagate': False,
-        },
         'vbm': {
             'handlers': ['logfile'],
             'level': 'DEBUG',
