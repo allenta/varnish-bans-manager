@@ -311,7 +311,7 @@ COPY_MEDIA_FILETYPES = (
 
 MEDIA_BUNDLES = (
     ('bundle.css',
-        'varnish-bans-manager/js/plugins/jquery-ui/css/ui-lightness/jquery-ui-1.8.24.custom.css',
+        'varnish-bans-manager/js/plugins/jquery-ui/css/ui-lightness/jquery-ui-1.9.2.custom.css',
         'varnish-bans-manager/css/main.scss',
     ),
     ('bundle.js',
@@ -420,13 +420,6 @@ LOGGING = {
         },
     },
     'loggers': {
-        # Including this logger, the usage of the 'django' fallback
-        # logger with a NullHandler that Django creates is avoided.
-        'django.request': {
-            'handlers': ['mail_admins'],
-            'level': 'ERROR',
-            'propagate': False,
-        },
         'vbm': {
             'handlers': ['logfile'],
             'level': 'DEBUG',
