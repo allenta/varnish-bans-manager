@@ -194,14 +194,14 @@
 
           $('thead th.collection-selector input', browser).change(function() {
             var table = $(this).closest('table');
-            table.find('tbody td.collection-selector input').attr('checked', $(this).is(':checked'));
+            table.find('tbody td.collection-selector input').prop('checked', $(this).is(':checked'));
             adjust_bulk_button(table);
           });
 
           $('tbody td.collection-selector input', browser).change(function() {
             var table = $(this).closest('table');
             if (!$(this).is(':checked')) {
-              table.find('thead th.collection-selector input').attr('checked', false);
+              table.find('thead th.collection-selector input').prop('checked', false);
             }
             adjust_bulk_button(table);
           });
