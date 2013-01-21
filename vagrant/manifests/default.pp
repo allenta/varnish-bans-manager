@@ -3,7 +3,7 @@ class phase1 {
     command => '/usr/bin/apt-get update'
   }
 
-  package {['python', 'python-pip', 'mysql-server', 'mysql-client', 'rubygems', 'python-dev', 'libmysqlclient-dev', 'libjpeg8', 'libjpeg62-dev', 'libfreetype6', 'libfreetype6-dev', 'zlib1g-dev', 'yui-compressor', 'gettext']:
+  package {['python', 'python-pip', 'mysql-server', 'mysql-client', 'rubygems', 'python-dev', 'libmysqlclient-dev', 'libjpeg8', 'libjpeg62-dev', 'libfreetype6', 'libfreetype6-dev', 'zlib1g-dev', 'yui-compressor', 'gettext', 'varnish']:
     ensure => present,
     require => Exec['apt-get-update'],
   }
@@ -38,6 +38,11 @@ class phase2 {
   }
 
   service {'mysql':
+    enable => true,
+    ensure => running,
+  }
+
+  service {'varnish':
     enable => true,
     ensure => running,
   }
