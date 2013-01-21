@@ -37,12 +37,7 @@ class phase2 {
     provider => 'pip',
   }
 
-  service {'mysql':
-    enable => true,
-    ensure => running,
-  }
-
-  service {'varnish':
+  service {['mysql', 'varnish']:
     enable => true,
     ensure => running,
   }
@@ -95,6 +90,14 @@ class phase2 {
     owner => 'vagrant',
     group => 'vagrant',
     target => '/vagrant',
+  }
+
+
+  file {['/vagrant/files']:
+    ensure => directory,
+    mode => 0644,
+    owner => 'vagrant',
+    group => 'vagrant',
   }
 }
 
