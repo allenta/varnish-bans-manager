@@ -3,7 +3,7 @@ class phase1 {
     command => '/usr/bin/apt-get update'
   }
 
-  package {['python', 'python-pip', 'mysql-server', 'mysql-client', 'rubygems', 'python-dev', 'libmysqlclient-dev', 'libjpeg8', 'libjpeg62-dev', 'libfreetype6', 'libfreetype6-dev', 'zlib1g-dev', 'yui-compressor', 'gettext', 'varnish']:
+  package {['python', 'python-pip', 'mysql-server', 'mysql-client', 'rubygems', 'python-dev', 'libmysqlclient-dev', 'libjpeg8', 'libjpeg62-dev', 'libfreetype6', 'libfreetype6-dev', 'zlib1g-dev', 'yui-compressor', 'gettext', 'varnish', 'postfix', 'mailutils']:
     ensure => present,
     require => Exec['apt-get-update'],
   }
@@ -46,9 +46,27 @@ class phase2 {
     provider => 'pip',
   }
 
-  service {['mysql', 'varnish']:
+  service {['mysql', 'varnish', 'postfix']:
     enable => true,
     ensure => running,
+  }
+
+  file {'/etc/mailname':
+    ensure => present,
+    mode => 0644,
+    owner => 'root',
+    group => 'root',
+    source => '/vagrant/vagrant/files/mailname',
+    notify => Service['postfix'],
+  }
+
+  file {'/etc/postfix/main.cf':
+    ensure => present,
+    mode => 0644,
+    owner => 'root',
+    group => 'root',
+    source => '/vagrant/vagrant/files/postfix-main.cf',
+    notify => Service['postfix'],
   }
 
   $mysql_user = "bob"
