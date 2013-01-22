@@ -10,16 +10,25 @@ class phase1 {
 
   file {'/usr/lib/libjpeg.so':
     ensure => link,
+    mode => 0644,
+    owner => 'root',
+    group => 'root',
     target => '/usr/lib/x86_64-linux-gnu/libjpeg.so',
   }
 
   file {'/usr/lib/libfreetype.so':
     ensure => link,
+    mode => 0644,
+    owner => 'root',
+    group => 'root',
     target => '/usr/lib/x86_64-linux-gnu/libfreetype.so',
   }
 
   file {'/usr/lib/libz.so':
     ensure => link,
+    mode => 0644,
+    owner => 'root',
+    group => 'root',
     target => '/usr/lib/x86_64-linux-gnu/libz.so',
   }
 }
@@ -91,7 +100,6 @@ class phase2 {
     group => 'vagrant',
     target => '/vagrant',
   }
-
 
   file {['/vagrant/files']:
     ensure => directory,
