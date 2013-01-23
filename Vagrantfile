@@ -16,5 +16,9 @@ Vagrant::Config.run do |config|
     '--name', 'Varnish Bans Manager',
   ]
 
+  # /etc/hosts
+  # 192.168.100.102 vbm.d2c.dev
   config.vm.forward_port 9000, 9000
+  config.vm.network :hostonly, '192.168.100.102'
+  config.vm.network :bridged
 end

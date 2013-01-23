@@ -84,7 +84,7 @@ class phase2 {
     unless => "/usr/bin/mysql -u${mysql_user} -p${mysql_password} ${mysql_db}",
     path => ['/bin', '/usr/bin'],
     command => "mysql -uroot -p$mysql_password -e \"CREATE DATABASE ${mysql_db}; CREATE USER '${mysql_user}'@'localhost' IDENTIFIED BY '${mysql_password}'; GRANT ALL PRIVILEGES ON ${mysql_db}.* TO '${mysql_user}'@'localhost';\"",
-    require => Service['mysql'],
+    require => Exec['set-mysql-root-password'],
   }
 
   exec {'create-virtualenv':
