@@ -3,7 +3,7 @@
 
 Vagrant::Config.run do |config|
   config.vm.box = 'precise64'
-
+  config.vm.host_name = 'dev'
   config.vm.box_url = 'http://files.vagrantup.com/precise64.box'
 
   config.vm.provision :puppet do |puppet|
