@@ -7,4 +7,4 @@ fi
 export VARNISH_BANS_MANAGER_CONF="/vagrant/varnish-bans-manager.conf"
 export YUICOMPRESSOR_PATH="/usr/share/yui-compressor/yui-compressor.jar"
 
-source $HOME/varnish-bans-manager/bin/activate
+source $HOME/.virtualenvs/varnish-bans-manager/bin/activate

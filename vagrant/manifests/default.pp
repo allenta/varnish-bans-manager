@@ -88,10 +88,10 @@ class phase2 {
   }
 
   exec {'create-virtualenv':
-    creates => '/home/vagrant/varnish-bans-manager/',
+    creates => '/home/vagrant/.virtualenvs/varnish-bans-manager/',
     user => 'vagrant',
     path => ['/bin', '/usr/bin', '/usr/local/bin'],
-    command => 'virtualenv /home/vagrant/varnish-bans-manager',
+    command => 'mkdir -p /home/vagrant/.virtualenvs; virtualenv /home/vagrant/.virtualenvs/varnish-bans-manager',
     require => Package['virtualenv'],
   }
 
