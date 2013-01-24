@@ -13,7 +13,10 @@ class phase1 {
     mode => 0644,
     owner => 'root',
     group => 'root',
-    target => '/usr/lib/x86_64-linux-gnu/libjpeg.so',
+    target => $architecture ? {
+      'i386' => '/usr/lib/i386-linux-gnu/libjpeg.so',
+      default => '/usr/lib/x86_64-linux-gnu/libjpeg.so',
+    }
   }
 
   file {'/usr/lib/libfreetype.so':
@@ -21,7 +24,10 @@ class phase1 {
     mode => 0644,
     owner => 'root',
     group => 'root',
-    target => '/usr/lib/x86_64-linux-gnu/libfreetype.so',
+    target => $architecture ? {
+      'i386' => '/usr/lib/i386-linux-gnu/libfreetype.so',
+      default => '/usr/lib/x86_64-linux-gnu/libfreetype.so',
+    },
   }
 
   file {'/usr/lib/libz.so':
@@ -29,7 +35,10 @@ class phase1 {
     mode => 0644,
     owner => 'root',
     group => 'root',
-    target => '/usr/lib/x86_64-linux-gnu/libz.so',
+    target => $architecture ? {
+      'i386' => '/usr/lib/i386-linux-gnu/libz.so',
+      default => '/usr/lib/x86_64-linux-gnu/libz.so',
+    },
   }
 }
 
