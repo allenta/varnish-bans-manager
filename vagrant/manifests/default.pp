@@ -99,7 +99,7 @@ class phase2 {
     path => ['/bin', '/usr/bin'],
     user => 'vagrant',
     provider => 'shell',
-    command => '. /home/vagrant/varnish-bans-manager/bin/activate; pip install "MySQL-python" "django >= 1.4.3" "django-celery >= 3.0.11" "django-mediagenerator >= 1.11" "django-templated-email >= 0.4.7" "gunicorn >= 0.14.6" "eventlet >= 0.9.17" "simplejson >= 2.1.6" "path.py >= 2.4.1" "ordereddict >= 1.1" "pytz" "pil" "south >= 0.7.6"',
+    command => '. /home/vagrant/.virtualenvs/varnish-bans-manager/bin/activate; pip install "MySQL-python" "django >= 1.4.3" "django-celery >= 3.0.11" "django-mediagenerator >= 1.11" "django-templated-email >= 0.4.7" "gunicorn >= 0.14.6" "eventlet >= 0.9.17" "simplejson >= 2.1.6" "path.py >= 2.4.1" "ordereddict >= 1.1" "pytz" "pil" "south >= 0.7.6"',
     require => Exec['create-virtualenv'],
   }
 
