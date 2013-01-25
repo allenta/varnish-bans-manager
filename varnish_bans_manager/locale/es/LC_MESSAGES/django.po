@@ -210,7 +210,7 @@ msgstr "Nueva contraseña"
 
 #: core/forms/user.py:186
 msgid "New password confirmation"
-msgstr "Confirmación nuevo contraseña"
+msgstr "Confirmación nueva contraseña"
 
 #: core/forms/user.py:187
 msgid "confirm new password"
