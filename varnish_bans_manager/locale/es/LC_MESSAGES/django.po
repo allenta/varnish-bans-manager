@@ -85,7 +85,7 @@ msgstr "caché"
 
 #: core/forms/base.py:62
 msgid "Enter a list of integer values."
-msgstr "Introduce una lista de valores enteros"
+msgstr "Introduce una lista de valores enteros."
 
 #: core/forms/base.py:63
 #, python-format
