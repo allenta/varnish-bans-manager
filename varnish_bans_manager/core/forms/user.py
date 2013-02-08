@@ -140,7 +140,7 @@ class PasswordResetConfirmationForm(forms.Form):
                     self.error_messages['password_mismatch'])
         return password2
 
-    def save(self, request):
+    def save(self):
         self.user.set_password(self.cleaned_data.get('new_password1'))
         self.user.save()
 
@@ -214,6 +214,6 @@ class PasswordChangeForm(forms.Form):
                     self.error_messages['password_mismatch'])
         return password2
 
-    def save(self, request):
+    def save(self):
         self.user.set_password(self.cleaned_data.get('new_password1'))
         self.user.save()

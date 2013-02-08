@@ -147,7 +147,7 @@ class PasswordResetConfirm(AnonymousBase):
         form = PasswordResetConfirmationForm(user, data=request.POST)
         if form.is_valid():
             # Save.
-            form.save(request)
+            form.save()
 
             # Done!
             messages.success(request, _('Your password has been updated.'))
@@ -195,7 +195,7 @@ class Password(AuthenticatedBase):
     def post(self, request):
         form = PasswordChangeForm(request.user, data=request.POST)
         if form.is_valid():
-            form.save(request)
+            form.save()
             messages.success(request, _("Your password has been updated."))
             return HttpResponseAjax([
                 commands.reload(request),
