@@ -16,9 +16,18 @@ from django.forms.widgets import SelectMultiple
 
 class FallbackMixinField(object):
     def __init__(self, default=None, choices=None, *args, **kwargs):
+        # Fallback fields are never required. Trying to require them should be
+        # an error.
+        kwargs.setdefault('required', False)
+        assert not kwargs['required'], "No fallback field can be set as "\
+            "required."
+        # Set default value and choices.
+        assert default is not None or choices, "All fallback fields should "\
+            "provide a default value or/and a non-empty choices list."
         self.default = choices[0] if default is None else default
         self.choices = choices
-        super(FallbackMixinField, self).__init__(required=False, *args, **kwargs)
+        # Done!
+        super(FallbackMixinField, self).__init__(*args, **kwargs)
 
     def clean(self, value):
         value = super(FallbackMixinField, self).clean(value)
@@ -41,8 +50,11 @@ class FallbackBooleanField(FallbackMixinField, BooleanField):
 
 
 class SortDirectionField(FallbackCharField):
-    def __init__(self, default=None, *args, **kwargs):
-        super(SortDirectionField, self).__init__(choices=['asc', 'desc'], default=default, *args, **kwargs)
+    def __init__(self, *args, **kwargs):
+        assert 'choices' not in kwargs, "No custom choices can be set for a"\
+            "SortDirectionField"
+        kwargs['choices'] = ['asc', 'desc']
+        super(SortDirectionField, self).__init__(*args, **kwargs)
 
 
 class BetterChoiceField(ChoiceField):
