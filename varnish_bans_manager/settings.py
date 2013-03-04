@@ -489,8 +489,27 @@ VERSION = {
 }
 
 ###############################################################################
+## VBM.
+###############################################################################
+
+VBM_HTTP = dict(_config.items('http'))
+VBM_EMAIL_SUBJECT_PREFIX = _config.get('email', 'subject_prefix') + ' '
+VBM_CONTACT_EMAIL = _config.get('email', 'contact')
+VBM_NOTIFICATIONS_EMAIL = _config.get('email', 'notifications')
+VBM_BASE_URL = VBM_HTTP.pop('base_url').rstrip('/')
+if not VBM_BASE_URL.startswith('http'):
+    VBM_BASE_URL = "http://%s" % VBM_BASE_URL
+
+###############################################################################
 ## MISC.
 ###############################################################################
+
+# To avoid the generation of URLs to external hosts that may lead to a phishing
+# attack this setting should be set only to allow the host(s) under which this
+# site will be accessible on production.
+# More info: https://docs.djangoproject.com/en/1.4/ref/settings/#allowed-hosts
+_hostname = urlparse(VBM_BASE_URL).hostname
+ALLOWED_HOSTS = [_hostname] if _hostname is not None else []
 
 ROOT_URLCONF = 'varnish_bans_manager.urls'
 WSGI_APPLICATION = 'varnish_bans_manager.wsgi.application'
@@ -515,18 +534,6 @@ FILE_CHARSET = 'utf-8'
 
 # Whether to send broken-link emails.
 SEND_BROKEN_LINK_EMAILS = False
-
-###############################################################################
-## VBM.
-###############################################################################
-
-VBM_HTTP = dict(_config.items('http'))
-VBM_EMAIL_SUBJECT_PREFIX = _config.get('email', 'subject_prefix') + ' '
-VBM_CONTACT_EMAIL = _config.get('email', 'contact')
-VBM_NOTIFICATIONS_EMAIL = _config.get('email', 'notifications')
-VBM_BASE_URL = VBM_HTTP.pop('base_url').rstrip('/')
-if not VBM_BASE_URL.startswith('http'):
-    VBM_BASE_URL = "http://%s" % VBM_BASE_URL
 
 ###############################################################################
 ## CELERY (http://docs.celeryproject.org/en/latest/configuration.html).
