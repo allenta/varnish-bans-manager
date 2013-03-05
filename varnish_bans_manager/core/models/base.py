@@ -6,7 +6,7 @@
 """
 
 from __future__ import absolute_import
-import simplejson
+import simplejson as json
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import F, Q
@@ -290,7 +290,7 @@ class JSONField(models.Field):
     def to_python(self, value):
         if isinstance(value, basestring):
             try:
-                return simplejson.loads(value)
+                return json.loads(value)
             except ValueError:
                 pass
         return value
@@ -300,7 +300,7 @@ class JSONField(models.Field):
             return value
         if self.null and value is None:
             return None
-        return simplejson.dumps(value)
+        return json.dumps(value)
 
     def get_internal_type(self):
         return 'TextField'
