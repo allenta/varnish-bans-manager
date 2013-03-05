@@ -92,9 +92,7 @@ class CustomizationsMiddleware:
         return None
 
     def process_view(self, request, view_func, view_args, view_kwargs):
-        # TODO. Avoid duplicated resolve: use request.resolver_match.url_name on django 1.5.
-        # https://github.com/django/django/pull/399
-        request.page_id = resolve(request.path_info).url_name.replace('.', '-')
+        request.page_id = request.resolver_match.url_name.replace('.', '-')
         return None
 
 
