@@ -16,7 +16,7 @@ from django.conf import settings
 from django.views.debug import get_safe_settings
 from django.core.urlresolvers import resolve
 from django.http import Http404
-from django.http import HttpResponseRedirect, HttpResponsePermanentRedirect, get_host
+from django.http import HttpResponseRedirect, HttpResponsePermanentRedirect
 from django.utils.encoding import smart_unicode
 from django.template import loader, Template, Context
 from django.contrib.auth.decorators import login_required
@@ -114,7 +114,7 @@ class SSLRedirectMiddleware:
 
     def _redirect(self, request, secure):
         protocol = secure and "https" or "http"
-        url = "%s://%s%s" % (protocol, get_host(request), request.get_full_path())
+        url = "%s://%s%s" % (protocol, request.get_host(), request.get_full_path())
         if settings.DEBUG and request.method == 'POST':
             raise RuntimeError(
                 """Django can't perform a redirect while maintaining POST data.

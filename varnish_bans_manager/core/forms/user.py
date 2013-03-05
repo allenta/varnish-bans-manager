@@ -11,7 +11,6 @@ from django.core.urlresolvers import reverse
 from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.utils.http import int_to_base36
-from django.http import get_host
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.contrib.auth.hashers import UNUSABLE_PASSWORD
@@ -94,7 +93,7 @@ class PasswordResetForm(forms.Form):
         Generates a one-use only link for resetting password and sends to the
         user.
         """
-        host = get_host(request)
+        host = request.get_host()
         send_templated_mail(
             template_name='varnish-bans-manager/core/user/password_reset',
             from_email=settings.DEFAULT_FROM_EMAIL,
@@ -103,7 +102,7 @@ class PasswordResetForm(forms.Form):
             context={
                 'name': self.user.first_name or self.user.email,
                 'base_url': "http://%s" % host,
-                'reset_url': \
+                'reset_url':
                     (settings.HTTPS_ENABLED and 'https' or 'http') + '://' +
                     host +
                     reverse('user-password-reset-confirm', kwargs={

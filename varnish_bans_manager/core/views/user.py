@@ -13,7 +13,7 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect, get_host
+from django.http import HttpResponseRedirect
 from django.utils.http import base36_to_int
 from django.utils.translation import ugettext as _
 from django.utils.decorators import method_decorator
@@ -58,7 +58,7 @@ class Login(AnonymousBase):
 
         # Don't allow redirection to a different host.
         netloc = urlparse.urlparse(destination)[1]
-        if netloc and netloc != get_host(request):
+        if netloc and netloc != request.get_host():
             destination = reverse('home')
 
         # Done!
