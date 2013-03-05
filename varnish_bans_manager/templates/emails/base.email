@@ -1,6 +1,5 @@
 {% load i18n %}
 {% load media %}
-{% load url from future %}
 {% load vbm_base_helpers %}
 
 {% block subject %}{% settings_value 'VBM_EMAIL_SUBJECT_PREFIX' %}{% block subject_content %}{% endblock %}{% endblock %}
