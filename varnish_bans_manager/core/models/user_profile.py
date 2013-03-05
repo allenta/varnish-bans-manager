@@ -74,8 +74,8 @@ class UserProfile(Model):
     revision = RevisionField()
 
     def editable_user_permission_labels(self):
-        permissions = filter(\
-            lambda permission: permission.codename in PERMISSIONS,\
+        permissions = filter(
+            lambda permission: permission.codename in PERMISSIONS,
             self.user.user_permissions.all())
         return [PERMISSIONS[permission.codename] for permission in permissions]
 
