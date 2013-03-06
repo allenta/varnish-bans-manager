@@ -177,7 +177,7 @@ created virtualenv active.
    If locally installed, you should now be able to test the service by
    visiting ``http://localhost:9000``.
 
-6. If not created yet, use the VBM CLI to create the first VBM administrator.
+6. Use the VBM CLI to create the first VBM administrator.
    You'll be able to add extra users later using the web UI::
 
     www-data:~$ varnish-bans-manager users --add --administrator --email "bob@domain.com" --password "s3cr3t" --firstname "Bob" --lastname "Brown"

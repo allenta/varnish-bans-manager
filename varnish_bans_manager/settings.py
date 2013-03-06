@@ -228,9 +228,7 @@ CSRF_COOKIE_SECURE = HTTPS_ENABLED
 ## AUTHENTICATION.
 ###############################################################################
 
-AUTHENTICATION_BACKENDS = ('varnish_bans_manager.core.backends.EmailAuthBackend',)
-
-AUTH_PROFILE_MODULE = 'core.UserProfile'
+AUTH_USER_MODEL = 'core.User'
 
 LOGIN_URL = 'user-login'
 LOGOUT_URL = 'user-logout'
@@ -406,11 +404,11 @@ LOGGING = {
         }
     },
     'handlers': {
-       'mail_admins': {
-           'level': 'ERROR',
-           'filters': ['require_production_environment'],
-           'class': 'django.utils.log.AdminEmailHandler',
-           'include_html': True,
+        'mail_admins': {
+            'level': 'ERROR',
+            'filters': ['require_production_environment'],
+            'class': 'django.utils.log.AdminEmailHandler',
+            'include_html': True,
         },
         'logfile': {
             'level': 'DEBUG',

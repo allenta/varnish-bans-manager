@@ -13,11 +13,10 @@ from django.utils.translation import ugettext_lazy as _
 from django.utils.http import int_to_base36
 from django.http import get_host
 from django.contrib.auth import authenticate
-from django.contrib.auth.models import User
 from django.contrib.auth.hashers import UNUSABLE_PASSWORD
 from templated_email import send_templated_mail
 from django.contrib.auth.tokens import default_token_generator
-from varnish_bans_manager.core.models import UserProfile
+from varnish_bans_manager.core.models import User, UserProfile
 
 
 class LoginForm(forms.Form):
@@ -48,7 +47,7 @@ class LoginForm(forms.Form):
         password = self.cleaned_data.get('password')
 
         if email and password:
-            self.user = authenticate(username=email, password=password)
+            self.user = authenticate(email=email, password=password)
             if self.user is None:
                 raise forms.ValidationError(self.error_messages['invalid_login'])
             elif not self.user.is_active:
@@ -165,7 +164,7 @@ class ProfilePreferencesForm():
 
     def __init__(self, user, data=None, files=None):
         self.user = self.UserForm(prefix='user', instance=user, data=data)
-        self.profile = self.ProfileForm(prefix='profile', instance=user.get_profile(), data=data, files=files)
+        self.profile = self.ProfileForm(prefix='profile', instance=user.profile, data=data, files=files)
 
     def is_valid(self):
         return self.user.is_valid() and self.profile.is_valid()

@@ -13,12 +13,11 @@ from string import letters
 from django import forms
 from django.core.urlresolvers import reverse
 from django.utils.translation import ugettext_lazy as _
-from django.contrib.auth.models import User
 from django.db import transaction
 from django.forms.widgets import CheckboxSelectMultiple
 from django.contrib.auth.models import Permission
-from varnish_bans_manager.core.models import UserProfile
-from varnish_bans_manager.core.models.user_profile import PERMISSIONS
+from varnish_bans_manager.core.models import User, UserProfile
+from varnish_bans_manager.core.models.user import PERMISSIONS
 from varnish_bans_manager.core.helpers.paginator import Paginator
 from varnish_bans_manager.core.forms.base import FallbackIntegerField, FallbackCharField, FallbackBooleanField, SortDirectionField, IntegerListField
 
@@ -201,7 +200,7 @@ class AddForm(EditForm):
 
     def save(self):
         user = self.user.save()
-        profile = user.get_profile()
+        profile = user.profile
         profile.creator = self.creator
         profile.photo = self.profile.cleaned_data.get('photo')
         profile.save()
@@ -243,7 +242,9 @@ class UpdateForm(EditForm):
 
     def __init__(self, instance, data=None, files=None):
         permissions = instance.user_permissions.all().values_list('codename', flat=True)
-        super(UpdateForm, self).__init__(user=instance, permissions=permissions, profile=instance.get_profile(), data=data, files=files)
+        super(UpdateForm, self).__init__(
+            user=instance, permissions=permissions, profile=instance.profile,
+            data=data, files=files)
 
     def save(self):
         # Save in a transaction as concurrent edition of the profile may raise an exception.
