@@ -15,7 +15,7 @@ from django.utils.datastructures import SortedDict
 from django.conf import settings
 from django.views.debug import get_safe_settings
 from django.core.urlresolvers import resolve
-from django.http import Http404
+from django.http import Http404, HttpResponse
 from django.http import HttpResponseRedirect, HttpResponsePermanentRedirect
 from django.utils.encoding import smart_unicode
 from django.template import loader, Template, Context
@@ -28,8 +28,9 @@ from varnish_bans_manager.core.helpers import commands
 
 def _replace_insensitive(string, target, replacement):
     """
-    Similar to string.replace() but is case insensitive
-    Code borrowed from: http://forums.devshed.com/python-programming-11/case-insensitive-string-replace-490921.html
+    Similar to string.replace() but case insensitive.
+    Code borrowed from:
+    http://forums.devshed.com/python-programming-11/case-insensitive-string-replace-490921.html
     """
     no_case = string.lower()
     index = no_case.rfind(target.lower())
@@ -41,7 +42,11 @@ def _replace_insensitive(string, target, replacement):
 
 
 def _can_append_script(response):
-    return response.status_code == 200 and 'gzip' not in response.get('Content-Encoding', '') and response['Content-Type'].split(';')[0] in ('text/html', 'application/xhtml+xml')
+    return isinstance(response, HttpResponse) and \
+        response.status_code == 200 and \
+        'gzip' not in response.get('Content-Encoding', '') and \
+        response['Content-Type'].split(';')[0] in (
+            'text/html', 'application/xhtml+xml')
 
 
 def _append_script(response, script):
@@ -87,9 +92,7 @@ class CustomizationsMiddleware:
         return None
 
     def process_view(self, request, view_func, view_args, view_kwargs):
-        # TODO. Avoid duplicated resolve: use request.resolver_match.url_name on django 1.5.
-        # https://github.com/django/django/pull/399
-        request.page_id = resolve(request.path_info).url_name.replace('.', '-')
+        request.page_id = request.resolver_match.url_name.replace('.', '-')
         return None
 
 
@@ -207,7 +210,7 @@ class DebugMiddleware:
                 pass
 
             if hasattr(request, 'session'):
-                req_report['session'] = [\
+                req_report['session'] = [
                     (k, request.session.get(k))
                     for k in request.session.iterkeys()
                 ]
@@ -287,5 +290,5 @@ class AjaxRedirectMiddleware:
         if request.is_ajax():
             if isinstance(response, HttpResponseRedirect) or \
                isinstance(response, HttpResponsePermanentRedirect):
-                return HttpResponseAjax([commands.redirect(response.__getitem__('Location'))])
+                return HttpResponseAjax([commands.redirect(response['Location'])])
         return response

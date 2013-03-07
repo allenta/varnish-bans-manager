@@ -1,11 +1,9 @@
 # -*- coding: utf-8 -*-
 
 from __future__ import absolute_import
-from random import choice
-from string import letters
 from optparse import make_option
-from django.contrib.auth.models import User
 from django.core.management.base import BaseCommand, CommandError
+from varnish_bans_manager.core.models import User
 
 
 class Command(BaseCommand):
@@ -35,16 +33,12 @@ class Command(BaseCommand):
         if User.objects.filter(email__iexact=options.get('email'), is_active=True).exists():
             raise CommandError('There is already an user with that e-mail address.')
 
-        # Generate random username.
-        username = ''.join([choice(letters) for i in xrange(30)])
+        # Choose user creation method (superuser vs normal user).
+        create_user_method = getattr(
+            User.objects,
+            'create_superuser' if options.get('administrator') else 'create_user')
 
         # Add new user.
-        user = User.objects.create_user(username, options.get('email'), options.get('password'))
-
-        # Set options.
-        user.first_name = options.get('firstname')
-        user.last_name = options.get('lastname')
-        user.is_staff = options.get('administrator')
-        user.is_superuser = options.get('administrator')
-        user.is_active = True
-        user.save()
+        create_user_method(
+            email=options.get('email'), password=options.get('password'),
+            first_name=options.get('firstname'), last_name=options.get('lastname'))

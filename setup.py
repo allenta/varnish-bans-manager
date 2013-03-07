@@ -39,7 +39,7 @@ setup(
         'Operating System :: OS Independent',
     ],
     install_requires=[
-        "django >= 1.4.5, < 1.5",
+        "django >= 1.5",
         "django-celery >= 3.0.11",
         "django-mediagenerator >= 1.11",
         "django-templated-email >= 0.4.7",

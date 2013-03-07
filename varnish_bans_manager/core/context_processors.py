@@ -6,7 +6,7 @@
 """
 
 from __future__ import absolute_import
-import simplejson
+import simplejson as json
 from django.conf import settings
 from varnish_bans_manager.core.helpers.views import get_messages
 
@@ -15,7 +15,7 @@ def messages(request):
     """
     Returns a lazy 'messages' context variable (JSON string).
     """
-    return {'messages': simplejson.dumps(get_messages(request))}
+    return {'messages': json.dumps(get_messages(request))}
 
 
 def page_id(request):

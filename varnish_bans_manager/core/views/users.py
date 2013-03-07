@@ -14,13 +14,12 @@ from django.core.exceptions import SuspiciousOperation
 from django.utils.decorators import method_decorator
 from django.utils.translation import ungettext, ugettext as _
 from django.shortcuts import get_object_or_404
-from django.contrib.auth.models import User
 from django.views.generic import View
+from varnish_bans_manager.core.forms.users import BrowseForm, BulkForm, AddForm, UpdateForm
+from varnish_bans_manager.core.helpers import commands, DEFAULT_SUCCESS_MESSAGE, DEFAULT_ERROR_MESSAGE, DEFAULT_FORM_ERROR_MESSAGE
 from varnish_bans_manager.core.helpers.http import HttpResponseAjax
 from varnish_bans_manager.core.helpers.views import ajaxify
-from varnish_bans_manager.core.helpers import commands
-from varnish_bans_manager.core.forms.users import BrowseForm, BulkForm, AddForm, UpdateForm
-from varnish_bans_manager.core.helpers import DEFAULT_SUCCESS_MESSAGE, DEFAULT_ERROR_MESSAGE, DEFAULT_FORM_ERROR_MESSAGE
+from varnish_bans_manager.core.models import User
 from varnish_bans_manager.core import tasks
 from varnish_bans_manager.core.tasks.users import Delete as DeleteTask
 from varnish_bans_manager.core.tasks.users import DownloadCSV as DownloadCSVTask

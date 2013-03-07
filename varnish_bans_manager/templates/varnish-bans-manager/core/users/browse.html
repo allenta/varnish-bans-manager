@@ -1,7 +1,6 @@
 {% extends "varnish-bans-manager/core/users/layout.html" %}
 {% load i18n %}
 {% load l10n %}
-{% load url from future %}
 {% load media %}
 {% load vbm_base_helpers %}
 {% load vbm_widget_helpers %}
@@ -92,13 +91,13 @@
           {% for user in form.paginator.current_page.object_list %}
             <tr>
               <td class="collection-selector"><input type="checkbox" data-id="{{ user.id|unlocalize }}"/></td>
-              <td class="photo"><div class="thumbnail"><img src="{% if user.get_profile.photo %}{{ user.get_profile.photo.url }}{% else %}{% media_url 'varnish-bans-manager/images/default-user-photo-128.png' %}{% endif %}"></a></td>
+              <td class="photo"><div class="thumbnail"><img src="{% if user.profile.photo %}{{ user.profile.photo.url }}{% else %}{% media_url 'varnish-bans-manager/images/default-user-photo-128.png' %}{% endif %}"></a></td>
               <td class="name">
                 <a href="{% url 'users-update' user.id %}" class="navigation"><strong>{{ user.human_name }}</strong><br/></a>
                 {% if user.is_superuser %}
                   <span class="label label-important">{% trans 'ADMINISTRATOR' %}</span>
                 {% else %}
-                  {% for label in user.get_profile.editable_user_permission_labels %}
+                  {% for label in user.editable_user_permission_labels %}
                     <span class="label label-info">{{ label }}</span>
                   {% endfor %}
                 {% endif %}

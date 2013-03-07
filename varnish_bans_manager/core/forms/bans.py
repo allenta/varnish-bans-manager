@@ -10,13 +10,12 @@ import re
 from urlparse import urlparse
 from django import forms
 from django.contrib.contenttypes.models import ContentType
-from django.contrib.auth.models import User
 from django.core.exceptions import ObjectDoesNotExist, ValidationError
 from django.utils.encoding import force_text
 from django.utils.safestring import mark_safe
 from django.utils.translation import ugettext_lazy as _
 from varnish_bans_manager.core.helpers.paginator import Paginator
-from varnish_bans_manager.core.models import BanSubmission, Node, Group, Setting
+from varnish_bans_manager.core.models import BanSubmission, Node, Group, Setting, User
 from varnish_bans_manager.core.forms.base import FallbackIntegerField, BetterChoiceField, FallbackCharField, SortDirectionField
 
 

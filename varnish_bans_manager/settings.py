@@ -62,7 +62,6 @@ else:
 from varnish_bans_manager.core.patches.base_management_command import *
 
 from django.contrib.messages import constants as message_constants
-from django.core.urlresolvers import reverse_lazy
 import djcelery
 from celery.schedules import crontab
 
@@ -229,13 +228,11 @@ CSRF_COOKIE_SECURE = HTTPS_ENABLED
 ## AUTHENTICATION.
 ###############################################################################
 
-AUTHENTICATION_BACKENDS = ('varnish_bans_manager.core.backends.EmailAuthBackend',)
+AUTH_USER_MODEL = 'core.User'
 
-AUTH_PROFILE_MODULE = 'core.UserProfile'
-
-LOGIN_URL = reverse_lazy('user-login')
-LOGOUT_URL = reverse_lazy('user-logout')
-LOGIN_REDIRECT_URL = reverse_lazy('home')
+LOGIN_URL = 'user-login'
+LOGOUT_URL = 'user-logout'
+LOGIN_REDIRECT_URL = 'home'
 
 PASSWORD_RESET_TIMEOUT_DAYS = 3
 
@@ -407,11 +404,11 @@ LOGGING = {
         }
     },
     'handlers': {
-       'mail_admins': {
-           'level': 'ERROR',
-           'filters': ['require_production_environment'],
-           'class': 'django.utils.log.AdminEmailHandler',
-           'include_html': True,
+        'mail_admins': {
+            'level': 'ERROR',
+            'filters': ['require_production_environment'],
+            'class': 'django.utils.log.AdminEmailHandler',
+            'include_html': True,
         },
         'logfile': {
             'level': 'DEBUG',
@@ -439,8 +436,8 @@ LOCALE_PATHS = (
 LANGUAGE_CODE = _config.get('i18n', 'default')
 
 LANGUAGES = (
-  ('es', ugettext('Spanish')),
-  ('en', ugettext('English')),
+    ('es', ugettext('Spanish')),
+    ('en', ugettext('English')),
 )
 
 ###############################################################################
