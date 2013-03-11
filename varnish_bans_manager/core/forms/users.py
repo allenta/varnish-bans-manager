@@ -130,7 +130,8 @@ class EditForm(object):
                 "This e-mail address is already in use."),
         }
 
-        def __init__(self, permissions=[], *args, **kwargs):
+        def __init__(self, permissions=None, *args, **kwargs):
+            permissions = permissions if permissions is not None else []
             super(EditForm.UserForm, self).__init__(*args, **kwargs)
             self.fields['email'].required = True
             self.fields['permissions'] = forms.MultipleChoiceField(
@@ -196,7 +197,9 @@ class AddForm(EditForm):
 
     def __init__(self, user, data=None, files=None):
         self.creator = user
-        super(AddForm, self).__init__(user=User(), permissions=[], profile=UserProfile(), data=data, files=files)
+        super(AddForm, self).__init__(
+            user=User(), permissions=[], profile=UserProfile(), data=data,
+            files=files)
 
     def save(self):
         user = self.user.save()
@@ -214,8 +217,10 @@ class UpdateForm(EditForm):
                 raise forms.ValidationError(self.error_messages['duplicated_email'])
             return email
 
-        def __init__(self, permissions=[], *args, **kwargs):
-            super(UpdateForm.UserForm, self).__init__(permissions=permissions, *args, **kwargs)
+        def __init__(self, permissions=None, *args, **kwargs):
+            permissions = permissions if permissions is not None else []
+            super(UpdateForm.UserForm, self).__init__(
+                permissions=permissions, *args, **kwargs)
             self.fields['password1'].required = False
             self.fields['password2'].required = False
 
