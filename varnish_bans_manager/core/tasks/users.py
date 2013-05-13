@@ -7,10 +7,10 @@
 
 from __future__ import absolute_import
 from django.utils.translation import ugettext as _
-from django.contrib.auth.models import User
+from varnish_bans_manager.core.helpers.csv import UnicodeWriter
+from varnish_bans_manager.core.models import User
 from varnish_bans_manager.core.tasks.base import MonitoredTask
 from varnish_bans_manager.filesystem import new_temporary_file
-from varnish_bans_manager.core.helpers.csv import UnicodeWriter
 
 
 class Delete(MonitoredTask):

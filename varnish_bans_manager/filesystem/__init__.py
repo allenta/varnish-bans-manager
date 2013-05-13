@@ -11,6 +11,7 @@ import string
 import os
 import posixpath
 import time
+import codecs
 from urllib import unquote
 from django.utils.http import http_date
 from django.conf import settings
@@ -104,11 +105,11 @@ def randomize_filename(filename, length=32, prefix=''):
         splitted[1]
 
 
-def open_public_file(name, mode='w'):
+def open_public_file(name, mode='w', encoding='utf-8'):
     dir = secure_join(settings.MEDIA_ROOT, 'public', os.path.dirname(name))
     if not os.path.exists(dir):
         os.makedirs(dir)
-    return open(secure_join(settings.MEDIA_ROOT, 'public', name), mode)
+    return codecs.open(secure_join(settings.MEDIA_ROOT, 'public', name), mode=mode, encoding=encoding)
 
 
 def find_public_file(path):

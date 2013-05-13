@@ -206,6 +206,7 @@ form {
 
   // Append / prepend with proper margin-bottom.
   .input-append, .input-prepend {
+    display: block;
     margin-bottom: 0;
     input {
       margin-bottom: 9px;

@@ -29,7 +29,7 @@ class Paginator(BasePaginator):
     def page(self, number):
         """
         TODO: this method is a copy & paste of supperclass method due to
-        the poor Django 1.4 implementation. On 1.5, a '_get_page' factory
+        the poor Django 1.5 implementation. On 1.6, a '_get_page' factory
         method is provided to overcome this.
         """
         number = self.validate_number(number)

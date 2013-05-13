@@ -10,19 +10,18 @@ import urlparse
 from abc import ABCMeta
 from django.contrib import auth, messages
 from django.contrib.auth.decorators import login_required
-from django.contrib.auth.models import User
 from django.contrib.auth.tokens import default_token_generator
 from django.core.urlresolvers import reverse
-from django.http import HttpResponseRedirect, get_host
+from django.http import HttpResponseRedirect
 from django.utils.http import base36_to_int
 from django.utils.translation import ugettext as _
 from django.utils.decorators import method_decorator
 from django.views.generic import View
-from varnish_bans_manager.core.helpers import commands
-from varnish_bans_manager.core.helpers.views import ajaxify
+from varnish_bans_manager.core.helpers import commands, DEFAULT_SUCCESS_MESSAGE, DEFAULT_FORM_ERROR_MESSAGE
 from varnish_bans_manager.core.helpers.http import HttpResponseAjax
+from varnish_bans_manager.core.helpers.views import ajaxify
 from varnish_bans_manager.core.forms.user import LoginForm, PasswordResetForm, PasswordResetConfirmationForm, ProfilePreferencesForm, PasswordChangeForm
-from varnish_bans_manager.core.helpers import DEFAULT_SUCCESS_MESSAGE, DEFAULT_FORM_ERROR_MESSAGE
+from varnish_bans_manager.core.models import User
 
 
 class Base(View):
@@ -58,7 +57,7 @@ class Login(AnonymousBase):
 
         # Don't allow redirection to a different host.
         netloc = urlparse.urlparse(destination)[1]
-        if netloc and netloc != get_host(request):
+        if netloc and netloc != request.get_host():
             destination = reverse('home')
 
         # Done!
@@ -147,7 +146,7 @@ class PasswordResetConfirm(AnonymousBase):
         form = PasswordResetConfirmationForm(user, data=request.POST)
         if form.is_valid():
             # Save.
-            form.save(request)
+            form.save()
 
             # Done!
             messages.success(request, _('Your password has been updated.'))
@@ -195,7 +194,7 @@ class Password(AuthenticatedBase):
     def post(self, request):
         form = PasswordChangeForm(request.user, data=request.POST)
         if form.is_valid():
-            form.save(request)
+            form.save()
             messages.success(request, _("Your password has been updated."))
             return HttpResponseAjax([
                 commands.reload(request),

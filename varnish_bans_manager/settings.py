@@ -9,6 +9,7 @@ from __future__ import absolute_import
 import os
 import sys
 from cStringIO import StringIO
+from urlparse import urlparse
 import ConfigParser
 import getpass
 from path import path
@@ -61,7 +62,6 @@ else:
 from varnish_bans_manager.core.patches.base_management_command import *
 
 from django.contrib.messages import constants as message_constants
-from django.core.urlresolvers import reverse_lazy
 import djcelery
 from celery.schedules import crontab
 
@@ -228,13 +228,11 @@ CSRF_COOKIE_SECURE = HTTPS_ENABLED
 ## AUTHENTICATION.
 ###############################################################################
 
-AUTHENTICATION_BACKENDS = ('varnish_bans_manager.core.backends.EmailAuthBackend',)
+AUTH_USER_MODEL = 'core.User'
 
-AUTH_PROFILE_MODULE = 'core.UserProfile'
-
-LOGIN_URL = reverse_lazy('user-login')
-LOGOUT_URL = reverse_lazy('user-logout')
-LOGIN_REDIRECT_URL = reverse_lazy('home')
+LOGIN_URL = 'user-login'
+LOGOUT_URL = 'user-logout'
+LOGIN_REDIRECT_URL = 'home'
 
 PASSWORD_RESET_TIMEOUT_DAYS = 3
 
@@ -406,11 +404,11 @@ LOGGING = {
         }
     },
     'handlers': {
-       'mail_admins': {
-           'level': 'ERROR',
-           'filters': ['require_production_environment'],
-           'class': 'django.utils.log.AdminEmailHandler',
-           'include_html': True,
+        'mail_admins': {
+            'level': 'ERROR',
+            'filters': ['require_production_environment'],
+            'class': 'django.utils.log.AdminEmailHandler',
+            'include_html': True,
         },
         'logfile': {
             'level': 'DEBUG',
@@ -438,8 +436,8 @@ LOCALE_PATHS = (
 LANGUAGE_CODE = _config.get('i18n', 'default')
 
 LANGUAGES = (
-  ('es', ugettext('Spanish')),
-  ('en', ugettext('English')),
+    ('es', ugettext('Spanish')),
+    ('en', ugettext('English')),
 )
 
 ###############################################################################
@@ -489,8 +487,27 @@ VERSION = {
 }
 
 ###############################################################################
+## VBM.
+###############################################################################
+
+VBM_HTTP = dict(_config.items('http'))
+VBM_EMAIL_SUBJECT_PREFIX = _config.get('email', 'subject_prefix') + ' '
+VBM_CONTACT_EMAIL = _config.get('email', 'contact')
+VBM_NOTIFICATIONS_EMAIL = _config.get('email', 'notifications')
+VBM_BASE_URL = VBM_HTTP.pop('base_url').rstrip('/')
+if not VBM_BASE_URL.startswith('http'):
+    VBM_BASE_URL = "http://%s" % VBM_BASE_URL
+
+###############################################################################
 ## MISC.
 ###############################################################################
+
+# To avoid the generation of URLs to external hosts that may lead to a phishing
+# attack this setting should be set only to allow the host(s) under which this
+# site will be accessible on production.
+# More info: https://docs.djangoproject.com/en/1.4/ref/settings/#allowed-hosts
+_hostname = urlparse(VBM_BASE_URL).hostname
+ALLOWED_HOSTS = [_hostname] if _hostname is not None else []
 
 ROOT_URLCONF = 'varnish_bans_manager.urls'
 WSGI_APPLICATION = 'varnish_bans_manager.wsgi.application'
@@ -515,18 +532,6 @@ FILE_CHARSET = 'utf-8'
 
 # Whether to send broken-link emails.
 SEND_BROKEN_LINK_EMAILS = False
-
-###############################################################################
-## VBM.
-###############################################################################
-
-VBM_HTTP = dict(_config.items('http'))
-VBM_EMAIL_SUBJECT_PREFIX = _config.get('email', 'subject_prefix') + ' '
-VBM_CONTACT_EMAIL = _config.get('email', 'contact')
-VBM_NOTIFICATIONS_EMAIL = _config.get('email', 'notifications')
-VBM_BASE_URL = VBM_HTTP.pop('base_url').rstrip('/')
-if not VBM_BASE_URL.startswith('http'):
-    VBM_BASE_URL = "http://%s" % VBM_BASE_URL
 
 ###############################################################################
 ## CELERY (http://docs.celeryproject.org/en/latest/configuration.html).
