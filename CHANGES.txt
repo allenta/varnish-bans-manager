@@ -1,3 +1,10 @@
+v0.5, 13/05/2013
+----------------
+
+  - Upgrade to Django 1.5.
+  - Improved Vagrant env.
+  - Minor bugfixes.
+
 v0.4.3, 17/01/2013
 ------------------
 
