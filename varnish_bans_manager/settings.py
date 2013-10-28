@@ -506,8 +506,7 @@ if not VBM_BASE_URL.startswith('http'):
 # attack this setting should be set only to allow the host(s) under which this
 # site will be accessible on production.
 # More info: https://docs.djangoproject.com/en/1.4/ref/settings/#allowed-hosts
-_hostname = urlparse(VBM_BASE_URL).hostname
-ALLOWED_HOSTS = [_hostname] if _hostname is not None else []
+ALLOWED_HOSTS = ['*']
 
 ROOT_URLCONF = 'varnish_bans_manager.urls'
 WSGI_APPLICATION = 'varnish_bans_manager.wsgi.application'
