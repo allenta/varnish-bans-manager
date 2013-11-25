@@ -18,7 +18,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='varnish-bans-manager',
-    version='0.5.1',
+    version='0.5.2',
     author='dot2code Technologies',
     author_email='info@dot2code.com',
     packages=find_packages(),
@@ -39,7 +39,7 @@ setup(
         'Operating System :: OS Independent',
     ],
     install_requires=[
-        "django >= 1.5",
+        "django >= 1.5,<1.6",
         "django-celery >= 3.0.11",
         "django-mediagenerator >= 1.11",
         "django-templated-email >= 0.4.7",

@@ -1,3 +1,8 @@
+v0.5.2, 25/11/2013
+------------------
+
+  - Updated Django dependency in setup.py in order to keep using 1.5.*.
+
 v0.5.1, 28/10/2013
 ------------------
 
