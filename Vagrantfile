@@ -1,24 +1,28 @@
 # -*- mode: ruby -*-
 # vi: set ft=ruby :
 
-Vagrant::Config.run do |config|
+Vagrant.configure('2') do |config|
   config.vm.box = 'precise64'
-  config.vm.host_name = 'dev'
+  config.vm.hostname = 'dev'
   config.vm.box_url = 'http://files.vagrantup.com/precise64.box'
 
-  config.vm.provision :puppet do |puppet|
-    puppet.manifests_path = 'vagrant/manifests'
+  config.vm.provider :virtualbox do |vb|
+    vb.customize [
+      'modifyvm', :id,
+      '--memory', '512',
+      '--name', 'Varnish Bans Manager',
+    ]
   end
 
-  config.vm.customize [
-    'modifyvm', :id,
-    '--memory', '512',
-    '--name', 'Varnish Bans Manager',
-  ]
+  config.vm.provision :puppet do |puppet|
+    puppet.manifests_path = 'extras/vagrant/manifests'
+  end
 
   # /etc/hosts
   # 192.168.100.102 vbm.d2c.dev
-  config.vm.forward_port 9000, 9000
-  config.vm.network :hostonly, '192.168.100.102'
-  config.vm.network :bridged
+  config.vm.network :forwarded_port, guest: 9000, host: 9000
+  config.vm.network :private_network, ip: '192.168.100.102'
+  config.vm.network :public_network
+
+  config.vm.synced_folder '.', '/vagrant', :nfs => true
 end

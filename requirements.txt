@@ -1,0 +1,12 @@
+django >= 1.5,<1.6
+django-celery >= 3.0.11
+django-mediagenerator >= 1.11
+django-templated-email >= 0.4.7
+gunicorn >= 0.14.6
+eventlet >= 0.9.17
+simplejson >= 2.1.6
+path.py >= 2.4.1
+ordereddict >= 1.1
+south >= 0.7.6
+pytz
+pil
