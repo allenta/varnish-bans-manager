@@ -74,7 +74,7 @@ class virtualenv {
     creates => '/home/vagrant/.vagrant.install-virtualenv-dependencies',
     user => 'vagrant',
     provider => 'shell',
-    command => '. /home/vagrant/virtualenv/bin/activate && pip install -r /vagrant/requirements.txt && touch /home/vagrant/.vagrant.install-virtualenv-dependencies',
+    command => '. /home/vagrant/virtualenv/bin/activate && pip install MySQL-python -r /vagrant/requirements.txt && touch /home/vagrant/.vagrant.install-virtualenv-dependencies',
     require => Exec['create-virtualenv'],
     timeout => 0,
   }
