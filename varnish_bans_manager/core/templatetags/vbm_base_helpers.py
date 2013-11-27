@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-"""
+'''
 :copyright: (c) 2012 by the dot2code Team, see AUTHORS.txt for more details.
 :license: GPL, see LICENSE.txt for more details.
-"""
+'''
 
 from __future__ import absolute_import
 import re
@@ -20,10 +20,11 @@ register = template.Library()
 
 @register.simple_tag
 def active(value, pattern):
-    """
+    '''
     See http://gnuvince.wordpress.com/2007/09/14/a-django-template-tag-for-the-current-active-page/.
     See http://110j.wordpress.com/2009/01/25/django-template-tag-for-active-class/.
-    """
+
+    '''
     if isinstance(value, HttpRequest):
         prefix = '/%s' % value.LANGUAGE_CODE
         value = value.path_info
@@ -53,7 +54,7 @@ def hidden(value, pattern):
 @register.filter(is_safe=True)
 @stringfilter
 def classify(value):
-    return re.sub(r"_", '-', value)
+    return re.sub(r'_', '-', value)
 
 ###############################################################################
 
@@ -79,14 +80,15 @@ def key(dict, key):
 
 @register.simple_tag
 def settings_value(name, encoding='raw'):
-    """
+    '''
     Access some raw settings value.
-    """
+
+    '''
     try:
         value = getattr(settings, name)
         return json.dumps(value) if encoding == 'json' else value
     except AttributeError:
-        return ""
+        return ''
 
 
 ###############################################################################
@@ -94,14 +96,15 @@ def settings_value(name, encoding='raw'):
 
 @register.tag
 def capture(parser, token):
-    """
+    '''
     Capture contents of block into context.
 
     Use case: variable accessing based on current variable values.
 
     {% capture foo %}{{ foo.value }}-suffix{% endcapture %}
     {% if foo in bar %}{% endif %}
-    """
+
+    '''
     nodelist = parser.parse(('endcapture',))
     parser.delete_first_token()
     varname = token.contents.split()[1]

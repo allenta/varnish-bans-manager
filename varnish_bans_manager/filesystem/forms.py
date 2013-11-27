@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-"""
+'''
 :copyright: (c) 2012 by the dot2code Team, see AUTHORS.txt for more details.
 :license: GPL, see LICENSE.txt for more details.
-"""
+'''
 
 from __future__ import absolute_import
 from django.forms import ImageField as BaseImageField
@@ -13,10 +13,11 @@ from django.utils.safestring import mark_safe
 
 class ImageFileInput(FileInput):
     def _clear_checkbox_name(self, name):
-        """
+        '''
         Given the name of the file input, return the name of the clear hidden
         input.
-        """
+
+        '''
         return name + '-clear'
 
     def render(self, name, value, attrs=None):
@@ -28,8 +29,9 @@ class ImageFileInput(FileInput):
         if value and hasattr(value, "url"):
             # Add clear checkbox input.
             output.append(
-              CheckboxInput().render(self._clear_checkbox_name(name), False, attrs={
-                'class': 'image-file-input-clear'}))
+                CheckboxInput().render(self._clear_checkbox_name(name), False, attrs={
+                    'class': 'image-file-input-clear'
+                }))
 
             # Add image preview with delete icon.
             output.append(('<ul class="thumbnails image-file-input-preview">'

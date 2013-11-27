@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-"""
+'''
 :copyright: (c) 2012 by the dot2code Team, see AUTHORS.txt for more details.
 :license: GPL, see LICENSE.txt for more details.
-"""
+'''
 
 from __future__ import absolute_import
 import re
@@ -18,7 +18,7 @@ register = Library()
 def silence_without_field(fn):
     def wrapped(field, attr):
         if not field:
-            return ""
+            return ''
         else:
             return fn(field, attr)
     return wrapped
@@ -46,7 +46,7 @@ def _process_field_attributes(field, attr, process):
     return field
 
 
-@register.filter("attr")
+@register.filter('attr')
 @silence_without_field
 def set_attr(field, attr):
     def process(widget, attrs, attribute, value):
@@ -54,7 +54,7 @@ def set_attr(field, attr):
     return _process_field_attributes(field, attr, process)
 
 
-@register.filter("append_attr")
+@register.filter('append_attr')
 @silence_without_field
 def append_attr(field, attr):
     def process(widget, attrs, attribute, value):
@@ -67,13 +67,13 @@ def append_attr(field, attr):
     return _process_field_attributes(field, attr, process)
 
 
-@register.filter("add_class")
+@register.filter('add_class')
 @silence_without_field
 def add_class(field, css_class):
     return append_attr(field, 'class:' + css_class)
 
 
-@register.filter("add_error_class")
+@register.filter('add_error_class')
 @silence_without_field
 def add_error_class(field, css_class):
     if hasattr(field, 'errors') and field.errors:
@@ -81,14 +81,14 @@ def add_error_class(field, css_class):
     return field
 
 
-@register.filter("set_data")
+@register.filter('set_data')
 @silence_without_field
 def set_data(field, data):
     return set_attr(field, 'data-' + data)
 
 # render_field tag
 
-ATTRIBUTE_RE = re.compile(r"""
+ATTRIBUTE_RE = re.compile(r'''
     (?P<attr>
         [\w_-]+
     )
@@ -100,19 +100,20 @@ ATTRIBUTE_RE = re.compile(r"""
         [^"']*
     ['"]? # end quote
     )
-""", re.VERBOSE | re.UNICODE)
+''', re.VERBOSE | re.UNICODE)
 
 
 @register.tag
 def render_field(parser, token):
-    """
+    '''
     Render a form field using given attribute-value pairs
 
     Takes form field as first argument and list of attribute-value pairs for
     all other arguments.  Attribute-value pairs should be in the form of
     attribute=value or attribute="a value" for assignment and attribute+=value
     or attribute+="value" for appending.
-    """
+
+    '''
     error_msg = '%r tag requires a form field followed by a list of attributes and values in the form attr="value"' % token.split_contents()[0]
     try:
         bits = token.split_contents()
@@ -129,10 +130,10 @@ def render_field(parser, token):
     for pair in attr_list:
         match = ATTRIBUTE_RE.match(pair)
         if not match:
-            raise TemplateSyntaxError(error_msg + ": %s" % pair)
+            raise TemplateSyntaxError(error_msg + ': %s' % pair)
         dct = match.groupdict()
         attr, sign, value = dct['attr'], dct['sign'], parser.compile_filter(dct['value'])
-        if sign == "=":
+        if sign == '=':
             set_attrs.append((attr, value))
         else:
             append_attrs.append((attr, value))
@@ -157,11 +158,11 @@ class FieldAttributeNode(Node):
 
 @register.filter(name='field_type')
 def field_type(field):
-    """
+    '''
     Template filter that returns field class name (in lower case).
     E.g. if field is CharField then {{ field|field_type }} will
     return 'charfield'.
-    """
+    '''
     if hasattr(field, 'field') and field.field:
         return field.field.__class__.__name__.lower()
     return ''
@@ -169,11 +170,11 @@ def field_type(field):
 
 @register.filter(name='widget_type')
 def widget_type(field):
-    """
+    '''
     Template filter that returns field widget class name (in lower case).
     E.g. if field's widget is TextInput then {{ field|widget_type }} will
     return 'textinput'.
-    """
+    '''
     if hasattr(field, 'field') and hasattr(field.field, 'widget') and field.field.widget:
         return field.field.widget.__class__.__name__.lower()
     return ''

@@ -1,15 +1,14 @@
 # -*- coding: utf-8 -*-
 
-"""
+'''
 :copyright: (c) 2012 by the dot2code Team, see AUTHORS.txt for more details.
 :license: GPL, see LICENSE.txt for more details.
-"""
+'''
 
 from __future__ import absolute_import
 import os
 import sys
 from cStringIO import StringIO
-from urlparse import urlparse
 import ConfigParser
 import getpass
 from path import path
@@ -24,7 +23,6 @@ ROOT = path(__file__).abspath().dirname()
 # This is defined here as a do-nothing function because we can't import
 # django.utils.translation -- that module depends on the settings.
 ugettext = lambda s: s
-
 
 ###############################################################################
 ## USER CONFIG.
@@ -115,17 +113,17 @@ TEMPLATE_DIRS = (
 )
 
 TEMPLATE_CONTEXT_PROCESSORS = (
-    "django.contrib.auth.context_processors.auth",
-    "django.core.context_processors.debug",
-    "django.core.context_processors.i18n",
-    "django.core.context_processors.media",
-    "django.core.context_processors.static",
-    "django.core.context_processors.tz",
-    "django.core.context_processors.csrf",
-    "django.core.context_processors.request",
-    "varnish_bans_manager.core.context_processors.messages",
-    "varnish_bans_manager.core.context_processors.page_id",
-    "varnish_bans_manager.core.context_processors.is_production",
+    'django.contrib.auth.context_processors.auth',
+    'django.core.context_processors.debug',
+    'django.core.context_processors.i18n',
+    'django.core.context_processors.media',
+    'django.core.context_processors.static',
+    'django.core.context_processors.tz',
+    'django.core.context_processors.csrf',
+    'django.core.context_processors.request',
+    'varnish_bans_manager.core.context_processors.messages',
+    'varnish_bans_manager.core.context_processors.page_id',
+    'varnish_bans_manager.core.context_processors.is_production',
 )
 
 ###############################################################################
@@ -308,11 +306,13 @@ COPY_MEDIA_FILETYPES = (
 )
 
 MEDIA_BUNDLES = (
-    ('bundle.css',
+    (
+        'bundle.css',
         'varnish-bans-manager/js/plugins/jquery-ui/css/ui-lightness/jquery-ui-1.9.2.custom.css',
         'varnish-bans-manager/css/main.scss',
     ),
-    ('bundle.js',
+    (
+        'bundle.js',
         'varnish-bans-manager/js/plugins/jquery.once.js',
         'varnish-bans-manager/js/plugins/jquery.form.js',
         'varnish-bans-manager/js/plugins/jquery.notify.js',
@@ -327,7 +327,8 @@ MEDIA_BUNDLES = (
         'varnish-bans-manager/js/commands.js',
         'varnish-bans-manager/js/partials.js',
     ),
-    ('bootstrap.js',
+    (
+        'bootstrap.js',
         {'filter': 'mediagenerator.filters.i18n.I18N'},
         {'filter': 'mediagenerator.filters.media_url.MediaURL'},
         'varnish-bans-manager/js/plugins/jquery.js',
@@ -496,16 +497,12 @@ VBM_CONTACT_EMAIL = _config.get('email', 'contact')
 VBM_NOTIFICATIONS_EMAIL = _config.get('email', 'notifications')
 VBM_BASE_URL = VBM_HTTP.pop('base_url').rstrip('/')
 if not VBM_BASE_URL.startswith('http'):
-    VBM_BASE_URL = "http://%s" % VBM_BASE_URL
+    VBM_BASE_URL = 'http://%s' % VBM_BASE_URL
 
 ###############################################################################
 ## MISC.
 ###############################################################################
 
-# To avoid the generation of URLs to external hosts that may lead to a phishing
-# attack this setting should be set only to allow the host(s) under which this
-# site will be accessible on production.
-# More info: https://docs.djangoproject.com/en/1.4/ref/settings/#allowed-hosts
 ALLOWED_HOSTS = ['*']
 
 ROOT_URLCONF = 'varnish_bans_manager.urls'

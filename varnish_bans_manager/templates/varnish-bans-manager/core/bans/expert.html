@@ -100,11 +100,11 @@
     </li>
     <li>
       {% trans 'To ban all PDF files in the virtual host <code>example.com</code>:' %}
-      <p><pre>req.url ~ "\.pdf$" && req.http.host == example.com</pre></p>
+      <p><pre>req.url ~ "\\.pdf$" && req.http.host == example.com</pre></p>
     </li>
     <li>
       {% blocktrans with 'https://www.varnish-software.com/blog/ban-lurker' as lurker %}Same as before but using a <a href="{{ lurker }}">lurker friendly ban</a> (recommended approach that requires some tunning of the VCL):{% endblocktrans %}
-      <p><pre>obj.http.x-url ~ "\.pdf$" && obj.http.x-host == example.com</pre></p>
+      <p><pre>obj.http.x-url ~ "\\.pdf$" && obj.http.x-host == example.com</pre></p>
     </li>
   </ol>
 {% endblock %}

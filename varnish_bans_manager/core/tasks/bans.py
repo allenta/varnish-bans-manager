@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-"""
+'''
 :copyright: (c) 2012 by the dot2code Team, see AUTHORS.txt for more details.
 :license: GPL, see LICENSE.txt for more details.
-"""
+'''
 
 from __future__ import absolute_import
 from django.conf import settings
@@ -14,10 +14,11 @@ from varnish_bans_manager.core.models import BanSubmission, BanSubmissionItem, S
 
 
 class NotifySubmissions(SingleInstanceTask):
-    """
+    '''
     Send a notification to the administrator with a report
     of all bans submited lately.
-    """
+
+    '''
     ignore_result = True
     soft_time_limit = 600  # 10 minutes.
 
@@ -56,9 +57,9 @@ class NotifySubmissions(SingleInstanceTask):
 
 
 class Submit(MonitoredTask):
-    """
+    '''
     Perform a ban submission.
-    """
+    '''
     def irun(self, ban_submission):
         ban_submission.launched_at = timezone.now()
         ban_submission.save()
@@ -80,9 +81,9 @@ class Submit(MonitoredTask):
 
 
 class Status(MonitoredTask):
-    """
+    '''
     Fetches & merges lists of bans.
-    """
+    '''
     def irun(self, cache):
         # Init result.
         result = {

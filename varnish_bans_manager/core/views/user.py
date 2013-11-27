@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-"""
+'''
 :copyright: (c) 2012 by the dot2code Team, see AUTHORS.txt for more details.
 :license: GPL, see LICENSE.txt for more details.
-"""
+'''
 
 from __future__ import absolute_import
 import urlparse
@@ -135,7 +135,7 @@ class PasswordResetConfirm(AnonymousBase):
             kwargs['user'] = user
             return super(PasswordResetConfirm, self).dispatch(request, *args, **kwargs)
         else:
-            messages.error(request, _("The password reset link is not valid anymore. Please, request a new one."))
+            messages.error(request, _('The password reset link is not valid anymore. Please, request a new one.'))
             return HttpResponseRedirect(reverse('user-password-reset'))
 
     def get(self, request, user):
@@ -195,7 +195,7 @@ class Password(AuthenticatedBase):
         form = PasswordChangeForm(request.user, data=request.POST)
         if form.is_valid():
             form.save()
-            messages.success(request, _("Your password has been updated."))
+            messages.success(request, _('Your password has been updated.'))
             return HttpResponseAjax([
                 commands.reload(request),
             ], request)

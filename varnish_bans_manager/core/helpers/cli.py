@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-"""
+'''
 :copyright: (c) 2012 by the dot2code Team, see AUTHORS.txt for more details.
 :license: GPL, see LICENSE.txt for more details.
-"""
+'''
 
 from __future__ import absolute_import
 import re
@@ -14,7 +14,7 @@ from django.utils.encoding import force_unicode
 
 
 class Varnish(Telnet):
-    """
+    '''
     Simple CLI to access a Varnish cache node management port. See:
 
         - https://www.varnish-cache.org/trac/wiki/CLI
@@ -23,7 +23,8 @@ class Varnish(Telnet):
         - https://www.varnish-cache.org/docs/3.0/reference/varnish-cli.html
         - https://github.com/justquick/python-varnish
         - http://code.google.com/p/pyvarnishmport/
-    """
+
+    '''
     error_messages = {
         'missing_secret': _(
             'Cache has requested authentication but a secret key was not provided.'),
@@ -53,22 +54,24 @@ class Varnish(Telnet):
             })
 
     def ban(self, expression):
-        """
+        '''
         (ban|purge) field operator argument [&& field operator argument [...]]
 
             Invalidates all documents matching the ban expression.
-        """
+
+        '''
         self._fetch('%s %s' % (
             'purge' if self.version < 30 else 'ban',
             expression,
         ))
 
     def ban_list(self):
-        """
+        '''
         (ban|purge).list
 
             Fetches the list of bans.
-        """
+
+        '''
         # Fetch list of bans.
         content = self._fetch('%s.list' % (
             'purge' if self.version < 30 else 'ban',
@@ -87,11 +90,12 @@ class Varnish(Telnet):
         return result
 
     def quit(self):
-        """
+        '''
         quit
 
             Closes the connection to the Varnish CLI.
-        """
+
+        '''
         self.close()
 
     def _read(self):
@@ -106,10 +110,11 @@ class Varnish(Telnet):
         self._fetch('auth %s' % response.hexdigest())
 
     def _fetch(self, command):
-        """
+        '''
         Runs a command on a Varnish cache node and return the result.
         Return value is a tuple of ((status, length), content).
-        """
+
+        '''
         self.write(('%s\n' % command).encode("utf8"))
         while 1:
             buffer = self.read_until('\n').strip()

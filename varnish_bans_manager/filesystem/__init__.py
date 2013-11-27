@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-"""
+'''
 :copyright: (c) 2012 by the dot2code Team, see AUTHORS.txt for more details.
 :license: GPL, see LICENSE.txt for more details.
-"""
+'''
 
 from __future__ import absolute_import
 import random
@@ -63,6 +63,7 @@ def sendfile(request, filename, attachment=False, attachment_filename=None, mime
 
     If no mimetype or encoding are specified, then they will be guessed via the
     filename (using the standard python mimetypes module)
+
     '''
     _sendfile = _get_sendfile()
 

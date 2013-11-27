@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-"""
+'''
 :copyright: (c) 2012 by the dot2code Team, see AUTHORS.txt for more details.
 :license: GPL, see LICENSE.txt for more details.
-"""
+'''
 
 from __future__ import absolute_import
 from django.utils import translation
@@ -49,11 +49,12 @@ class InternationalizedTask(Task):
 
 
 class MonitoredTask(InternationalizedTask):
-    """
+    '''
     Depending on the specific task, subclasses can, for example,
     implement cleanup logic overriding on_failure, on_retry, etc.
     methods.
-    """
+
+    '''
     abstract = True
 
     def internationalized_run(self, *args, **kwargs):
@@ -79,14 +80,15 @@ class MonitoredTask(InternationalizedTask):
 
 
 class SingleInstanceTask(InternationalizedTask):
-    """
+    '''
     Child classes are reponsible to complete as much work as possible and
     finish before lock expiration. Once expired, worker will be killed.
 
     See:
         - http://ask.github.com/celery/cookbook/tasks.html
         - http://stackoverflow.com/questions/4095940/running-unique-tasks-with-celery.
-    """
+
+    '''
     abstract = True
 
     def __init__(self, *args, **kwargs):
@@ -120,7 +122,7 @@ class SingleInstanceTask(InternationalizedTask):
         return cache.delete(self._lock_id())
 
     def _lock_id(self):
-        return "celery-single-instance:lock:%s" % self.name
+        return 'celery-single-instance:lock:%s' % self.name
 
     class LockedException(Exception):
         pass

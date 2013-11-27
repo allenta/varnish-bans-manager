@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""
+'''
 Varnish Bans Manager
 ====================
 
@@ -11,14 +11,27 @@ and other useful information.
 
 :copyright: (c) 2012 by the dot2code Team, see AUTHORS.txt for more details.
 :license: GPL, see LICENSE.txt for more details.
-"""
+'''
 
 from __future__ import absolute_import
+import sys
+import os
 from setuptools import setup, find_packages
+
+if sys.version_info < (2, 7):
+    raise Exception('VBM requires Python 2.7 or higher.')
+
+with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), 'requirements.txt')) as file:
+    install_requires = file.read().splitlines()
+
+extra = {}
+
+if sys.version_info[0] == 3:
+    extra['use_2to3'] = True
 
 setup(
     name='varnish-bans-manager',
-    version='0.5.2',
+    version='0.5.3',
     author='dot2code Technologies',
     author_email='info@dot2code.com',
     packages=find_packages(),
@@ -38,18 +51,6 @@ setup(
         'Intended Audience :: System Administrators',
         'Operating System :: OS Independent',
     ],
-    install_requires=[
-        "django >= 1.5,<1.6",
-        "django-celery >= 3.0.11",
-        "django-mediagenerator >= 1.11",
-        "django-templated-email >= 0.4.7",
-        "gunicorn >= 0.14.6",
-        "eventlet >= 0.9.17",
-        "simplejson >= 2.1.6",
-        "path.py >= 2.4.1",
-        "ordereddict >= 1.1",
-        "pytz",
-        "pil",
-        "south >= 0.7.6",
-    ],
+    install_requires=install_requires,
+    **extra
 )

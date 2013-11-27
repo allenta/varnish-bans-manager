@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-"""
+'''
 :copyright: (c) 2012 by the dot2code Team, see AUTHORS.txt for more details.
 :license: GPL, see LICENSE.txt for more details.
-"""
+'''
 
 from __future__ import absolute_import
 import simplejson as json
@@ -18,9 +18,10 @@ from south.modelsinspector import add_introspection_rules
 
 
 class RevisionedQuerySet(models.query.QuerySet):
-    """
+    '''
     Makes sure revision has not been changed since data was last read from DB.
-    """
+
+    '''
     class RecordModifiedError(DatabaseError):
         pass
 
@@ -53,12 +54,12 @@ class RevisionedQuerySet(models.query.QuerySet):
 
 
 class QuerySet(RevisionedQuerySet, models.query.QuerySet):
-    """
+    '''
     Custom QuerySet class for our models. Main added functionalities are:
 
       - RevisionField automatic checks during updates.
 
-    """
+    '''
     pass
 
 ##
@@ -79,9 +80,10 @@ for cls in models.query.QuerySet.__subclasses__():
 
 
 class Manager(models.Manager):
-    """
+    '''
     Custom Manager class for our models.
-    """
+
+    '''
     use_for_related_fields = True
 
     def get_query_set(self):
@@ -92,9 +94,10 @@ class Manager(models.Manager):
 
 
 class Options(object):
-    """
+    '''
     Custom meta options class for our models.
-    """
+
+    '''
     _valid_options = ('trackable_field_names',)
 
     def __init__(self, cls, meta):
@@ -114,7 +117,7 @@ class Options(object):
 
 
 class ModelBase(models.base.ModelBase):
-    """
+    '''
     Custom metaclass.
 
     This metaclass parses custom options in VBMMeta and makes
@@ -122,7 +125,8 @@ class ModelBase(models.base.ModelBase):
     a similar behaviour than that of the Meta class offered
     by Django model classes (inheritance, etc.) but encapsulates
     our own custom options for all our models.
-    """
+
+    '''
     def __init__(cls, name, bases, attrs):
         super(ModelBase, cls).__init__(name, bases, attrs)
         vbm_meta = attrs.pop('VBMMeta', getattr(cls, 'VBMMeta'))
@@ -150,7 +154,7 @@ class ModelBase(models.base.ModelBase):
 
 
 class Model(models.Model):
-    """
+    '''
     Custom base model class.
 
     Added functionality:
@@ -162,7 +166,8 @@ class Model(models.Model):
           updates to work, FileField fields will always be
           automatically added to VBMMeta.trackable_field_names.
           See Options.__init__
-    """
+
+    '''
     __metaclass__ = ModelBase
 
     objects = Manager()
@@ -224,9 +229,9 @@ class Model(models.Model):
         abstract = True
 
     class VBMMeta:
-        """
+        '''
         Default values for all custom meta options.
-        """
+        '''
         trackable_field_names = ()
 
 
@@ -234,9 +239,10 @@ class Model(models.Model):
 
 
 class RevisionField(models.IntegerField):
-    """
+    '''
     Revision Field that returns a "unique" revision number for the record.
-    """
+
+    '''
     default_error_messages = {
         'modified': _(
             'This item has been updated by other user while you were editing '
@@ -280,11 +286,12 @@ add_introspection_rules([], ["^varnish_bans_manager\.core\.models\.base\.Revisio
 
 
 class JSONField(models.Field):
-    """
+    '''
     Simple JSON field. See:
 
         - https://github.com/bradjasper/django-jsonfield
-    """
+
+    '''
     __metaclass__ = models.SubfieldBase
 
     def to_python(self, value):
@@ -306,4 +313,4 @@ class JSONField(models.Field):
         return 'TextField'
 
 
-add_introspection_rules([], ["^varnish_bans_manager\.core\.models\.base\.JSONField"])
+add_introspection_rules([], ['^varnish_bans_manager\.core\.models\.base\.JSONField'])

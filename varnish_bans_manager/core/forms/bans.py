@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-"""
+'''
 :copyright: (c) 2012 by the dot2code Team, see AUTHORS.txt for more details.
 :license: GPL, see LICENSE.txt for more details.
-"""
+'''
 
 from __future__ import absolute_import
 import re
@@ -25,9 +25,10 @@ class TargetField(BetterChoiceField):
     }
 
     def load_choices(self, initial=None, expert=False):
-        """
+        '''
         Build choices from current available groups and nodes.
-        """
+
+        '''
         groups = Group.objects.all().order_by('weight', 'created_at')
         nodes = Node.objects.all().order_by('weight', 'created_at')
         # Add nodes not linked to any group.
@@ -45,9 +46,10 @@ class TargetField(BetterChoiceField):
             self.initial = self._build_choice_value(initial)
 
     def clean(self, value):
-        """
+        '''
         Returns a Cache instance.
-        """
+
+        '''
         value = super(TargetField, self).clean(value)
         if value:
             cache = self._parse_choice_value(value)

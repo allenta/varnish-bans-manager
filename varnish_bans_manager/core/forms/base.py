@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-"""
+'''
 :copyright: (c) 2012 by the dot2code Team, see AUTHORS.txt for more details.
 :license: GPL, see LICENSE.txt for more details.
-"""
+'''
 
 from __future__ import absolute_import
 from django.core.exceptions import ValidationError
@@ -19,11 +19,11 @@ class FallbackMixinField(object):
         # Fallback fields are never required. Trying to require them should be
         # an error.
         kwargs.setdefault('required', False)
-        assert not kwargs['required'], "No fallback field can be set as "\
-            "required."
+        assert not kwargs['required'], 'No fallback field can be set as '\
+            'required.'
         # Set default value and choices.
-        assert default is not None or choices, "All fallback fields should "\
-            "provide a default value or/and a non-empty choices list."
+        assert default is not None or choices, 'All fallback fields should '\
+            'provide a default value or/and a non-empty choices list.'
         self.default = choices[0] if default is None else default
         self.choices = choices
         # Done!
@@ -51,8 +51,8 @@ class FallbackBooleanField(FallbackMixinField, BooleanField):
 
 class SortDirectionField(FallbackCharField):
     def __init__(self, *args, **kwargs):
-        assert 'choices' not in kwargs, "No custom choices can be set for a"\
-            "SortDirectionField"
+        assert 'choices' not in kwargs, 'No custom choices can be set for a'\
+            'SortDirectionField'
         kwargs['choices'] = ['asc', 'desc']
         super(SortDirectionField, self).__init__(*args, **kwargs)
 

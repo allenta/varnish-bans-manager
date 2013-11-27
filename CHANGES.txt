@@ -1,3 +1,9 @@
+v0.5.3, 27/11/2013
+------------------
+
+  - Improved/updated infrastructure (setup.py, Puppet manifest, etc.).
+  - Blocked django-celery package version (3.0.23).
+
 v0.5.2, 25/11/2013
 ------------------
 

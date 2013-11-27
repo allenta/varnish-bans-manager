@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-"""
+'''
 :copyright: (c) 2012 by the dot2code Team, see AUTHORS.txt for more details.
 :license: GPL, see LICENSE.txt for more details.
-"""
+'''
 
 from __future__ import absolute_import
 from PIL import Image
@@ -61,10 +61,11 @@ def _wrapped_upload_to(upload_to, private, path_generator):
 
 
 class FieldFileMixin(BaseFieldFile):
-    """
+    '''
     Mixin that adds support for public/private filesystems and file
     contents auto-generation, as well as some useful properties.
-    """
+
+    '''
     @property
     def attachment(self):
         return self.field.attachment
@@ -184,10 +185,11 @@ add_introspection_rules([(
 
 
 class ImageFieldFile(FieldFileMixin, BaseImageFieldFile):
-    """
+    '''
     Adds our custom mixin as well as support for resizing the image if it
     surpases the bounding box defined by the field.
-    """
+
+    '''
     def save(self, name, content, save=True):
         # Resize to the bounding box if necessary.
         if self.field.max_width and self.field.max_height:
@@ -197,7 +199,7 @@ class ImageFieldFile(FieldFileMixin, BaseImageFieldFile):
             img.thumbnail((
                 self.field.max_width,
                 self.field.max_height
-                ), Image.ANTIALIAS)
+            ), Image.ANTIALIAS)
             img.save(new_content, format=img.format)
             new_content = ContentFile(new_content.getvalue())
             super(ImageFieldFile, self).save(name, new_content, save)

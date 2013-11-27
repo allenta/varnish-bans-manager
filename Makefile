@@ -1,4 +1,4 @@
-VBM_ROOT=.
+VBM_ROOT = $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
 
 sdist: build
 	@echo
@@ -37,7 +37,8 @@ clone: clean
 		--exclude="Makefile" --exclude="DEVELOPERS.rst" \
 		--exclude="vbm.sublime-project" --exclude="vbm.sublime-workspace" \
 		--exclude="sftp-config.json" \
-		"$(VBM_ROOT)" "$(VBM_ROOT)/build/"
+		"$(VBM_ROOT)/" "$(VBM_ROOT)/build/"
 
 clean:
 	rm -rf "$(VBM_ROOT)/build/"
+	find "$(VBM_ROOT)" -name "*.pyc" -o -name "*.mo" | xargs rm -f

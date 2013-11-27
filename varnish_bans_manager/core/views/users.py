@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-"""
+'''
 :copyright: (c) 2012 by the dot2code Team, see AUTHORS.txt for more details.
 :license: GPL, see LICENSE.txt for more details.
-"""
+'''
 
 from __future__ import absolute_import
 from abc import ABCMeta
@@ -105,7 +105,7 @@ class Bulk(Base):
 
     @classmethod
     def download_csv_callback(cls, request, result, context):
-        instructions = _("You should now see a popup window that asks where to save the exported file in your computer. If not, you can download it manually by simply clicking <a href=\"%(url)s\" target=\"_blank\">this link</a>.") % {
+        instructions = _('You should now see a popup window that asks where to save the exported file in your computer. If not, you can download it manually by simply clicking <a href="%(url)s" target="_blank">this link</a>.') % {
             'url': result['url'],
         }
         if result['errors'] == 0:
