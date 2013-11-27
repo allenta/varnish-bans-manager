@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-"""
+'''
 :copyright: (c) 2012 by the dot2code Team, see AUTHORS.txt for more details.
 :license: GPL, see LICENSE.txt for more details.
-"""
+'''
 
 from __future__ import absolute_import
 from django import forms
@@ -31,10 +31,10 @@ class LoginForm(forms.Form):
 
     error_messages = {
         'invalid_login': _(
-            "Please enter a correct e-mail and password. "
-            "Note that both fields are case-sensitive."),
+            'Please enter a correct e-mail and password. '
+            'Note that both fields are case-sensitive.'),
         'inactive': _(
-            "This account is inactive."),
+            'This account is inactive.'),
     }
 
     def __init__(self, *args, **kwargs):
@@ -65,8 +65,8 @@ class PasswordResetForm(forms.Form):
             "That e-mail address doesn't have an associated "
             "user account. Are you sure you've registered?"),
         'unusable': _(
-            "The user account associated with this e-mail "
-            "address cannot reset the password."),
+            'The user account associated with this e-mail '
+            'address cannot reset the password.'),
     }
 
     def __init__(self, *args, **kwargs):
@@ -74,9 +74,10 @@ class PasswordResetForm(forms.Form):
         self.user = None
 
     def clean_email(self):
-        """
+        '''
         Validates that an active user exists with the given email address.
-        """
+
+        '''
         email = self.cleaned_data.get('email')
         try:
             self.user = User.objects.filter(email__iexact=email, is_active=True).order_by('date_joined')[:1].get()
@@ -88,10 +89,10 @@ class PasswordResetForm(forms.Form):
             raise forms.ValidationError(self.error_messages['unknown'])
 
     def save(self, request):
-        """
+        '''
         Generates a one-use only link for resetting password and sends to the
         user.
-        """
+        '''
         host = request.get_host()
         send_templated_mail(
             template_name='varnish-bans-manager/core/user/password_reset',
@@ -100,7 +101,7 @@ class PasswordResetForm(forms.Form):
             bcc=settings.DEFAULT_BCC_EMAILS,
             context={
                 'name': self.user.first_name or self.user.email,
-                'base_url': "http://%s" % host,
+                'base_url': 'http://%s' % host,
                 'reset_url':
                     (settings.HTTPS_ENABLED and 'https' or 'http') + '://' +
                     host +

@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-"""
+'''
 :copyright: (c) 2012 by the dot2code Team, see AUTHORS.txt for more details.
 :license: GPL, see LICENSE.txt for more details.
-"""
+'''
 
 from __future__ import absolute_import
 from django.core.paginator import Paginator as BasePaginator
@@ -27,11 +27,12 @@ class Paginator(BasePaginator):
         return range(left, right + 1)
 
     def page(self, number):
-        """
+        '''
         TODO: this method is a copy & paste of supperclass method due to
         the poor Django 1.5 implementation. On 1.6, a '_get_page' factory
         method is provided to overcome this.
-        """
+
+        '''
         number = self.validate_number(number)
         bottom = (number - 1) * self.per_page
         top = bottom + self.per_page

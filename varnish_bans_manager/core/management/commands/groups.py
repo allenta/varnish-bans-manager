@@ -15,12 +15,12 @@ class Command(BaseCommand):
         make_option('--id', dest='id', type='int'),
         make_option('--name', dest='name'),
     )
-    help = """Usage,
+    help = '''Usage,
 
     groups --list
     groups --add --name <value>
     groups --delete --id <value>
-    """
+    '''
 
     def handle(self, *args, **options):
         # --list

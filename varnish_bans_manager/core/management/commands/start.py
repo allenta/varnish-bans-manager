@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-"""
+'''
 :copyright: (c) 2012 by the dot2code Team, see AUTHORS.txt for more details.
 :license: GPL, see LICENSE.txt for more details.
-"""
+'''
 
 from __future__ import absolute_import
 import multiprocessing
@@ -25,7 +25,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         # Do any necessary upgrades in the DB.
-        print "Doing any required upgrades before service startup..."
+        print 'Doing any required upgrades before service startup...'
         call_command('upgrade')
 
         # Run!

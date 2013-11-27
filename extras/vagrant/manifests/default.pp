@@ -186,16 +186,12 @@ class user {
   file {'/home/vagrant/source':
     ensure => link,
     mode => 0644,
-    owner => 'vagrant',
-    group => 'vagrant',
     target => '/vagrant',
   }
 
   file {['/vagrant/files']:
     ensure => directory,
     mode => 0644,
-    owner => 'vagrant',
-    group => 'vagrant',
   }
 }
 

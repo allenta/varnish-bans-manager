@@ -1,9 +1,9 @@
 # -*- coding: utf-8 -*-
 
-"""
+'''
 :copyright: (c) 2012 by the dot2code Team, see AUTHORS.txt for more details.
 :license: GPL, see LICENSE.txt for more details.
-"""
+'''
 
 from __future__ import absolute_import
 import time
@@ -27,11 +27,12 @@ from varnish_bans_manager.core.helpers import commands
 
 
 def _replace_insensitive(string, target, replacement):
-    """
+    '''
     Similar to string.replace() but case insensitive.
     Code borrowed from:
     http://forums.devshed.com/python-programming-11/case-insensitive-string-replace-490921.html
-    """
+
+    '''
     no_case = string.lower()
     index = no_case.rfind(target.lower())
     if index >= 0:
@@ -97,11 +98,12 @@ class CustomizationsMiddleware:
 
 
 class SecurityMiddleware:
-    """
+    '''
     Extra check to force authentication for all views by default. Therefore, 'login_required'
     decorator is not required, but it's recommended (documentation, extra check if this
     middleware is disabled, etc.).
-    """
+
+    '''
     def process_view(self, request, view_func, view_args, view_kwargs):
         is_login_required = view_kwargs.pop('login_required', True)
         if is_login_required and not request.user.is_authenticated():
@@ -120,8 +122,8 @@ class SSLRedirectMiddleware:
         url = "%s://%s%s" % (protocol, request.get_host(), request.get_full_path())
         if settings.DEBUG and request.method == 'POST':
             raise RuntimeError(
-                """Django can't perform a redirect while maintaining POST data.
-                Please structure your views so that redirects only occur during GETs.""")
+                '''Django can't perform a redirect while maintaining POST data.
+                Please structure your views so that redirects only occur during GETs.''')
         if request.is_ajax():
             return HttpResponseAjax([commands.redirect(url)])
         else:
@@ -283,9 +285,10 @@ class TimerMiddleware:
 
 
 class AjaxRedirectMiddleware:
-    """
+    '''
     Intercepts standard HTTP redirections replacing them by AJAX commands when required.
-    """
+
+    '''
     def process_response(self, request, response):
         if request.is_ajax():
             if isinstance(response, HttpResponseRedirect) or \

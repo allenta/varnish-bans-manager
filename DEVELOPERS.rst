@@ -25,6 +25,7 @@ development environment.
 
         $ python varnish_bans_manager/runner.py syncdb
         $ python varnish_bans_manager/runner.py migrate
+        $ python varnish_bans_manager/runner.py createcachetable cache
 
 - Install `Sass <http://sass-lang.com>`_ and `Compass <http://compass-style.org>`_
   in your development box (required by ``django-mediagenerator`` asset manager)::

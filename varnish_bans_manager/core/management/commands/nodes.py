@@ -20,12 +20,12 @@ class Command(BaseCommand):
         make_option('--name', dest='name'),
         make_option('--group', dest='group', type='int'),
     )
-    help = """Usage,
+    help = '''Usage,
 
     nodes --list
     nodes --add --host <host> --port <port> [--secret-file <value>] [--legacy] [--name <value>] [--group <group>]
     nodes --delete --id <value>
-    """
+    '''
 
     def handle(self, *args, **options):
         # --list

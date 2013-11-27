@@ -1,9 +1,9 @@
 #!/usr/bin/env python
 
-"""
+'''
 :copyright: (c) 2012 by the dot2code Team, see AUTHORS.txt for more details.
 :license: GPL, see LICENSE.txt for more details.
-"""
+'''
 
 from __future__ import absolute_import
 import os
@@ -14,7 +14,7 @@ from path import path
 
 
 def default_config():
-    return """
+    return '''
 # HTTP server settings. All Gunicorn server settings are supported. Check
 # out Gunicorn documentation (http://docs.gunicorn.org/en/latest/configure.html)
 # for further details and for a full list of options. Note that 'debug' and
@@ -93,7 +93,7 @@ secret_key: %(secret_key)s
 # For development purposes only. Always keep this value to false, or,
 # even better, remove it from the configuration file.
 development: false
-    """ % {
+    ''' % {
         'secret_key': ''.join(
             random.choice(string.ascii_letters + string.digits) for i in range(64))
     }
@@ -101,12 +101,12 @@ development: false
 
 def main():
     if len(sys.argv) == 1:
-        sys.exit("Usage: varnish-bans-manager [command] [options]")
+        sys.exit('Usage: varnish-bans-manager [command] [options]')
     elif len(sys.argv) == 2 and sys.argv[1] == 'init':
         print default_config()
         sys.exit()
     else:
-        sys.path.append(path(__file__).abspath().dirname().dirname())
+        sys.path.append(str(path(__file__).abspath().dirname().dirname()))
         os.environ['DJANGO_SETTINGS_MODULE'] = 'varnish_bans_manager.settings'
         from django.core.management import execute_from_command_line
         execute_from_command_line(sys.argv)

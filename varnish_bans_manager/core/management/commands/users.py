@@ -15,10 +15,10 @@ class Command(BaseCommand):
         make_option('--firstname', dest='firstname'),
         make_option('--lastname', dest='lastname'),
     )
-    help = """Usage,
+    help = '''Usage,
 
     users --add [--administrator] --email <value> --password <value> --firstname <value> --lastname <value>
-    """
+    '''
 
     def handle(self, *args, **options):
         # Check arguments.
