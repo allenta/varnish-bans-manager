@@ -37,7 +37,7 @@ clone: clean
 		--exclude="Makefile" --exclude="DEVELOPERS.rst" \
 		--exclude="vbm.sublime-project" --exclude="vbm.sublime-workspace" \
 		--exclude="sftp-config.json" \
-		"$(VBM_ROOT)" "$(VBM_ROOT)/build/"
+		"$(VBM_ROOT)/" "$(VBM_ROOT)/build/"
 
 clean:
 	rm -rf "$(VBM_ROOT)/build/"
