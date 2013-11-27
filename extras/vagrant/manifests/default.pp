@@ -1,9 +1,22 @@
-class phase1 {
+Exec {
+  path => ['/bin/', '/sbin/' , '/usr/bin/', '/usr/sbin/', '/usr/local/bin']
+}
+
+class configuration {
+  $mysql_db_name = 'varnish_bans_manager'
+  $mysql_user = 'bob'
+  $mysql_password = 's3cr3t'
+}
+
+class system-update {
+  Class['configuration'] -> Class['system-update']
+
   exec {'apt-get-update':
-    command => '/usr/bin/apt-get update'
+    user => 'root',
+    command => 'apt-get update',
   }
 
-  package {['python', 'python-pip', 'mysql-server', 'mysql-client', 'rubygems', 'python-dev', 'libmysqlclient-dev', 'libjpeg8', 'libjpeg62-dev', 'libfreetype6', 'libfreetype6-dev', 'zlib1g-dev', 'yui-compressor', 'gettext', 'varnish', 'postfix', 'mailutils']:
+  package {['python', 'python-pip', 'curl', 'mysql-server', 'mysql-client', 'rubygems', 'python-dev', 'libmysqlclient-dev', 'libjpeg8', 'libjpeg62-dev', 'libfreetype6', 'libfreetype6-dev', 'zlib1g-dev', 'yui-compressor', 'gettext', 'postfix', 'mailutils']:
     ensure => present,
     require => Exec['apt-get-update'],
   }
@@ -16,7 +29,7 @@ class phase1 {
     target => $architecture ? {
       'i386' => '/usr/lib/i386-linux-gnu/libjpeg.so',
       default => '/usr/lib/x86_64-linux-gnu/libjpeg.so',
-    }
+    },
   }
 
   file {'/usr/lib/libfreetype.so':
@@ -42,20 +55,95 @@ class phase1 {
   }
 }
 
-class phase2 {
-  Class['phase1'] -> Class['phase2']
-
-  package {['sass', 'compass']:
-    ensure   => 'installed',
-    provider => 'gem',
-  }
+class virtualenv {
+  Class['system-update'] -> Class['virtualenv']
 
   package {['virtualenv']:
     ensure   => 'installed',
     provider => 'pip',
   }
 
-  service {['mysql', 'varnish', 'postfix']:
+  exec {'create-virtualenv':
+    creates => '/home/vagrant/virtualenv/',
+    user => 'vagrant',
+    command => 'virtualenv /home/vagrant/virtualenv',
+    require => Package['virtualenv'],
+  }
+
+  exec {'install-virtualenv-dependencies':
+    creates => '/home/vagrant/.vagrant.install-virtualenv-dependencies',
+    user => 'vagrant',
+    provider => 'shell',
+    command => '. /home/vagrant/virtualenv/bin/activate && pip install -r /vagrant/requirements.txt && touch /home/vagrant/.vagrant.install-virtualenv-dependencies',
+    require => Exec['create-virtualenv'],
+    timeout => 0,
+  }
+}
+
+class mysql {
+  Class['system-update'] -> Class['mysql']
+
+  service {['mysql']:
+    enable => true,
+    ensure => running,
+  }
+
+  exec {'set-mysql-root-password':
+    user => 'vagrant',
+    unless => "mysqladmin -uroot -p${configuration::mysql_password} status",
+    command => "mysqladmin -uroot password ${configuration::mysql_password}",
+    require => Service['mysql'],
+  }
+
+  exec {'create-mysql-db':
+    user => 'vagrant',
+    unless => "mysql -u${configuration::mysql_user} -p${configuration::mysql_password} ${configuration::mysql_db_name}",
+    command => "mysql -uroot -p${configuration::mysql_password} -e \"CREATE DATABASE ${configuration::mysql_db_name}; CREATE USER '${configuration::mysql_user}'@'localhost' IDENTIFIED BY '${configuration::mysql_password}'; GRANT ALL PRIVILEGES ON ${configuration::mysql_db_name}.* TO '${configuration::mysql_user}'@'localhost';\"",
+    require => Exec['set-mysql-root-password'],
+  }
+}
+
+class varnish {
+  Class['system-update'] -> Class['varnish']
+
+  exec {'add-varnish-apt-key':
+    user => 'root',
+    creates => '/home/vagrant/.vagrant.add-varnish-apt-key',
+    command => 'curl http://repo.varnish-cache.org/debian/GPG-key.txt | apt-key add - && touch /home/vagrant/.vagrant.add-varnish-apt-key',
+  }
+
+  file {'/etc/apt/sources.list.d/varnish.list':
+    ensure => present,
+    mode => 0644,
+    owner => 'root',
+    group => 'root',
+    source => '/vagrant/extras/vagrant/files/apt/varnish.list',
+    require => Exec['add-varnish-apt-key'],
+  }
+
+  exec {'apt-get-update-varnish':
+    user => 'root',
+    creates => '/usr/sbin/varnishd',
+    command => 'apt-get update',
+    require => File['/etc/apt/sources.list.d/varnish.list'],
+  }
+
+  package {'varnish':
+    ensure => present,
+    require => Exec['apt-get-update-varnish'],
+  }
+
+  service {'varnish':
+    enable => true,
+    ensure => running,
+    require => Package['varnish'],
+  }
+}
+
+class postfix {
+  Class['system-update'] -> Class['postfix']
+
+  service {['postfix']:
     enable => true,
     ensure => running,
   }
@@ -65,7 +153,7 @@ class phase2 {
     mode => 0644,
     owner => 'root',
     group => 'root',
-    source => '/vagrant/vagrant/files/mailname',
+    source => '/vagrant/extras/vagrant/files/postfix/mailname',
     notify => Service['postfix'],
   }
 
@@ -74,42 +162,17 @@ class phase2 {
     mode => 0644,
     owner => 'root',
     group => 'root',
-    source => '/vagrant/vagrant/files/postfix-main.cf',
+    source => '/vagrant/extras/vagrant/files/postfix/main.cf',
     notify => Service['postfix'],
   }
+}
 
-  $mysql_user = "bob"
-  $mysql_password = "s3cr3t"
-  $mysql_db = "varnish_bans_manager"
+class user {
+  Class['system-update'] -> Class['user']
 
-  exec {'set-mysql-root-password':
-    unless => "mysqladmin -uroot -p$mysql_password status",
-    path => ['/bin', '/usr/bin'],
-    command => "mysqladmin -uroot password $mysql_password",
-    require => Service['mysql'],
-  }
-
-  exec {'create-mysql-db':
-    unless => "/usr/bin/mysql -u${mysql_user} -p${mysql_password} ${mysql_db}",
-    path => ['/bin', '/usr/bin'],
-    command => "mysql -uroot -p$mysql_password -e \"CREATE DATABASE ${mysql_db}; CREATE USER '${mysql_user}'@'localhost' IDENTIFIED BY '${mysql_password}'; GRANT ALL PRIVILEGES ON ${mysql_db}.* TO '${mysql_user}'@'localhost';\"",
-    require => Exec['set-mysql-root-password'],
-  }
-
-  exec {'create-virtualenv':
-    creates => '/home/vagrant/.virtualenvs/varnish-bans-manager/',
-    user => 'vagrant',
-    path => ['/bin', '/usr/bin', '/usr/local/bin'],
-    command => 'mkdir -p /home/vagrant/.virtualenvs; virtualenv /home/vagrant/.virtualenvs/varnish-bans-manager',
-    require => Package['virtualenv'],
-  }
-
-  exec {'install-virtualenv-dependencies':
-    path => ['/bin', '/usr/bin'],
-    user => 'vagrant',
-    provider => 'shell',
-    command => '. /home/vagrant/.virtualenvs/varnish-bans-manager/bin/activate; pip install "MySQL-python" "django >= 1.4.5" "django-celery >= 3.0.11" "django-mediagenerator >= 1.11" "django-templated-email >= 0.4.7" "gunicorn >= 0.14.6" "eventlet >= 0.9.17" "simplejson >= 2.1.6" "path.py >= 2.4.1" "ordereddict >= 1.1" "pytz" "pil" "south >= 0.7.6"',
-    require => Exec['create-virtualenv'],
+  package {['sass', 'compass']:
+    ensure   => 'installed',
+    provider => 'gem',
   }
 
   file {'/home/vagrant/.profile':
@@ -117,7 +180,7 @@ class phase2 {
     mode => 0644,
     owner => 'vagrant',
     group => 'vagrant',
-    source => '/vagrant/vagrant/files/profile',
+    source => '/vagrant/extras/vagrant/files/profile',
   }
 
   file {'/home/vagrant/source':
@@ -136,5 +199,10 @@ class phase2 {
   }
 }
 
-include phase1
-include phase2
+include configuration
+include system-update
+include virtualenv
+include mysql
+include varnish
+include postfix
+include user

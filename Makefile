@@ -1,4 +1,4 @@
-VBM_ROOT=.
+VBM_ROOT = $(abspath $(dir $(lastword $(MAKEFILE_LIST))))
 
 sdist: build
 	@echo
@@ -41,3 +41,4 @@ clone: clean
 
 clean:
 	rm -rf "$(VBM_ROOT)/build/"
+	find "$(VBM_ROOT)" -name "*.pyc" -o -name "*.mo" | xargs rm -f

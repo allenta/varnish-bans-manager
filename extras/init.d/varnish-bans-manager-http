@@ -12,16 +12,17 @@
 ##
 ## Configuration.
 ##
-VIRTUALENV="/var/www/varnish-bans-manager"
+HTTP_VIRTUALENV="/var/www/varnish-bans-manager"
 HTTP="varnish-bans-manager start"
 HTTP_USER="www-data"
 HTTP_GROUP="www-data"
 HTTP_PID_DIR="/var/run/varnish-bans-manager"
 HTTP_PID_FILE="$HTTP_PID_DIR/http.pid"
+HTTP_LOG_DIR="/var/log/varnish-bans-manager"
 HTTP_DAEMON_OPTS="\
-    --pid "$HTTP_PID_FILE" \
-    --user "$HTTP_USER" \
-    --group "$HTTP_GROUP" \
+    --pid="$HTTP_PID_FILE" \
+    --user="$HTTP_USER" \
+    --group="$HTTP_GROUP" \
     --daemon"
 
 ##
@@ -65,6 +66,7 @@ stop_http () {
     echo -n "Stopping HTTP... "
     if [ -f "$HTTP_PID_FILE" ]; then
         wait_pid $(cat "$HTTP_PID_FILE")
+        rm -f "$HTTP_PID_FILE"
     else
         echo "NOT RUNNING" 1>&2
     fi
@@ -73,10 +75,18 @@ stop_http () {
 ##
 ##
 ##
-source "$VIRTUALENV/bin/activate"
-mkdir -p "/var/run/varnish-bans-manager"
-chown $HTTP_USER:$HTTP_GROUP "$HTTP_PID_DIR"
+restart_http () {
+    echo "Restarting HTTP..."
+    stop_http
+    start_http
+}
 
+##
+##
+##
+source "$HTTP_VIRTUALENV/bin/activate"
+mkdir -p "$HTTP_PID_DIR" "$HTTP_LOG_DIR"
+chown $HTTP_USER:$HTTP_GROUP "$HTTP_PID_DIR" "$HTTP_LOG_DIR"
 
 ##
 ##
@@ -85,17 +95,20 @@ case "$1" in
     start)
         start_http
     ;;
+
     stop)
         stop_http
     ;;
-    reload|force-reload)
-        echo "Use start+stop"
-    ;;
+
     restart)
-        echo "Restarting HTTP frontend daemon"
-        stop_http
-        start_http
+        restart_http
     ;;
+
+    reload|force-reload)
+        echo "Use restart" 1>&2
+        exit 1
+    ;;
+
     *)
         echo "Usage: $0 {start|stop|restart}" 1>&2
         exit 64  # EX_USAGE

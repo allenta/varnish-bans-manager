@@ -12,7 +12,7 @@
 ##
 ## Configuration.
 ##
-VIRTUALENV="/var/www/varnish-bans-manager"
+CELERYBEAT_VIRTUALENV="/var/www/varnish-bans-manager"
 CELERYBEAT="python -mvarnish_bans_manager.runner celerybeat"
 CELERYBEAT_USER="www-data"
 CELERYBEAT_GROUP="www-data"
@@ -22,7 +22,6 @@ CELERYBEAT_LOG_DIR="/var/log/varnish-bans-manager"
 CELERYBEAT_LOG_FILE="$CELERYBEAT_LOG_DIR/celerybeat.log"
 CELERYBEAT_LOG_LEVEL="WARNING"
 CELERYBEAT_SCHEDULE="/var/www/varnish-bans-manager/celerybeat-schedule"
-CELERYBEAT_CHDIR="/tmp"
 CELERYBEAT_DAEMON_OPTS="\
     --pidfile="$CELERYBEAT_PID_FILE" \
     --logfile="$CELERYBEAT_LOG_FILE" \
@@ -30,7 +29,6 @@ CELERYBEAT_DAEMON_OPTS="\
     --schedule="$CELERYBEAT_SCHEDULE" \
     --uid="$CELERYBEAT_USER" \
     --gid="$CELERYBEAT_GROUP" \
-    --workdir="$CELERYBEAT_CHDIR" \
     --detach"
 
 ##
@@ -62,7 +60,7 @@ wait_pid () {
 ##
 ##
 ##
-start_beat () {
+start_celerybeat () {
     echo "Starting celerybeat..."
     $CELERYBEAT $CELERYBEAT_DAEMON_OPTS
 }
@@ -70,10 +68,11 @@ start_beat () {
 ##
 ##
 ##
-stop_beat () {
+stop_celerybeat () {
     echo -n "Stopping celerybeat... "
     if [ -f "$CELERYBEAT_PID_FILE" ]; then
         wait_pid $(cat "$CELERYBEAT_PID_FILE")
+        rm -f "$CELERYBEAT_PID_FILE"
     else
         echo "NOT RUNNING" 1>&2
     fi
@@ -82,31 +81,40 @@ stop_beat () {
 ##
 ##
 ##
-source "$VIRTUALENV/bin/activate"
-mkdir -p "$CELERYBEAT_PID_DIR"
-chown $CELERYBEAT_USER:$CELERYBEAT_GROUP "$CELERYBEAT_PID_DIR"
-mkdir -p "$CELERYBEAT_LOG_DIR"
-chown $CELERYBEAT_USER:$CELERYBEAT_GROUP "$CELERYBEAT_LOG_DIR"
-cd "$CELERYBEAT_CHDIR"
+restart_celerybeat () {
+    echo "Restarting celerybeat..."
+    stop_celerybeat
+    start_celerybeat
+}
+
+##
+##
+##
+source "$CELERYBEAT_VIRTUALENV/bin/activate"
+mkdir -p "$CELERYBEAT_PID_DIR" "$CELERYBEAT_LOG_DIR"
+chown $CELERYBEAT_USER:$CELERYBEAT_GROUP "$CELERYBEAT_PID_DIR" "$CELERYBEAT_LOG_DIR"
 
 ##
 ##
 ##
 case "$1" in
     start)
-        start_beat
+        start_celerybeat
     ;;
+
     stop)
-        stop_beat
+        stop_celerybeat
     ;;
-    reload|force-reload)
-        echo "Use start+stop"
-    ;;
+
     restart)
-        echo "Restarting celery periodic task scheduler"
-        stop_beat
-        start_beat
+        restart_celerybeat
     ;;
+
+    reload|force-reload)
+        echo "Use restart" 1>&2
+        exit 1
+    ;;
+
     *)
         echo "Usage: $0 {start|stop|restart}" 1>&2
         exit 64  # EX_USAGE
