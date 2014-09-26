@@ -4,7 +4,7 @@ if [ -n "$BASH_VERSION" ]; then
     fi
 fi
 
-export VARNISH_BANS_MANAGER_CONF="/vagrant/extras/varnish-bans-manager.dev.conf"
+export VARNISH_BANS_MANAGER_CONF="/vagrant/extras/envs/dev/varnish-bans-manager.conf"
 export YUICOMPRESSOR_PATH="/usr/share/yui-compressor/yui-compressor.jar"
 
 source $HOME/virtualenv/bin/activate

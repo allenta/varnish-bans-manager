@@ -16,7 +16,7 @@ class system-update {
     command => 'apt-get update',
   }
 
-  package {['python', 'python-pip', 'curl', 'mysql-server', 'mysql-client', 'rubygems', 'python-dev', 'libmysqlclient-dev', 'libjpeg8', 'libjpeg62-dev', 'libfreetype6', 'libfreetype6-dev', 'zlib1g-dev', 'yui-compressor', 'gettext', 'postfix', 'mailutils']:
+  package {['python', 'python-pip', 'curl', 'mysql-server', 'mysql-client', 'python-dev', 'libmysqlclient-dev', 'libjpeg8', 'libjpeg62-dev', 'libfreetype6', 'libfreetype6-dev', 'zlib1g-dev', 'yui-compressor', 'gettext', 'postfix', 'mailutils', 'ruby1.9.1-dev']:
     ensure => present,
     require => Exec['apt-get-update'],
   }
@@ -117,7 +117,7 @@ class varnish {
     mode => 0644,
     owner => 'root',
     group => 'root',
-    source => '/vagrant/extras/vagrant/files/apt/varnish.list',
+    source => '/vagrant/extras/envs/dev/puppet/files/apt/varnish.list',
     require => Exec['add-varnish-apt-key'],
   }
 
@@ -153,7 +153,7 @@ class postfix {
     mode => 0644,
     owner => 'root',
     group => 'root',
-    source => '/vagrant/extras/vagrant/files/postfix/mailname',
+    source => '/vagrant/extras/envs/dev/puppet/files/postfix/mailname',
     notify => Service['postfix'],
   }
 
@@ -162,7 +162,7 @@ class postfix {
     mode => 0644,
     owner => 'root',
     group => 'root',
-    source => '/vagrant/extras/vagrant/files/postfix/main.cf',
+    source => '/vagrant/extras/envs/dev/puppet/files/postfix/main.cf',
     notify => Service['postfix'],
   }
 }
@@ -180,7 +180,7 @@ class user {
     mode => 0644,
     owner => 'vagrant',
     group => 'vagrant',
-    source => '/vagrant/extras/vagrant/files/profile',
+    source => '/vagrant/extras/envs/dev/puppet/files/profile',
   }
 
   file {'/home/vagrant/source':

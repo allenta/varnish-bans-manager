@@ -16,7 +16,6 @@ VBM. However, VAC is part of the Varnish enterprise subscriptions services
 and it's not available as standalone software for free. Unlike VAC:
 
 - VBM is open source.
-- VBM is installed locally in your CPD.
 - VBM does not require changes in the configuration of your Varnish nodes.
 - VBM does not require installing extra components such as the `Varnish Agent <https://github.com/varnish/varnish-agent>`_.
 - VBM is only focused in the management of bans, not in monitoring caching
@@ -188,13 +187,13 @@ Final touches
 1. If you want to bind VBM's HTTP frontend to port 80, simply set up
    a reverse proxy using your preferred web server. Always avoid running
    VBM as a privileged user for this! Check out the `sample configuration
-   files <https://github.com/allenta/varnish-bans-manager/tree/master/extras/proxies/>`_
+   files <https://github.com/allenta/varnish-bans-manager/tree/master/extras/envs/prod/proxies/>`_
    for extra information.
 
 2. In a production environment you should run VBM HTTP frontend,
    celeryd and celerybeat as OS services. Use whatever software you
    are most familiar with, such as upstart, supervisord or a simple
-   init.d script. Check out the `sample init.d scripts <https://github.com/allenta/varnish-bans-manager/tree/master/extras/init.d/>`_
+   init.d script. Check out the `sample init.d scripts <https://github.com/allenta/varnish-bans-manager/tree/master/extras/envs/prod/init.d/>`_
    if you need some inspiration.
 
 Configuration

@@ -9,4 +9,4 @@ path.py >= 2.4.1
 ordereddict >= 1.1
 south >= 0.7.6
 pytz
-pil
+pillow
