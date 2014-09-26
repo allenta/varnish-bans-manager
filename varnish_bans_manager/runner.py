@@ -1,7 +1,7 @@
 #!/usr/bin/env python
 
 '''
-:copyright: (c) 2012 by the dot2code Team, see AUTHORS.txt for more details.
+:copyright: (c) 2012 by Allenta Consulting, see AUTHORS.txt for more details.
 :license: GPL, see LICENSE.txt for more details.
 '''
 

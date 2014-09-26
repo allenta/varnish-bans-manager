@@ -33,45 +33,45 @@ and it's not available as standalone software for free. Unlike VAC:
 |bans_status|  |caches|  |users|  |settings|
 =============  ========  =======  ==========
 
-.. |login| image:: https://raw.github.com/dot2code/varnish-bans-manager/master/extras/screenshots/login_small.png
+.. |login| image:: https://raw.github.com/allenta/varnish-bans-manager/master/extras/screenshots/login_small.png
    :width: 200 px
    :alt: Login screen
-   :target: https://raw.github.com/dot2code/varnish-bans-manager/master/extras/screenshots/login.png
+   :target: https://raw.github.com/allenta/varnish-bans-manager/master/extras/screenshots/login.png
 
-.. |basic_ban_submission| image:: https://raw.github.com/dot2code/varnish-bans-manager/master/extras/screenshots/basic_ban_submission_small.png
+.. |basic_ban_submission| image:: https://raw.github.com/allenta/varnish-bans-manager/master/extras/screenshots/basic_ban_submission_small.png
    :width: 200 px
    :alt: Basic ban submission
-   :target: https://raw.github.com/dot2code/varnish-bans-manager/master/extras/screenshots/basic_ban_submission.png
+   :target: https://raw.github.com/allenta/varnish-bans-manager/master/extras/screenshots/basic_ban_submission.png
 
-.. |advanced_ban_submission| image:: https://raw.github.com/dot2code/varnish-bans-manager/master/extras/screenshots/advanced_ban_submission_small.png
+.. |advanced_ban_submission| image:: https://raw.github.com/allenta/varnish-bans-manager/master/extras/screenshots/advanced_ban_submission_small.png
    :width: 200 px
    :alt: Advanced ban submission
-   :target: https://raw.github.com/dot2code/varnish-bans-manager/master/extras/screenshots/advanced_ban_submission.png
+   :target: https://raw.github.com/allenta/varnish-bans-manager/master/extras/screenshots/advanced_ban_submission.png
 
-.. |bans_submissions| image:: https://raw.github.com/dot2code/varnish-bans-manager/master/extras/screenshots/bans_submissions_small.png
+.. |bans_submissions| image:: https://raw.github.com/allenta/varnish-bans-manager/master/extras/screenshots/bans_submissions_small.png
    :width: 200 px
    :alt: Bans submissions
-   :target: https://raw.github.com/dot2code/varnish-bans-manager/master/extras/screenshots/bans_submissions.png
+   :target: https://raw.github.com/allenta/varnish-bans-manager/master/extras/screenshots/bans_submissions.png
 
-.. |bans_status| image:: https://raw.github.com/dot2code/varnish-bans-manager/master/extras/screenshots/bans_status_small.png
+.. |bans_status| image:: https://raw.github.com/allenta/varnish-bans-manager/master/extras/screenshots/bans_status_small.png
    :width: 200 px
    :alt: Bans status
-   :target: https://raw.github.com/dot2code/varnish-bans-manager/master/extras/screenshots/bans_status.png
+   :target: https://raw.github.com/allenta/varnish-bans-manager/master/extras/screenshots/bans_status.png
 
-.. |caches| image:: https://raw.github.com/dot2code/varnish-bans-manager/master/extras/screenshots/caches_small.png
+.. |caches| image:: https://raw.github.com/allenta/varnish-bans-manager/master/extras/screenshots/caches_small.png
    :width: 200 px
    :alt: Caches management
-   :target: https://raw.github.com/dot2code/varnish-bans-manager/master/extras/screenshots/caches.png
+   :target: https://raw.github.com/allenta/varnish-bans-manager/master/extras/screenshots/caches.png
 
-.. |users| image:: https://raw.github.com/dot2code/varnish-bans-manager/master/extras/screenshots/users_small.png
+.. |users| image:: https://raw.github.com/allenta/varnish-bans-manager/master/extras/screenshots/users_small.png
    :width: 200 px
    :alt: Users management
-   :target: https://raw.github.com/dot2code/varnish-bans-manager/master/extras/screenshots/users.png
+   :target: https://raw.github.com/allenta/varnish-bans-manager/master/extras/screenshots/users.png
 
-.. |settings| image:: https://raw.github.com/dot2code/varnish-bans-manager/master/extras/screenshots/settings_small.png
+.. |settings| image:: https://raw.github.com/allenta/varnish-bans-manager/master/extras/screenshots/settings_small.png
    :width: 200 px
    :alt: General settings
-   :target: https://raw.github.com/dot2code/varnish-bans-manager/master/extras/screenshots/settings.png
+   :target: https://raw.github.com/allenta/varnish-bans-manager/master/extras/screenshots/settings.png
 
 QuickStart
 ==========
@@ -188,13 +188,13 @@ Final touches
 1. If you want to bind VBM's HTTP frontend to port 80, simply set up
    a reverse proxy using your preferred web server. Always avoid running
    VBM as a privileged user for this! Check out the `sample configuration
-   files <https://github.com/dot2code/varnish-bans-manager/tree/master/extras/proxies/>`_
+   files <https://github.com/allenta/varnish-bans-manager/tree/master/extras/proxies/>`_
    for extra information.
 
 2. In a production environment you should run VBM HTTP frontend,
    celeryd and celerybeat as OS services. Use whatever software you
    are most familiar with, such as upstart, supervisord or a simple
-   init.d script. Check out the `sample init.d scripts <https://github.com/dot2code/varnish-bans-manager/tree/master/extras/init.d/>`_
+   init.d script. Check out the `sample init.d scripts <https://github.com/allenta/varnish-bans-manager/tree/master/extras/init.d/>`_
    if you need some inspiration.
 
 Configuration

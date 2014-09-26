@@ -67,7 +67,7 @@ please contact us directly at {{contact_email}}.{% endblocktrans %}
       <td></td>
       <td align="right">
         <span style="font-family: 'Lucida Grande', Arial, Verdana, 'Lucida Sans Unicode', Tahoma, 'Sans Serif'; font-size: 11px; color: #888;">
-          <a href="https://github.com/dot2code/varnish-bans-manager">Varnish Bans Manager</a>
+          <a href="https://github.com/allenta/varnish-bans-manager">Varnish Bans Manager</a>
         </span>
       </td>
       <td></td>

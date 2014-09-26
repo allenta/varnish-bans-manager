@@ -5,11 +5,11 @@ Varnish Bans Manager
 
 Varnish Bans Manager (VBM) is a simple server and web UI designed to ease
 management of bans in complex Varnish (https://www.varnish-cache.org)
-deployments. Check out https://github.com/dot2code/varnish-bans-manager
+deployments. Check out https://github.com/allenta/varnish-bans-manager
 for a detailed description of VBM, extra documentation, some script samples,
 and other useful information.
 
-:copyright: (c) 2012 by the dot2code Team, see AUTHORS.txt for more details.
+:copyright: (c) 2012 by Allenta Consulting, see AUTHORS.txt for more details.
 :license: GPL, see LICENSE.txt for more details.
 '''
 
@@ -32,11 +32,11 @@ if sys.version_info[0] == 3:
 setup(
     name='varnish-bans-manager',
     version='0.5.3',
-    author='dot2code Technologies',
-    author_email='info@dot2code.com',
+    author='Allenta Consulting',
+    author_email='info@allenta.com',
     packages=find_packages(),
     include_package_data=True,
-    url='https://github.com/dot2code/varnish-bans-manager',
+    url='https://github.com/allenta/varnish-bans-manager',
     description='Varnish Bans Manager.',
     long_description=__doc__,
     license='GPL',
