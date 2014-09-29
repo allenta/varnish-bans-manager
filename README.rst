@@ -95,7 +95,7 @@ Prepare the environment
     www-data:~$ sudo apt-get install python-dev libmysqlclient-dev
     www-data:~$ pip install MySQL-python
 
-4. VBM depends on the Python Image Library (PIL) to perform some image
+4. VBM depends on the Python Image Library (Pillow) to perform some image
    manipulations. It will be installed as a dependency when installing
    VBM, but some OS packages need to be installed previously. For example,
    for Ubuntu::
@@ -103,7 +103,7 @@ Prepare the environment
     www-data:~$ sudo apt-get install libjpeg8 libjpeg62-dev libfreetype6 libfreetype6-dev zlib1g-dev
 
    Note that on Ubuntu 64 bits some symbolic links need to be created manually.
-   If not, when installing PIL, it will not include JPEG, ZLIB and FREETYPE2
+   If not, when installing Pillow, it will not include JPEG, ZLIB and FREETYPE2
    support::
 
     sudo ln -s /usr/lib/x86_64-linux-gnu/libjpeg.so /usr/lib
