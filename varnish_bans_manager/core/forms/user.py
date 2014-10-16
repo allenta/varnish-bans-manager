@@ -12,7 +12,7 @@ from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.utils.http import int_to_base36
 from django.contrib.auth import authenticate
-from django.contrib.auth.hashers import UNUSABLE_PASSWORD
+from django.contrib.auth.hashers import UNUSABLE_PASSWORD_PREFIX
 from templated_email import send_templated_mail
 from django.contrib.auth.tokens import default_token_generator
 from varnish_bans_manager.core.models import User, UserProfile
@@ -81,7 +81,7 @@ class PasswordResetForm(forms.Form):
         email = self.cleaned_data.get('email')
         try:
             self.user = User.objects.filter(email__iexact=email, is_active=True).order_by('date_joined')[:1].get()
-            if self.user.password == UNUSABLE_PASSWORD:
+            if self.user.password.startswith(UNUSABLE_PASSWORD_PREFIX):
                 raise forms.ValidationError(self.error_messages['unusable'])
             else:
                 return email
