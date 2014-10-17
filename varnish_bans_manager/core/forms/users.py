@@ -253,6 +253,6 @@ class UpdateForm(EditForm):
 
     def save(self):
         # Save in a transaction as concurrent edition of the profile may raise an exception.
-        with transaction.commit_on_success():
+        with transaction.atomic():
             self.user.save()
             self.profile.save()
