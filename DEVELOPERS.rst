@@ -27,6 +27,11 @@ development environment.
         $ python varnish_bans_manager/runner.py migrate
         $ python varnish_bans_manager/runner.py createcachetable cache
 
+    - Create the first VBM administrator. You'll be able to add extra
+      users later using the web UI::
+
+        $ python varnish_bans_manager/runner.py users --add --administrator --email "bob@domain.com" --password "s3cr3t" --firstname "Bob" --lastname "Brown"
+
 - Install `Sass <http://sass-lang.com>`_ and `Compass <http://compass-style.org>`_
   in your development box (required by ``django-mediagenerator`` asset manager)::
 
