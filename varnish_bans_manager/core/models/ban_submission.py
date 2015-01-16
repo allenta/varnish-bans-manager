@@ -6,7 +6,7 @@
 '''
 
 from __future__ import absolute_import
-from django.contrib.contenttypes import generic
+from django.contrib.contenttypes.fields import GenericForeignKey
 from django.contrib.contenttypes.models import ContentType
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
@@ -43,7 +43,7 @@ class BanSubmission(Model):
     )
     target_content_type = models.ForeignKey(ContentType)
     target_id = models.PositiveIntegerField()
-    target = generic.GenericForeignKey('target_content_type', 'target_id')
+    target = GenericForeignKey('target_content_type', 'target_id')
     created_at = models.DateTimeField(
         auto_now_add=True,
         null=False
@@ -74,6 +74,7 @@ class BanSubmissionItem(Model):
         null=False
     )
     success = models.BooleanField(
+        default=False,
         null=False
     )
     message = models.CharField(

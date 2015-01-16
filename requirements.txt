@@ -1,6 +1,6 @@
-django >= 1.6,<1.7
+django == 1.7.3
 django-celery == 3.0.23
-django-mediagenerator >= 1.11
+django-mediagenerator == 1.12
 django-templated-email >= 0.4.7
 gunicorn >= 0.14.6
 eventlet >= 0.9.17

@@ -6,7 +6,7 @@
 '''
 
 from __future__ import absolute_import
-from django.contrib.contenttypes import generic
+from django.contrib.contenttypes.fields import GenericRelation
 from django.db import models
 from django.utils.translation import ugettext_lazy as _
 from varnish_bans_manager.core.models.base import Model, RevisionField
@@ -15,7 +15,7 @@ from varnish_bans_manager.core.helpers.cli import Varnish
 
 
 class Cache(Model):
-    ban_submissions = generic.GenericRelation(
+    ban_submissions = GenericRelation(
         BanSubmission,
         content_type_field='target_content_type',
         object_id_field='target_id'
