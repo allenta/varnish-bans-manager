@@ -6,7 +6,7 @@
 '''
 
 from __future__ import absolute_import
-from ordereddict import OrderedDict
+from collections import OrderedDict
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 from django.db import models
 from django.utils import timezone
