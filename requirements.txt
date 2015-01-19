@@ -1,13 +1,13 @@
 django >= 1.6,<1.7
 celery == 3.1.17
 django-celery == 3.1.16
-django-mediagenerator >= 1.11
-django-templated-email >= 0.4.7
-gunicorn >= 0.14.6
-eventlet >= 0.9.17
-simplejson >= 2.1.6
-path.py >= 2.4.1
-ordereddict >= 1.1
-south >= 0.7.6
-pytz
-pillow
+django-mediagenerator == 1.11
+django-templated-email == 0.4.9
+gunicorn == 19.1.1
+eventlet == 0.16.1
+simplejson == 3.6.5
+path.py == 7.0
+ordereddict == 1.1
+south == 1.0.2
+pytz == 2014.10
+pillow == 2.7.0
