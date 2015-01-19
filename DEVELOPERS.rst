@@ -41,7 +41,7 @@ development environment.
 - Don't forget to manually launch celeryd/celerybeat in some available
   term/screen while developing::
 
-    $ python varnish_bans_manager/runner.py celery worker --beat -s ~/varnish-bans-manager-celerybeat-schedule --loglevel=info
+    $ celery -A varnish_bans_manager worker -B -s ~/varnish-bans-manager-celerybeat-schedule --loglevel=info
 
 - Remember to install the packages required by your relational database
   backend. For example, for MySQL::

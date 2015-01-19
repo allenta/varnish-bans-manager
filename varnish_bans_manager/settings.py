@@ -60,7 +60,6 @@ else:
 from varnish_bans_manager.core.patches.base_management_command import *
 
 from django.contrib.messages import constants as message_constants
-import djcelery
 from celery.schedules import crontab
 
 ###############################################################################
@@ -533,10 +532,9 @@ SEND_BROKEN_LINK_EMAILS = False
 ## CELERY (http://docs.celeryproject.org/en/latest/configuration.html).
 ###############################################################################
 
-djcelery.setup_loader()
-
 # See http://docs.celeryproject.org/en/latest/getting-started/brokers/django.html.
 BROKER_URL = 'django://'
+CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
 CELERY_DISABLE_RATE_LIMITS = True
 CELERYD_TASK_SOFT_TIME_LIMIT = 3600  # 1 hour.
 CELERYD_TASK_TIME_LIMIT = None
