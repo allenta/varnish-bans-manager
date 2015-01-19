@@ -204,7 +204,7 @@
                 </tr>
               </thead>
               <tbody>
-                {% for name, value in req.settings.items %}
+                {% for name, value in req.settings %}
                   <tr>
                     <td>{{ name }}</td>
                     <td class="main"><pre>{{ value|pprint }}</pre></td>

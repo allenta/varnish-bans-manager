@@ -126,9 +126,10 @@ class FileFieldMixin(BaseFileField):
         self.max_upload_size = kwargs.pop('max_upload_size', None)
         self.strong_caching = kwargs.pop('strong_caching', True)
         self.path_generator = kwargs.pop('path_generator', None)
-        self.original_contents_generator = kwargs.pop('contents_generator', None)
-        self.contents_generator = _wrapped_contents_generator(self.original_contents_generator) if self.original_contents_generator else None
-        kwargs['upload_to'] = _wrapped_upload_to(kwargs.pop('upload_to', ''), self.private, self.path_generator)
+        self._original_contents_generator = kwargs.pop('contents_generator', None)
+        self.contents_generator = _wrapped_contents_generator(self._original_contents_generator) if self._original_contents_generator else None
+        self._original_upload_to = kwargs.pop('upload_to', '')
+        kwargs['upload_to'] = _wrapped_upload_to(self._original_upload_to, self.private, self.path_generator)
         super(FileFieldMixin, self).__init__(**kwargs)
 
     def clean(self, *args, **kwargs):
@@ -151,6 +152,23 @@ class FileFieldMixin(BaseFileField):
             file.generate()
         return file
 
+    def deconstruct(self):
+        # These args accept a callable and therefore can
+        # not be included in south introspection rules:
+        # attachment_filename, condition, upload_to.
+        name, path, args, kwargs = super(FileFieldMixin, self).deconstruct()
+        kwargs['private'] = self.private
+        kwargs['condition'] = self.condition
+        kwargs['attachment'] = self.attachment
+        kwargs['attachment_filename'] = self.attachment_filename
+        kwargs['content_types'] = self.content_types
+        kwargs['max_upload_size'] = self.max_upload_size
+        kwargs['strong_caching'] = self.strong_caching
+        kwargs['path_generator'] = self.path_generator
+        kwargs['contents_generator'] = self._original_contents_generator
+        kwargs['upload_to'] = self._original_upload_to
+        return name, path, args, kwargs
+
 
 ###############################################################################
 
@@ -161,24 +179,6 @@ class FieldFile(FieldFileMixin, BaseFieldFile):
 
 class FileField(FileFieldMixin, BaseFileField):
     attr_class = FieldFile
-
-
-add_introspection_rules([(
-        (FileField, ),
-        [],
-        {
-            'private': ['private', {}],
-            'attachment': ['attachment', {}],
-            'content_types': ['content_types', {}],
-            'max_upload_size': ['max_upload_size', {}],
-            'strong_caching': ['strong_caching', {}],
-            'path_generator': ['path_generator', {}],
-            'contents_generator': ['original_contents_generator', {}],
-            # These args accept a callable and therefore can
-            # not be included in south introspection rules:
-            # attachment_filename, condition, upload_to.
-        },
-    )], ["^varnish_bans_manager\.filesystem\.models\.FileField"])
 
 
 ###############################################################################
@@ -211,7 +211,7 @@ class ImageField(FileFieldMixin, BaseImageField):
     attr_class = ImageFieldFile
 
     def __init__(self, verbose_name=None, name=None, width_field=None,
-            height_field=None, max_width=None, max_height=None, **kwargs):
+                 height_field=None, max_width=None, max_height=None, **kwargs):
         # Extract bounding box definition.
         self.max_width = max_width
         self.max_height = max_height
@@ -224,22 +224,11 @@ class ImageField(FileFieldMixin, BaseImageField):
         kwargs.setdefault('form_class', FormImageField)
         return super(ImageField, self).formfield(**kwargs)
 
-
-add_introspection_rules([(
-        (ImageField, ),
-        [],
-        {
-            'private': ['private', {}],
-            'attachment': ['attachment', {}],
-            'content_types': ['content_types', {}],
-            'max_upload_size': ['max_upload_size', {}],
-            'strong_caching': ['strong_caching', {}],
-            'path_generator': ['path_generator', {}],
-            'contents_generator': ['original_contents_generator', {}],
-            'max_width': ['max_width', {}],
-            'max_height': ['max_height', {}],
-            # These args accept a callable and therefore can
-            # not be included in south introspection rules:
-            # attachment_filename, condition, upload_to.
-        },
-    )], ["^varnish_bans_manager\.filesystem\.models\.ImageField"])
+    def deconstruct(self):
+        # These args accept a callable and therefore can
+        # not be included in south introspection rules:
+        # attachment_filename, condition, upload_to.
+        name, path, args, kwargs = super(ImageField, self).deconstruct()
+        kwargs['max_width'] = self.max_width
+        kwargs['max_height'] = self.max_height
+        return name, path, args, kwargs

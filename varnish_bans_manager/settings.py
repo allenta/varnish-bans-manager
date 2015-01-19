@@ -8,6 +8,7 @@
 from __future__ import absolute_import
 import os
 import sys
+import simplejson
 from cStringIO import StringIO
 import ConfigParser
 import getpass
@@ -24,11 +25,17 @@ ROOT = path(__file__).abspath().dirname()
 # django.utils.translation -- that module depends on the settings.
 ugettext = lambda s: s
 
+# Django 1.7 deprecates the django.utils.simplejson module but the current last
+# version for django-mediagenerator (1.11) still uses it. Until this package is
+# updated, this hack can be used.
+sys.modules['django.utils.simplejson'] = simplejson
+
 ###############################################################################
 ## USER CONFIG.
 ###############################################################################
 
-_config_filename = os.environ.get('VARNISH_BANS_MANAGER_CONF', '/etc/varnish-bans-manager.conf')
+_config_filename = os.environ.get(
+    'VARNISH_BANS_MANAGER_CONF', '/etc/varnish-bans-manager.conf')
 _config = ConfigParser.ConfigParser()
 _config.readfp(StringIO(default_config()))
 try:
@@ -198,9 +205,6 @@ INSTALLED_APPS = (
     'djcelery',
     'kombu.transport.django',
 
-    # See http://south.aeracode.org.
-    'south',
-
     # VBM.
     'varnish_bans_manager.filesystem',
     'varnish_bans_manager.core',
@@ -347,7 +351,7 @@ MEDIA_BUNDLES = (
         'varnish-bans-manager/js/plugins/jquery-ui/jquery.ui.js',
         'varnish-bans-manager/js/bootstrap.js',
     ),
- )
+)
 
 ROOT_MEDIA_FILTERS = {
     'js': 'mediagenerator.filters.yuicompressor.YUICompressor',
@@ -425,6 +429,12 @@ LOGGING = {
         },
     }
 }
+
+###############################################################################
+## TESTS.
+###############################################################################
+
+TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 
 ###############################################################################
 ## I18N.

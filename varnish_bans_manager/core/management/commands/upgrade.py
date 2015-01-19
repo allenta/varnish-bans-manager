@@ -16,14 +16,11 @@ class Command(NoArgsCommand):
     help = 'Upgrades Varnish Bans Manager DB.'
 
     def handle_noargs(self, **options):
-        self._syncdb()
-        self._createcachetable()
-
-    def _syncdb(self):
-        # Synchronize DB.
-        call_command('syncdb')
-        # And apply all pending migrations.
+        # Apply pending migrations.
         call_command('migrate')
+
+        # Create cache table if needed.
+        self._createcachetable()
 
     def _createcachetable(self):
         # Check cache is enabled in settings.

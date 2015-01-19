@@ -23,7 +23,6 @@ development environment.
 
     - Initialize database schema::
 
-        $ python varnish_bans_manager/runner.py syncdb
         $ python varnish_bans_manager/runner.py migrate
         $ python varnish_bans_manager/runner.py createcachetable cache
 
@@ -54,7 +53,7 @@ development environment.
 - Remember .po files can be regenerated and compiled using the following
   commands::
 
-    $ python runner.py makemessages -l es -e "html,txt,email,py"
+    $ python varnish_bans_manager/runner.py makemessages -l es -e "html,txt,email,py"
     $ python varnish_bans_manager/runner.py compilemessages
 
 Source Distribution Package

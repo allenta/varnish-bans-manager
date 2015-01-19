@@ -18,7 +18,7 @@ class HttpResponseAjax(HttpResponse):
         self.is_iframe_upload = request.is_iframe_upload() if request else False
         super(HttpResponseAjax, self).__init__(
             self.dumps(),
-            mimetype='text/html' if self.is_iframe_upload else 'application/json')
+            content_type='text/html' if self.is_iframe_upload else 'application/json')
 
     def add_command(self, command):
         self.commands.append(command)

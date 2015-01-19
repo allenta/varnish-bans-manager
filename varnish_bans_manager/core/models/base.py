@@ -25,13 +25,14 @@ class RevisionedQuerySet(models.query.QuerySet):
     class RecordModifiedError(DatabaseError):
         pass
 
-    def __init__(self, model=None, query=None, using=None):
-        super(RevisionedQuerySet, self).__init__(model=model, query=query, using=using)
-        self._revision_field = getattr(model, '_revision_field', None)
+    def __init__(self, *args, **kwargs):
+        super(RevisionedQuerySet, self).__init__(*args, **kwargs)
+        self._revision_field = getattr(self.model, '_revision_field', None)
 
     def _update(self, values):
         if self._revision_field:
-            # Get current revision value and increment it in the list of values to update.
+            # Get current revision value and increment it in the list of values
+            # to update.
             current_revision = None
             for i in range(0, len(values)):
                 (field, model, value) = values[i]
@@ -39,16 +40,19 @@ class RevisionedQuerySet(models.query.QuerySet):
                     current_revision = value
                     values[i] = (field, model, F(self._revision_field) + 1)
             if current_revision is not None:
-                # Ensure the revision value has not been changed and go on with the update.
+                # Ensure the revision value has not been changed and go on with
+                # the update.
                 self.query.add_q(Q(**{self._revision_field: current_revision}))
                 rows = super(RevisionedQuerySet, self)._update(values)
-                # If no rows have been updated, revision number must have changed: raise an error.
+                # If no rows have been updated, revision number must have
+                # changed: raise an error.
                 if rows == 0:
                     raise self.RecordModifiedError()
                 return rows
             else:
                 # No revision value has ben provided: raise an error.
-                raise ValueError("Can't update this model without providing a revision value")
+                raise ValueError(
+                    "Can't update this model without providing a revision value")
         else:
             return super(RevisionedQuerySet, self)._update(values)
 
