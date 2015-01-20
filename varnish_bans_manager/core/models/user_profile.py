@@ -52,6 +52,3 @@ class UserProfile(Model):
         max_height=128
     )
     revision = RevisionField()
-
-    class Meta:
-        app_label = 'core'

@@ -58,9 +58,6 @@ class BanSubmission(Model):
 
     human_ban_type_name = property(_human_ban_type_name)
 
-    class Meta:
-        app_label = 'core'
-
 
 class BanSubmissionItem(Model):
     ban_submission = models.ForeignKey(
@@ -89,6 +86,3 @@ class BanSubmissionItem(Model):
         auto_now=True,
         null=False
     )
-
-    class Meta:
-        app_label = 'core'

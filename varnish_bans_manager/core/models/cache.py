@@ -44,7 +44,6 @@ class Cache(Model):
         return self.human_name
 
     class Meta:
-        app_label = 'core'
         abstract = True
 
 
@@ -81,7 +80,6 @@ class Group(Cache):
     items = property(_items)
 
     class Meta:
-        app_label = 'core'
         verbose_name = _('cache group')
         verbose_name_plural = _('cache groups')
 
@@ -176,6 +174,5 @@ class Node(Cache):
     items = property(_items)
 
     class Meta:
-        app_label = 'core'
         verbose_name = _('cache node')
         verbose_name_plural = _('cache nodes')

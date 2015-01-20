@@ -33,9 +33,6 @@ class Setting(Model):
         null=False
     )
 
-    class Meta:
-        app_label = 'core'
-
 
 class SettingMetaclass(Setting.__class__):
     def _property(name, default):

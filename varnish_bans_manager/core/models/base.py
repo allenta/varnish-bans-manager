@@ -229,7 +229,6 @@ class Model(models.Model):
         self._complete_state()
 
     class Meta:
-        app_label = 'core'
         abstract = True
 
     class VBMMeta:

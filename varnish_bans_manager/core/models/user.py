@@ -74,7 +74,6 @@ class User(AbstractBaseUser, PermissionsMixin):
         return [PERMISSIONS[permission.codename] for permission in permissions]
 
     class Meta:
-        app_label = 'core'
         permissions = (
             ('can_access_advanced_ban_submission', 'Access advanced ban submission form'),
             ('can_access_expert_ban_submission', 'Access expert ban submission form'),
