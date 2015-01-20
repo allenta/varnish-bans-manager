@@ -75,13 +75,20 @@ class User(AbstractBaseUser, PermissionsMixin):
 
     class Meta:
         permissions = (
-            ('can_access_advanced_ban_submission', 'Access advanced ban submission form'),
-            ('can_access_expert_ban_submission', 'Access expert ban submission form'),
-            ('can_access_bans_submissions', 'Access bans submissions'),
-            ('can_access_bans_status', 'Access bans status'),
-            ('can_access_caches_management', 'Access caches management'),
-            ('can_access_users_management', 'Access users management'),
-            ('can_access_settings', 'Access settings'),
+            ('can_access_advanced_ban_submission',
+             'Access advanced ban submission form'),
+            ('can_access_expert_ban_submission',
+             'Access expert ban submission form'),
+            ('can_access_bans_submissions',
+             'Access bans submissions'),
+            ('can_access_bans_status',
+             'Access bans status'),
+            ('can_access_caches_management',
+             'Access caches management'),
+            ('can_access_users_management',
+             'Access users management'),
+            ('can_access_settings',
+             'Access settings'),
         )
         verbose_name = _('user')
         verbose_name_plural = _('users')

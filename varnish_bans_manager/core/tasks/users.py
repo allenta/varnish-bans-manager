@@ -34,7 +34,8 @@ class DownloadCSV(MonitoredTask):
     def irun(self, ids):
         exported = 0
         errors = 0
-        file, url = new_temporary_file(_('users.csv'), mimetype='text/csv', prefix='users-download-csv')
+        file, url = new_temporary_file(
+            _('users.csv'), mimetype='text/csv', prefix='users-download-csv')
         with file as f:
             writer = UnicodeWriter(f)
             writer.writerow([

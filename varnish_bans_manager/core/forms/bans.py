@@ -21,7 +21,9 @@ from varnish_bans_manager.core.forms.base import FallbackIntegerField, BetterCho
 
 class TargetField(BetterChoiceField):
     default_error_messages = {
-        'invalid': _('The selected item is no longer available. Please, refresh the page to update the list and choose another.'),
+        'invalid': _(
+            'The selected item is no longer available. Please, refresh the '
+            'page to update the list and choose another.'),
     }
 
     def load_choices(self, initial=None, expert=False):
@@ -32,14 +34,23 @@ class TargetField(BetterChoiceField):
         groups = Group.objects.all().order_by('weight', 'created_at')
         nodes = Node.objects.all().order_by('weight', 'created_at')
         # Add nodes not linked to any group.
-        choices = [(self._build_choice_value(node), node.human_name) for node in nodes if node.group_id is None]
+        choices = [
+            (self._build_choice_value(node), node.human_name)
+            for node in nodes if node.group_id is None]
         # Add each group with its linked nodes.
         for group in groups:
-            nodes_in_current_group = [node for node in nodes if node.group_id == group.id]
+            nodes_in_current_group = [
+                node for node in nodes if node.group_id == group.id]
             if nodes_in_current_group:
-                choices.append((self._build_choice_value(group), '%s (%d)' % (group.name, len(nodes_in_current_group))))
+                choices.append((
+                    self._build_choice_value(group),
+                    '%s (%d)' % (group.name, len(nodes_in_current_group))
+                ))
                 if expert:
-                    choices.extend((self._build_choice_value(node), mark_safe('&nbsp;&nbsp;' + force_text(node.human_name))) for node in nodes_in_current_group)
+                    choices.extend((
+                        self._build_choice_value(node),
+                        mark_safe('&nbsp;&nbsp;' + force_text(node.human_name))
+                    ) for node in nodes_in_current_group)
         self.choices = self.choices + choices
         # Set initial cache item.
         if initial:
@@ -60,7 +71,8 @@ class TargetField(BetterChoiceField):
             return None
 
     def _build_choice_value(self, cache):
-        return '%d:%d' % (ContentType.objects.get_for_model(cache).id, cache.id)
+        return '%d:%d' % (
+            ContentType.objects.get_for_model(cache).id, cache.id)
 
     def _parse_choice_value(self, choice):
         (content_type_id, cache_id) = choice.split(':')
@@ -101,11 +113,14 @@ class BasicForm(SubmitForm):
 
     url = forms.URLField(
         label=_('URL'),
-        widget=forms.TextInput(attrs={'placeholder': _('URL to be removed from caches')}),
+        widget=forms.TextInput(attrs={
+            'placeholder': _('URL to be removed from caches'),
+        }),
         max_length=2048)
 
     error_messages = {
-        'invalid_url_scheme': _('Only http:// and https:// schemes are supported.')
+        'invalid_url_scheme': _(
+            'Only http:// and https:// schemes are supported.')
     }
 
     def __init__(self, *args, **kwargs):
@@ -115,7 +130,8 @@ class BasicForm(SubmitForm):
     def clean_url(self):
         url = self.cleaned_data['url']
         if not re.compile(r'^https?://').match(url):
-            raise forms.ValidationError(self.error_messages['invalid_url_scheme'])
+            raise forms.ValidationError(
+                self.error_messages['invalid_url_scheme'])
         return url
 
     def _expression(self):
@@ -135,7 +151,9 @@ class AdvancedForm(SubmitForm):
 
     regular_expression = forms.CharField(
         label=_('Regular expression'),
-        widget=forms.TextInput(attrs={'placeholder': _('match contents to be removed from caches')}),
+        widget=forms.TextInput(attrs={
+            'placeholder': _('match contents to be removed from caches'),
+        }),
         max_length=1024)
 
     def __init__(self, *args, **kwargs):
@@ -157,7 +175,10 @@ class ExpertForm(SubmitForm):
 
     ban_expression = forms.CharField(
         label=_('Ban expression'),
-        widget=forms.Textarea(attrs={'placeholder': _('match contents to be removed from caches'), 'rows': 4}),
+        widget=forms.Textarea(attrs={
+            'placeholder': _('match contents to be removed from caches'),
+            'rows': 4,
+        }),
         max_length=1024)
 
     def __init__(self, *args, **kwargs):
@@ -189,7 +210,8 @@ class SubmissionsForm(forms.Form):
         placeholder=_('all targets'))
     items_per_page = FallbackIntegerField(choices=ITEMS_PER_PAGE_CHOICES)
     page = FallbackIntegerField(default=1, min_value=1)
-    sort_criteria = FallbackCharField(choices=[id for (id, name) in SORT_CRITERIA_CHOICES])
+    sort_criteria = FallbackCharField(choices=[
+        id for (id, name) in SORT_CRITERIA_CHOICES])
     sort_direction = SortDirectionField(default='desc')
 
     def __init__(self, *args, **kwargs):
@@ -211,7 +233,8 @@ class SubmissionsForm(forms.Form):
 
     def _query_set(self):
         # Sort criteria.
-        order_by_prefix = '-' if self.cleaned_data.get('sort_direction') == 'desc' else ''
+        order_by_prefix = \
+            '-' if self.cleaned_data.get('sort_direction') == 'desc' else ''
         result = BanSubmission.objects.\
             order_by(order_by_prefix + self.cleaned_data.get('sort_criteria'))
         # Basic filters.
@@ -223,7 +246,8 @@ class SubmissionsForm(forms.Form):
         # Target filter.
         target = self.cleaned_data.get('target')
         if target:
-            filters['target_content_type'] = ContentType.objects.get_for_model(target)
+            filters['target_content_type'] = \
+                ContentType.objects.get_for_model(target)
             filters['target_id'] = target.id
         # Done!
         if filters:

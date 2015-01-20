@@ -188,9 +188,12 @@ class DebugMiddleware(object):
             # Request report.
             req_report = {
                 'path': request.path_info,
-                'get': [(k, request.GET.getlist(k)) for k in request.GET],
-                'post': [(k, request.POST.getlist(k)) for k in request.POST],
-                'cookies': [(k, request.COOKIES.get(k)) for k in request.COOKIES],
+                'get': [
+                    (k, request.GET.getlist(k)) for k in request.GET],
+                'post': [
+                    (k, request.POST.getlist(k)) for k in request.POST],
+                'cookies': [
+                    (k, request.COOKIES.get(k)) for k in request.COOKIES],
                 'view': {
                     'func': '<no view>',
                     'args': 'None',
@@ -198,9 +201,11 @@ class DebugMiddleware(object):
                     'url': 'None',
                 },
                 'headers': dict(
-                    [(k, request.META[k]) for k in self.HEADER_FILTER if k in request.META]
+                    (k, request.META[k])
+                    for k in self.HEADER_FILTER if k in request.META
                 ),
-                'settings': sorted(get_safe_settings().items(), key=lambda s: s[0]),
+                'settings': sorted(
+                    get_safe_settings().items(), key=lambda s: s[0]),
             }
 
             try:
@@ -209,7 +214,8 @@ class DebugMiddleware(object):
                 req_report['view']['func'] = self._get_name_from_obj(func)
                 req_report['view']['args'] = args
                 req_report['view']['kwargs'] = kwargs
-                req_report['view']['url'] = getattr(match, 'url_name', '<unavailable>')
+                req_report['view']['url'] = \
+                    getattr(match, 'url_name', '<unavailable>')
             except Http404:
                 req_report['view']['func'] = request.path
 
@@ -222,20 +228,25 @@ class DebugMiddleware(object):
             # MySQL report.
             mysql_report = {
                 'time': sum([float(q['time']) for q in connection.queries]),
-                'log': [{'time': q['time'], 'sql': q['sql']} for q in connection.queries],
+                'log': [
+                    {'time': q['time'], 'sql': q['sql']}
+                    for q in connection.queries
+                ],
             }
 
             # Log.
             context = Context({'req': req_report, 'mysql': mysql_report})
             if settings.DEBUG:
-                logging.\
-                    getLogger('vbm').\
-                    debug(loader.get_template('varnish-bans-manager/partials/_debug.txt').render(context))
-            report = loader.get_template('varnish-bans-manager/partials/_debug.html').render(context)
+                text_report = loader.get_template(
+                    'varnish-bans-manager/partials/_debug.txt').render(context)
+                logging.getLogger('vbm').debug(text_report)
+            report = loader.get_template(
+                'varnish-bans-manager/partials/_debug.html').render(context)
             if isinstance(response, HttpResponseAjax):
                 response.add_command(commands.debug(report))
             elif _can_append_script(response):
-                script = '<script type="text/javascript">(function ($) { vbm.ready(function(context) { vbm.commands.debug(%s); });})(jQuery);</script>' % (json.dumps(report))
+                script = \
+                    '<script type="text/javascript">(function ($) { vbm.ready(function(context) { vbm.commands.debug(%s); });})(jQuery);</script>' % (json.dumps(report))
                 _append_script(response, script)
 
         return response
@@ -260,8 +271,13 @@ class TimerMiddleware(object):
             request.start_time = time.time()
 
             # Console log.
-            template = Template('=' * 80 + '\n{{tst}}: {{method}} {{path|safe}}\n' + '=' * 80)
-            logging.getLogger('vbm').debug(template.render(Context({'tst': strftime('%Y/%m/%d @ %H:%M:%S', gmtime()), 'method': request.method, 'path': request.path})))
+            template = Template(
+                '=' * 80 + '\n{{tst}}: {{method}} {{path|safe}}\n' + '=' * 80)
+            logging.getLogger('vbm').debug(template.render(Context({
+                'tst': strftime('%Y/%m/%d @ %H:%M:%S', gmtime()),
+                'method': request.method,
+                'path': request.path,
+            })))
 
         # Done!
         return None

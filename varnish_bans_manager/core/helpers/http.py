@@ -15,10 +15,12 @@ class HttpResponseAjax(HttpResponse):
 
     def __init__(self, commands=None, request=None):
         self.commands = commands if commands is not None else []
-        self.is_iframe_upload = request.is_iframe_upload() if request else False
+        self.is_iframe_upload = \
+            request.is_iframe_upload() if request else False
         super(HttpResponseAjax, self).__init__(
             self.dumps(),
-            content_type='text/html' if self.is_iframe_upload else 'application/json')
+            content_type=(
+                'text/html' if self.is_iframe_upload else 'application/json'))
 
     def add_command(self, command):
         self.commands.append(command)

@@ -115,7 +115,10 @@ def hide_progress():
 def modal(template, context, context_instance):
     return {
         'cmd': 'modal',
-        'args': [render_to_string(template, context, context_instance=context_instance)],
+        'args': [
+            render_to_string(
+                template, context, context_instance=context_instance),
+        ],
         'weight': DEFAULT_WEIGHT,
     }
 

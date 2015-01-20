@@ -42,7 +42,8 @@ class Progress(Base):
                         (path, static_method) = fn
                         index = path.rfind('.')
                         classname = path[index + 1:len(path)]
-                        module = __import__(path[0:index], fromlist=[classname])
+                        module = __import__(
+                            path[0:index], fromlist=[classname])
                         klass = getattr(module, classname)
                         callable = getattr(klass, static_method)
                     else:

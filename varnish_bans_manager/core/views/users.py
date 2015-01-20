@@ -44,9 +44,12 @@ class Browse(Base):
         form = BrowseForm(data=request.GET)
         if form.is_valid():
             form.execute()
-            return {'template': 'varnish-bans-manager/core/users/browse.html', 'context': {
-                'form': form,
-            }}
+            return {
+                'template': 'varnish-bans-manager/core/users/browse.html',
+                'context': {
+                    'form': form,
+                },
+            }
         else:
             raise SuspiciousOperation()
 
@@ -77,7 +80,10 @@ class Bulk(Base):
         token = tasks.enqueue(
             request, task, form.ids,
             callback={
-                'fn': ('varnish_bans_manager.core.views.users.Bulk', '%s_callback' % form.cleaned_data.get('op')),
+                'fn': (
+                    'varnish_bans_manager.core.views.users.Bulk',
+                    '%s_callback' % form.cleaned_data.get('op'),
+                ),
                 'context': {
                     'destination': destination,
                 }
@@ -105,19 +111,27 @@ class Bulk(Base):
 
     @classmethod
     def download_csv_callback(cls, request, result, context):
-        instructions = _('You should now see a popup window that asks where to save the exported file in your computer. If not, you can download it manually by simply clicking <a href="%(url)s" target="_blank">this link</a>.') % {
-            'url': result['url'],
-        }
+        instructions = _(
+            'You should now see a popup window that asks where to save the '
+            'exported file in your computer. If not, you can download it '
+            'manually by simply clicking '
+            '<a href="%(url)s" target="_blank">this link</a>.') % {
+                'url': result['url'],
+            }
         if result['errors'] == 0:
             messages.success(request, (ungettext(
                 '%(count)d user has been exported.',
                 '%(count)d users have been exported.',
-                result['exported']) % {'count': result['exported']}) + ' ' + instructions)
+                result['exported']) % {
+                    'count': result['exported'],
+                }) + ' ' + instructions)
         else:
             messages.error(request, (ungettext(
                 'Failed to export %(count)d user.',
                 'Failed to export %(count)d users.',
-                result['errors']) % {'count': result['errors']}) + ' ' + instructions)
+                result['errors']) % {
+                    'count': result['errors'],
+                }) + ' ' + instructions)
         return [
             commands.download(result['url']),
         ]
@@ -141,9 +155,12 @@ class Add(Base):
             return self._render(form)
 
     def _render(self, form):
-        return {'template': 'varnish-bans-manager/core/users/add.html', 'context': {
-            'form': form,
-        }}
+        return {
+            'template': 'varnish-bans-manager/core/users/add.html',
+            'context': {
+                'form': form,
+            },
+        }
 
 
 class Update(Base):
@@ -164,10 +181,13 @@ class Update(Base):
             return self._render(form, user)
 
     def _render(self, form, user):
-        return {'template': 'varnish-bans-manager/core/users/update.html', 'context': {
-            'form': form,
-            'instance': user,
-        }}
+        return {
+            'template': 'varnish-bans-manager/core/users/update.html',
+            'context': {
+                'form': form,
+                'instance': user,
+            },
+        }
 
 
 class Delete(Base):
@@ -175,7 +195,10 @@ class Delete(Base):
         token = tasks.enqueue(
             request, DeleteTask(), [user.id],
             callback={
-                'fn': ('varnish_bans_manager.core.views.users.Delete', 'callback'),
+                'fn': (
+                    'varnish_bans_manager.core.views.users.Delete',
+                    'callback',
+                ),
                 'context': {
                     'destination': reverse('users-browse'),
                 }

@@ -38,14 +38,20 @@ class TemporaryDownload(View):
     def get(self, request, token, filename):
         try:
             path, attachment_filename, mimetype = find_temporary_file(token)
-            return sendfile(request, path, attachment=True, attachment_filename=attachment_filename, mimetype=mimetype)
+            return sendfile(
+                request,
+                path,
+                attachment=True,
+                attachment_filename=attachment_filename,
+                mimetype=mimetype)
         except:
             return HttpResponseNotFound()
 
 
 class PrivateDownload(View):
     @method_decorator(login_required)
-    def get(self, request, app_label, model_name, object_id, field_name, filename):
+    def get(self, request, app_label, model_name, object_id, field_name,
+            filename):
         model = get_model(app_label, model_name)
         if model:
             instance = get_object_or_404(model, pk=unquote(object_id))
@@ -53,12 +59,15 @@ class PrivateDownload(View):
                 field = getattr(instance, field_name)
                 if field.condition(request, instance):
                     if field and os.path.exists(field.path):
-                        signals.pre_private_download.send(sender=model, instance=instance, field_name=field_name, request=request)
+                        signals.pre_private_download.send(
+                            sender=model, instance=instance,
+                            field_name=field_name, request=request)
                         return sendfile(
                             request,
                             field.path,
                             attachment=field.attachment,
-                            attachment_filename=field.attachment_filename(request, instance, field),
+                            attachment_filename=field.attachment_filename(
+                                request, instance, field),
                             strong_caching=field.strong_caching)
                     else:
                         field.generate()
@@ -75,6 +84,7 @@ class StaticDownload(View):
     def get(self, request, path):
         try:
             path = find_static_file(path)
-            return sendfile(request, path, attachment=False, strong_caching=True)
+            return sendfile(
+                request, path, attachment=False, strong_caching=True)
         except:
             return HttpResponseNotFound()

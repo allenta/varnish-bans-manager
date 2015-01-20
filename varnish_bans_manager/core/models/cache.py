@@ -50,7 +50,9 @@ class Cache(Model):
 class Group(Cache):
     name = models.CharField(
         _('Name'),
-        help_text=_('Some name used internally by VBM to refer to the group of caching nodes.'),
+        help_text=_(
+            'Some name used internally by VBM to refer to the group of '
+            'caching nodes.'),
         max_length=255,
         null=False
     )
@@ -94,14 +96,19 @@ class Node(Cache):
 
     name = models.CharField(
         _('Name'),
-        help_text=_('Some name used internally by VBM to refer to the cache node. If not provided, the host and port number of the node will be used.'),
+        help_text=_(
+            'Some name used internally by VBM to refer to the cache node. If '
+            'not provided, the host and port number of the node will be '
+            'used.'),
         max_length=255,
         null=True,
         blank=True
     )
     host = models.CharField(
         _('Host'),
-        help_text=_('Name or IP address of the server running the Varnish cache node.'),
+        help_text=_(
+            'Name or IP address of the server running the Varnish cache '
+            'node.'),
         max_length=255,
         null=False
     )
@@ -112,7 +119,10 @@ class Node(Cache):
     )
     secret = models.TextField(
         _('Secret'),
-        help_text=_('If the -S secret-file is used in the cache node, provide here the contents of that file in order to authenticate CLI connections opened by VBM.'),
+        help_text=_(
+            'If the -S secret-file is used in the cache node, provide here '
+            'the contents of that file in order to authenticate CLI '
+            'connections opened by VBM.'),
         max_length=65536,
         null=True,
         blank=True,

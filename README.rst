@@ -290,7 +290,7 @@ Simply execute in a terminal with the proper active virtualenv::
   www-data:~$ pip install --upgrade varnish-bans-manager
 
 VBM transparently supports migrations since version 0.4.1 by using
-`South <http://south.aeracode.org/>`_ so you don't need to do anything
-special to keep the database up to date. To upgrade from a previous version,
-the easiest solution is to clear the whole database prior to restarting
-VBM's webserver.
+`South <http://south.aeracode.org/>`_ or Django's own migration mechanism
+(depending on the version) so you don't need to do anything special to keep the
+database up to date. To upgrade from a previous version, the easiest solution
+is to clear the whole database prior to restarting VBM's webserver.

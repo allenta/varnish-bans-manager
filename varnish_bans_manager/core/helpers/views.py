@@ -48,9 +48,10 @@ def ajaxify(fn):
 
 def get_messages(request):
     return [{
-        'type': messages.constants.DEFAULT_TAGS[message.level]
-                  if message.level in (messages.INFO, messages.SUCCESS, messages.WARNING, messages.ERROR)
-                  else messages.constants.DEFAULT_TAGS[messages.INFO],
+        'type': (messages.constants.DEFAULT_TAGS[message.level]
+                 if message.level in (messages.INFO, messages.SUCCESS,
+                                      messages.WARNING, messages.ERROR)
+                 else messages.constants.DEFAULT_TAGS[messages.INFO]),
         'message': unicode(message.message),
         'tags': message.tags,
     } for message in messages.get_messages(request)]

@@ -16,9 +16,11 @@ class GenerateFileField(Task):
     ignore_result = True
 
     @classmethod
-    def enqueue(cls, app_label, model_name, object_id, field_name, timeout=1200):
+    def enqueue(cls, app_label, model_name, object_id, field_name,
+                timeout=1200):
         # Generate custom task id.
-        task_id = 'filesystem-file-generator-task:%s:%s:%s:%s' % (app_label, model_name, object_id, field_name)
+        task_id = 'filesystem-file-generator-task:%s:%s:%s:%s' % (
+            app_label, model_name, object_id, field_name)
 
         # Check if the task is already enqueued/running. Celery does
         # not provide any general support to check if a task id has

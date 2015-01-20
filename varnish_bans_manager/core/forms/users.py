@@ -47,7 +47,8 @@ class CollectionForm(forms.Form):
         max_length=128)
     items_per_page = FallbackIntegerField(choices=ITEMS_PER_PAGE_CHOICES)
     page = FallbackIntegerField(default=1, min_value=1)
-    sort_criteria = FallbackCharField(choices=[id for (id, name) in SORT_CRITERIA_CHOICES])
+    sort_criteria = FallbackCharField(choices=[
+        id for (id, name) in SORT_CRITERIA_CHOICES])
     sort_direction = SortDirectionField(default='asc')
 
     def _base_query_set(self):
@@ -55,7 +56,8 @@ class CollectionForm(forms.Form):
             filter(is_active=True)
 
     def _query_set(self):
-        order_by_prefix = '-' if self.cleaned_data.get('sort_direction') == 'desc' else ''
+        order_by_prefix = \
+            '-' if self.cleaned_data.get('sort_direction') == 'desc' else ''
         result = self._base_query_set().\
             order_by(order_by_prefix + self.cleaned_data.get('sort_criteria'))
         filters = {}
@@ -73,7 +75,10 @@ class BrowseForm(CollectionForm):
         self.paginator = None
 
     def execute(self):
-        self.paginator = Paginator(object_list=self._query_set(), per_page=self.cleaned_data.get('items_per_page'), page=self.cleaned_data.get('page'))
+        self.paginator = Paginator(
+            object_list=self._query_set(),
+            per_page=self.cleaned_data.get('items_per_page'),
+            page=self.cleaned_data.get('page'))
 
 
 class BulkForm(CollectionForm):
@@ -103,7 +108,8 @@ class BulkForm(CollectionForm):
         if reset_page:
             fields.remove('page')
         return reverse('users-browse') + \
-            '?' + urlencode(dict((field, self.cleaned_data.get(field)) for field in fields))
+            '?' + urlencode(dict(
+                (field, self.cleaned_data.get(field)) for field in fields))
 
 
 class EditForm(object):
@@ -111,17 +117,25 @@ class EditForm(object):
 
     class UserForm(forms.ModelForm):
         first_name = forms.CharField(
-            widget=forms.TextInput(attrs={'placeholder': _('first name')}),
+            widget=forms.TextInput(attrs={
+                'placeholder': _('first name'),
+            }),
             max_length=30)
         last_name = forms.CharField(
-            widget=forms.TextInput(attrs={'placeholder': _('last name')}),
+            widget=forms.TextInput(attrs={
+                'placeholder': _('last name'),
+            }),
             max_length=30)
         password1 = forms.CharField(
             label=_('password'),
-            widget=forms.PasswordInput(attrs={'placeholder': _('password')}))
+            widget=forms.PasswordInput(attrs={
+                'placeholder': _('password'),
+            }))
         password2 = forms.CharField(
             label=_('password confirmation'),
-            widget=forms.PasswordInput(attrs={'placeholder': _('password confirmation')}))
+            widget=forms.PasswordInput(attrs={
+                'placeholder': _('password confirmation'),
+            }))
 
         error_messages = {
             'password_mismatch': _(
@@ -139,7 +153,8 @@ class EditForm(object):
                 widget=CheckboxSelectMultiple,
                 initial=list(set(permissions) & set(PERMISSIONS.keys())),
                 choices=[
-                    (permission, _(Permission.objects.get(codename=permission).name))
+                    (permission,
+                     _(Permission.objects.get(codename=permission).name))
                     for permission in PERMISSIONS.keys()
                 ])
 
@@ -161,8 +176,10 @@ class EditForm(object):
             fields = ('photo',)
 
     def __init__(self, user, permissions, profile, data, files):
-        self.user = self.UserForm(permissions=permissions, prefix='user', instance=user, data=data)
-        self.profile = self.ProfileForm(prefix='profile', instance=profile, data=data, files=files)
+        self.user = self.UserForm(
+            permissions=permissions, prefix='user', instance=user, data=data)
+        self.profile = self.ProfileForm(
+            prefix='profile', instance=profile, data=data, files=files)
 
     def is_valid(self):
         return self.user.is_valid() and self.profile.is_valid()
@@ -173,7 +190,8 @@ class AddForm(EditForm):
         def clean_email(self):
             email = self.cleaned_data.get('email')
             if User.objects.filter(email=email).exists():
-                raise forms.ValidationError(self.error_messages['duplicated_email'])
+                raise forms.ValidationError(
+                    self.error_messages['duplicated_email'])
             return email
 
         def save(self, commit=True):
@@ -214,7 +232,8 @@ class UpdateForm(EditForm):
         def clean_email(self):
             email = self.cleaned_data.get('email')
             if User.objects.filter(email=email).exclude(id=self.instance.id).exists():
-                raise forms.ValidationError(self.error_messages['duplicated_email'])
+                raise forms.ValidationError(
+                    self.error_messages['duplicated_email'])
             return email
 
         def __init__(self, permissions=None, *args, **kwargs):
@@ -226,7 +245,8 @@ class UpdateForm(EditForm):
 
         def save(self, commit=True):
             user = super(UpdateForm.UserForm, self).save(commit=False)
-            if self.cleaned_data.get('password1') and self.cleaned_data.get('password2'):
+            if self.cleaned_data.get('password1') and \
+               self.cleaned_data.get('password2'):
                 user.set_password(self.cleaned_data.get('password1'))
             # Update permissions.
             permissions = set(user.user_permissions.all())
@@ -246,13 +266,15 @@ class UpdateForm(EditForm):
             fields = EditForm.ProfileForm.Meta.fields + ('revision',)
 
     def __init__(self, instance, data=None, files=None):
-        permissions = instance.user_permissions.all().values_list('codename', flat=True)
+        permissions = instance.user_permissions.all().values_list(
+            'codename', flat=True)
         super(UpdateForm, self).__init__(
             user=instance, permissions=permissions, profile=instance.profile,
             data=data, files=files)
 
     def save(self):
-        # Save in a transaction as concurrent edition of the profile may raise an exception.
+        # Save in a transaction as concurrent edition of the profile may raise
+        # an exception.
         with transaction.atomic():
             self.user.save()
             self.profile.save()

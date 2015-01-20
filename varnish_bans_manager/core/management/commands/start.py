@@ -33,6 +33,7 @@ class Command(BaseCommand):
         opts.update(options)
         opts['debug'] = settings.DEBUG
         opts['secure_scheme_headers'] = {
-            settings.SECURE_PROXY_SSL_HEADER[0]: settings.SECURE_PROXY_SSL_HEADER[1],
+            settings.SECURE_PROXY_SSL_HEADER[0]:
+                settings.SECURE_PROXY_SSL_HEADER[1],
         }
         call_command('run_gunicorn', **opts)

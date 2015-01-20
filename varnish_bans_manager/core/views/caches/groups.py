@@ -52,9 +52,12 @@ class Add(Base):
             return self._render(form)
 
     def _render(self, form):
-        return {'template': 'varnish-bans-manager/core/caches/groups/add.html', 'context': {
-            'form': form,
-        }}
+        return {
+            'template': 'varnish-bans-manager/core/caches/groups/add.html',
+            'context': {
+                'form': form,
+            }
+        }
 
 
 class Update(Base):
@@ -75,16 +78,21 @@ class Update(Base):
             return self._render(form)
 
     def _render(self, form):
-        return {'template': 'varnish-bans-manager/core/caches/groups/update.html', 'context': {
-            'form': form,
-        }}
+        return {
+            'template': 'varnish-bans-manager/core/caches/groups/update.html',
+            'context': {
+                'form': form,
+            }
+        }
 
 
 class Delete(Base):
     def post(self, request, group):
         try:
             group.delete()
-            messages.success(request, _('The group has been deleted. Its nodes are no longer assigned to any group.'))
+            messages.success(request, _(
+                'The group has been deleted. Its nodes are no longer assigned '
+                'to any group.'))
         except:
             messages.error(request, DEFAULT_ERROR_MESSAGE)
         return HttpResponseAjax([

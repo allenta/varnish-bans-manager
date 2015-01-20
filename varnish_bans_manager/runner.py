@@ -95,7 +95,8 @@ secret_key: %(secret_key)s
 development: false
     ''' % {
         'secret_key': ''.join(
-            random.choice(string.ascii_letters + string.digits) for i in range(64))
+            random.choice(string.ascii_letters + string.digits)
+            for i in range(64))
     }
 
 

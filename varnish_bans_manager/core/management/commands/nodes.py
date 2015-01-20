@@ -42,7 +42,8 @@ class Command(BaseCommand):
                 secret_file=options.get('secret-file'),
                 version=options.get('version'),
                 name=options.get('name'),
-                group=self._get_object_or_command_error(Group, options.get('group'))
+                group=self._get_object_or_command_error(
+                    Group, options.get('group'))
             )
 
         # --delete
@@ -65,7 +66,8 @@ class Command(BaseCommand):
                 node.group.name if node.group else '-'
             ))
 
-    def _add(self, host, port, secret_file=None, version=None, name=None, group=None):
+    def _add(self, host, port, secret_file=None, version=None, name=None,
+             group=None):
         # Fetch shared secret.
         secret = None
         if secret_file is not None:
@@ -77,7 +79,9 @@ class Command(BaseCommand):
 
         # Validate & add new instance.
         try:
-            node = Node(host=host, port=port, secret=secret, version=version, name=name, group=group)
+            node = Node(
+                host=host, port=port, secret=secret, version=version,
+                name=name, group=group)
             node.full_clean()
             node.save()
         except ValidationError:
@@ -91,6 +95,8 @@ class Command(BaseCommand):
             try:
                 return model.objects.get(pk=pk)
             except:
-                raise CommandError('Failed to load %s instance with identifier %d.' % (model.__name__, pk,))
+                raise CommandError(
+                    'Failed to load %s instance with identifier %d.' % (
+                        model.__name__, pk,))
         else:
             return None
