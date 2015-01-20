@@ -53,7 +53,7 @@ class AuthenticatedBase(Base):
 class Login(AnonymousBase):
     def get(self, request):
         # Destination?
-        destination = request.REQUEST.get(auth.REDIRECT_FIELD_NAME, reverse('home'))
+        destination = request.GET.get(auth.REDIRECT_FIELD_NAME, reverse('home'))
 
         # Don't allow redirection to a different host.
         netloc = urlparse.urlparse(destination)[1]
