@@ -8,7 +8,7 @@
 from __future__ import absolute_import
 import time
 import logging
-import simplejson as json
+import json
 from time import gmtime, strftime
 from django.db import connection
 from django.conf import settings

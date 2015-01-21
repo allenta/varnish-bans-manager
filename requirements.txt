@@ -5,7 +5,6 @@ django-mediagenerator == 1.12
 django-templated-email == 0.4.9
 gunicorn == 19.1.1
 eventlet == 0.16.1
-simplejson == 3.6.5
 path.py == 7.0
 pytz == 2014.10
 pillow == 2.7.0

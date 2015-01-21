@@ -6,7 +6,7 @@
 '''
 
 from __future__ import absolute_import
-import simplejson as json
+import json
 from django.http import HttpResponse
 from varnish_bans_manager.core.helpers.commands import is_redirection
 

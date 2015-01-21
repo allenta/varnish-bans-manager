@@ -7,7 +7,7 @@
 
 from __future__ import absolute_import
 import re
-import simplejson as json
+import json
 from django import template
 from django.conf import settings
 from django.template.defaultfilters import stringfilter

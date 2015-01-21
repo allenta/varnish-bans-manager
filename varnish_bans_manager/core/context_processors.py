@@ -6,7 +6,7 @@
 '''
 
 from __future__ import absolute_import
-import simplejson as json
+import json
 from django.conf import settings
 from varnish_bans_manager.core.helpers.views import get_messages
 

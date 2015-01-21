@@ -8,7 +8,6 @@
 from __future__ import absolute_import
 import os
 import sys
-import simplejson
 from cStringIO import StringIO
 import ConfigParser
 import getpass
@@ -24,11 +23,6 @@ ROOT = path(__file__).abspath().dirname()
 # This is defined here as a do-nothing function because we can't import
 # django.utils.translation -- that module depends on the settings.
 ugettext = lambda s: s
-
-# Django 1.7 deprecates the django.utils.simplejson module but the current last
-# version for django-mediagenerator (1.11) still uses it. Until this package is
-# updated, this hack can be used.
-sys.modules['django.utils.simplejson'] = simplejson
 
 ###############################################################################
 ## USER CONFIG.
