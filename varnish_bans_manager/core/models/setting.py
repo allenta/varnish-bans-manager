@@ -10,31 +10,10 @@ from django.db import models
 from varnish_bans_manager.core.models.base import Model, JSONField
 
 
-class Setting(Model):
-    DEFAULT_HOST_MATCHING_VARIABLE = 'obj.http.x-host'
-    DEFAULT_URL_MATCHING_VARIABLE = 'obj.http.x-url'
+class SettingMetaclass(type(Model)):
+    DEFAULT_HOST_MATCHING_VARIABLE = u'obj.http.x-host'
+    DEFAULT_URL_MATCHING_VARIABLE = u'obj.http.x-url'
 
-    name = models.CharField(
-        max_length=255,
-        null=False,
-        db_index=True,
-        unique=True
-    )
-    value = JSONField(
-        max_length=1024,
-        null=False
-    )
-    created_at = models.DateTimeField(
-        auto_now_add=True,
-        null=False
-    )
-    updated_at = models.DateTimeField(
-        auto_now=True,
-        null=False
-    )
-
-
-class SettingMetaclass(Setting.__class__):
     def _property(name, default):
         def fget(cls):
             try:
@@ -60,9 +39,9 @@ class SettingMetaclass(Setting.__class__):
 
     host_matching_variable = property(*_property(
         'host_matching_variable',
-        Setting.DEFAULT_HOST_MATCHING_VARIABLE))
+        DEFAULT_HOST_MATCHING_VARIABLE))
     url_matching_variable = property(*_property(
-        'url_matching_variable', Setting.DEFAULT_URL_MATCHING_VARIABLE))
+        'url_matching_variable', DEFAULT_URL_MATCHING_VARIABLE))
     base_ban_expression = property(*_property(
         'base_ban_expression', ''))
     notify_bans = property(*_property(
@@ -71,4 +50,24 @@ class SettingMetaclass(Setting.__class__):
         'notify_bans_task_status', None))
 
 
-Setting.__class__ = SettingMetaclass
+class Setting(Model):
+    __metaclass__ = SettingMetaclass
+
+    name = models.CharField(
+        max_length=255,
+        null=False,
+        db_index=True,
+        unique=True
+    )
+    value = JSONField(
+        max_length=1024,
+        null=False
+    )
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        null=False
+    )
+    updated_at = models.DateTimeField(
+        auto_now=True,
+        null=False
+    )
