@@ -13,20 +13,20 @@
 ## Configuration.
 ##
 CELERYD_VIRTUALENV="/var/www/varnish-bans-manager"
-CELERYD_MULTI="python -mvarnish_bans_manager.runner celeryd_multi"
-CELERYD_CTL="python -mvarnish_bans_manager.runner celeryctl"
+CELERYD_MULTI="celery multi"
+CELERYD_CTL="celery status"
 CELERYD_USER="www-data"
 CELERYD_GROUP="www-data"
 CELERYD_PID_DIR="/var/run/varnish-bans-manager"
-CELERYD_PID_FILE="$CELERYD_PID_DIR/celeryd.pid"
+CELERYD_PID_FILE="$CELERYD_PID_DIR/celeryd.%n.pid"
 CELERYD_LOG_DIR="/var/log/varnish-bans-manager"
-CELERYD_LOG_FILE="$CELERYD_LOG_DIR/celeryd.log"
+CELERYD_LOG_FILE="$CELERYD_LOG_DIR/celeryd.%n.log"
 CELERYD_LOG_LEVEL="WARNING"
 CELERYD_NODES="w1"
 CELERYD_DAEMON_OPTS="\
-    --pidfile="$CELERYD_PID_FILE" \
     --uid="$CELERYD_USER" \
     --gid="$CELERYD_GROUP" \
+    --pidfile="$CELERYD_PID_FILE" \
     --logfile="$CELERYD_LOG_FILE" \
     --loglevel="$CELERYD_LOG_LEVEL" \
     --cmd=-mcelery.bin.celeryd_detach \
@@ -38,7 +38,7 @@ CELERYD_DAEMON_OPTS="\
 ##
 start_celeryd () {
     echo "Starting celeryd..."
-    $CELERYD start $CELERYD_NODES --app=apw $CELERYD_DAEMON_OPTS
+    $CELERYD_MULTI start $CELERYD_NODES --app=varnish_bans_manager $CELERYD_DAEMON_OPTS
 }
 
 ##
@@ -46,8 +46,7 @@ start_celeryd () {
 ##
 stop_celeryd () {
     echo "Stopping celeryd..."
-    $CELERYD_MULTI stop $CELERYD_NODES --app=apw --pidfile="$CELERYD_PID_FILE"
-    rm -f "$CELERYD_PID_FILE"
+    $CELERYD_MULTI stop $CELERYD_NODES --app=varnish_bans_manager --pidfile="$CELERYD_PID_FILE"
 }
 
 ##
@@ -55,14 +54,14 @@ stop_celeryd () {
 ##
 restart_celeryd () {
     echo "Restarting celeryd..."
-    $CELERYD_MULTI restart $CELERYD_NODES --app=apw $CELERYD_DAEMON_OPTS
+    $CELERYD_MULTI restart $CELERYD_NODES --app=varnish_bans_manager $CELERYD_DAEMON_OPTS
 }
 
 ##
 ##
 ##
 status_celeryd () {
-    $CELERYD_CTL status $CELERYD_CTL_OPTS
+    $CELERYD_CTL --app=varnish_bans_manager
 }
 
 ##
