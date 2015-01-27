@@ -1,3 +1,10 @@
+v0.6, 27/01/2015
+----------------
+
+  - Upgrade to Django 1.7.
+  - Upgraded other requirements to their latest version.
+  - Fixed example init.d scripts for production environments.
+
 v0.5.3, 27/11/2013
 ------------------
 

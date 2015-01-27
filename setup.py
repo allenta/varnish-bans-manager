@@ -31,7 +31,7 @@ if sys.version_info[0] == 3:
 
 setup(
     name='varnish-bans-manager',
-    version='0.5.3',
+    version='0.6',
     author='Allenta Consulting',
     author_email='info@allenta.com',
     packages=find_packages(),
