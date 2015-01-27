@@ -20,7 +20,6 @@ from django.template.defaultfilters import filesizeformat
 from django.core.urlresolvers import reverse
 from django.forms import forms
 from django.utils.translation import ugettext_lazy as _
-from south.modelsinspector import add_introspection_rules
 from varnish_bans_manager.filesystem.forms import ImageField as FormImageField
 from varnish_bans_manager.filesystem import tasks
 
@@ -84,7 +83,9 @@ class FieldFileMixin(BaseFieldFile):
 
     @property
     def url(self):
-        if not self and self.field.path_generator and self.field.contents_generator:
+        if not self and \
+           self.field.path_generator and \
+           self.field.contents_generator:
             path = self.field.path_generator(self.instance)
         else:
             path = self.path
@@ -98,7 +99,8 @@ class FieldFileMixin(BaseFieldFile):
             })
         else:
             return reverse('filesystem-public-download', kwargs={
-                'path': re.compile(r'^%s/?public/' % settings.MEDIA_ROOT).sub('', path)
+                'path': re.compile(
+                    r'^%s/?public/' % settings.MEDIA_ROOT).sub('', path)
             })
 
     def generate(self):
@@ -114,30 +116,44 @@ class FileFieldMixin(BaseFileField):
     default_error_messages = {
         'file_invalid': _('Invalid file.'),
         'file_type_not_supported': _('File type not supported.'),
-        'file_too_big': _('Please keep filesize under %(max)s. Current filesize %(current)s.')
+        'file_too_big': _(
+            'Please keep filesize under %(max)s. Current filesize %(current)s.'
+        ),
     }
 
     def __init__(self, **kwargs):
         self.private = kwargs.pop('private', True)
         self.condition = kwargs.pop('condition', _default_condition)
         self.attachment = kwargs.pop('attachment', False)
-        self.attachment_filename = kwargs.pop('attachment_filename', _default_attachment_filename)
+        self.attachment_filename = kwargs.pop(
+            'attachment_filename', _default_attachment_filename)
         self.content_types = kwargs.pop('content_types', None)
         self.max_upload_size = kwargs.pop('max_upload_size', None)
         self.strong_caching = kwargs.pop('strong_caching', True)
         self.path_generator = kwargs.pop('path_generator', None)
-        self.original_contents_generator = kwargs.pop('contents_generator', None)
-        self.contents_generator = _wrapped_contents_generator(self.original_contents_generator) if self.original_contents_generator else None
-        kwargs['upload_to'] = _wrapped_upload_to(kwargs.pop('upload_to', ''), self.private, self.path_generator)
+        self._original_contents_generator = kwargs.pop(
+            'contents_generator', None)
+        self.contents_generator = \
+            _wrapped_contents_generator(self._original_contents_generator) \
+            if self._original_contents_generator else None
+        self._original_upload_to = kwargs.pop('upload_to', '')
+        kwargs['upload_to'] = _wrapped_upload_to(
+            self._original_upload_to, self.private, self.path_generator)
         super(FileFieldMixin, self).__init__(**kwargs)
 
     def clean(self, *args, **kwargs):
         data = super(FileFieldMixin, self).clean(*args, **kwargs)
         try:
-            if self.content_types and not data.file.content_type in self.content_types:
-                raise forms.ValidationError(self.error_messages['file_type_not_supported'])
+            if self.content_types and \
+               data.file.content_type not in self.content_types:
+                raise forms.ValidationError(
+                    self.error_messages['file_type_not_supported'])
             elif self.max_upload_size and data.file._size > self.max_upload_size:
-                raise forms.ValidationError(self.error_messages['file_too_big'] % {'max': filesizeformat(self.max_upload_size), 'current': filesizeformat(data.file._size)})
+                raise forms.ValidationError(
+                    self.error_messages['file_too_big'] % {
+                        'max': filesizeformat(self.max_upload_size),
+                        'current': filesizeformat(data.file._size),
+                    })
         except IOError:
             raise forms.ValidationError(self.error_messages['file_invalid'])
         except AttributeError:
@@ -151,6 +167,22 @@ class FileFieldMixin(BaseFileField):
             file.generate()
         return file
 
+    def deconstruct(self):
+        # These args accept a callable and therefore aren't serializable:
+        # attachment_filename, condition, upload_to.
+        name, path, args, kwargs = super(FileFieldMixin, self).deconstruct()
+        kwargs['private'] = self.private
+        kwargs['condition'] = self.condition
+        kwargs['attachment'] = self.attachment
+        kwargs['attachment_filename'] = self.attachment_filename
+        kwargs['content_types'] = self.content_types
+        kwargs['max_upload_size'] = self.max_upload_size
+        kwargs['strong_caching'] = self.strong_caching
+        kwargs['path_generator'] = self.path_generator
+        kwargs['contents_generator'] = self._original_contents_generator
+        kwargs['upload_to'] = self._original_upload_to
+        return name, path, args, kwargs
+
 
 ###############################################################################
 
@@ -161,24 +193,6 @@ class FieldFile(FieldFileMixin, BaseFieldFile):
 
 class FileField(FileFieldMixin, BaseFileField):
     attr_class = FieldFile
-
-
-add_introspection_rules([(
-        (FileField, ),
-        [],
-        {
-            'private': ['private', {}],
-            'attachment': ['attachment', {}],
-            'content_types': ['content_types', {}],
-            'max_upload_size': ['max_upload_size', {}],
-            'strong_caching': ['strong_caching', {}],
-            'path_generator': ['path_generator', {}],
-            'contents_generator': ['original_contents_generator', {}],
-            # These args accept a callable and therefore can
-            # not be included in south introspection rules:
-            # attachment_filename, condition, upload_to.
-        },
-    )], ["^varnish_bans_manager\.filesystem\.models\.FileField"])
 
 
 ###############################################################################
@@ -211,7 +225,7 @@ class ImageField(FileFieldMixin, BaseImageField):
     attr_class = ImageFieldFile
 
     def __init__(self, verbose_name=None, name=None, width_field=None,
-            height_field=None, max_width=None, max_height=None, **kwargs):
+                 height_field=None, max_width=None, max_height=None, **kwargs):
         # Extract bounding box definition.
         self.max_width = max_width
         self.max_height = max_height
@@ -224,22 +238,10 @@ class ImageField(FileFieldMixin, BaseImageField):
         kwargs.setdefault('form_class', FormImageField)
         return super(ImageField, self).formfield(**kwargs)
 
-
-add_introspection_rules([(
-        (ImageField, ),
-        [],
-        {
-            'private': ['private', {}],
-            'attachment': ['attachment', {}],
-            'content_types': ['content_types', {}],
-            'max_upload_size': ['max_upload_size', {}],
-            'strong_caching': ['strong_caching', {}],
-            'path_generator': ['path_generator', {}],
-            'contents_generator': ['original_contents_generator', {}],
-            'max_width': ['max_width', {}],
-            'max_height': ['max_height', {}],
-            # These args accept a callable and therefore can
-            # not be included in south introspection rules:
-            # attachment_filename, condition, upload_to.
-        },
-    )], ["^varnish_bans_manager\.filesystem\.models\.ImageField"])
+    def deconstruct(self):
+        # These args accept a callable and therefore aren't serializable:
+        # attachment_filename, condition, upload_to.
+        name, path, args, kwargs = super(ImageField, self).deconstruct()
+        kwargs['max_width'] = self.max_width
+        kwargs['max_height'] = self.max_height
+        return name, path, args, kwargs

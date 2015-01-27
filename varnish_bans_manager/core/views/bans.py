@@ -56,7 +56,10 @@ class Submit(Base):
                 SubmitTask(),
                 form.ban_submission,
                 callback={
-                    'fn': ('varnish_bans_manager.core.views.bans.Submit', 'callback'),
+                    'fn': (
+                        'varnish_bans_manager.core.views.bans.Submit',
+                        'callback',
+                    ),
                     'context': {
                         'expression': form.expression,
                         'destination': self.destination,
@@ -81,20 +84,28 @@ class Submit(Base):
         destination = reverse(context['destination'])
         ban_submission = BanSubmission.objects.get(pk=result)
         ban_submission_items = ban_submission.items.all()
-        successful_items_count = len([item for item in ban_submission_items if item.success])
+        successful_items_count = len([
+            item for item in ban_submission_items if item.success])
         if successful_items_count < len(ban_submission_items):
             return [
-                commands.modal('varnish-bans-manager/core/bans/submit_errors.html', {
-                    'expression': ban_submission.expression,
-                    'submissions': successful_items_count,
-                    'errors': [item for item in ban_submission_items if not item.success],
-                    'destination': destination,
-                }, context_instance=RequestContext(request))
+                commands.modal(
+                    'varnish-bans-manager/core/bans/submit_errors.html', {
+                        'expression': ban_submission.expression,
+                        'submissions': successful_items_count,
+                        'errors': [
+                            item
+                            for item in ban_submission_items
+                            if not item.success
+                        ],
+                        'destination': destination,
+                    }, context_instance=RequestContext(request))
             ]
         else:
             messages.success(request, ungettext(
-                'Your ban has been submitted and successfully processed by %(count)d cache.',
-                'Your ban has been submitted and successfully processed by %(count)d caches.',
+                'Your ban has been submitted and successfully processed by '
+                '%(count)d cache.',
+                'Your ban has been submitted and successfully processed by '
+                '%(count)d caches.',
                 successful_items_count) % {'count': successful_items_count})
             return [
                 commands.navigate(destination),
@@ -137,9 +148,12 @@ class Submissions(Base):
         form = SubmissionsForm(data=request.GET)
         if form.is_valid():
             form.execute()
-            return {'template': 'varnish-bans-manager/core/bans/submissions.html', 'context': {
-                'form': form,
-            }}
+            return {
+                'template': 'varnish-bans-manager/core/bans/submissions.html',
+                'context': {
+                    'form': form,
+                },
+            }
         else:
             raise SuspiciousOperation()
 
@@ -160,21 +174,28 @@ class Status(Base):
                 StatusTask(),
                 form.cleaned_data.get('cache'),
                 callback={
-                    'fn': ('varnish_bans_manager.core.views.bans.Status', 'callback'),
+                    'fn': (
+                        'varnish_bans_manager.core.views.bans.Status',
+                        'callback',
+                    ),
                     'context': {},
                 }
             )
             return HttpResponseAjax([
-                commands.show_progress(token, title=_('Fetching lists of bans...')),
+                commands.show_progress(
+                    token, title=_('Fetching lists of bans...')),
             ], request)
         else:
             messages.error(request, DEFAULT_FORM_ERROR_MESSAGE)
             return self._render(form=form)
 
     def _render(self, form):
-        return {'template': 'varnish-bans-manager/core/bans/status.html', 'context': {
-            'form': form,
-        }}
+        return {
+            'template': 'varnish-bans-manager/core/bans/status.html',
+            'context': {
+                'form': form,
+            },
+        }
 
     @classmethod
     def callback(cls, request, result, context):

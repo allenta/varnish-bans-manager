@@ -52,9 +52,12 @@ class Add(Base):
             return self._render(form)
 
     def _render(self, form):
-        return {'template': 'varnish-bans-manager/core/caches/nodes/add.html', 'context': {
-            'form': form,
-        }}
+        return {
+            'template': 'varnish-bans-manager/core/caches/nodes/add.html',
+            'context': {
+                'form': form,
+            }
+        }
 
 
 class Update(Base):
@@ -75,9 +78,12 @@ class Update(Base):
             return self._render(form)
 
     def _render(self, form):
-        return {'template': 'varnish-bans-manager/core/caches/nodes/update.html', 'context': {
-            'form': form,
-        }}
+        return {
+            'template': 'varnish-bans-manager/core/caches/nodes/update.html',
+            'context': {
+                'form': form,
+            }
+        }
 
 
 class Delete(Base):

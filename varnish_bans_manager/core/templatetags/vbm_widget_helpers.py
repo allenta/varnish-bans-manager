@@ -114,7 +114,9 @@ def render_field(parser, token):
     or attribute+="value" for appending.
 
     '''
-    error_msg = '%r tag requires a form field followed by a list of attributes and values in the form attr="value"' % token.split_contents()[0]
+    error_msg = (
+        '%r tag requires a form field followed by a list of attributes and '
+        'values in the form attr="value"' % token.split_contents()[0])
     try:
         bits = token.split_contents()
         tag_name = bits[0]
@@ -132,7 +134,8 @@ def render_field(parser, token):
         if not match:
             raise TemplateSyntaxError(error_msg + ': %s' % pair)
         dct = match.groupdict()
-        attr, sign, value = dct['attr'], dct['sign'], parser.compile_filter(dct['value'])
+        attr, sign, value = \
+            dct['attr'], dct['sign'], parser.compile_filter(dct['value'])
         if sign == '=':
             set_attrs.append((attr, value))
         else:
@@ -150,9 +153,11 @@ class FieldAttributeNode(Node):
     def render(self, context):
         bounded_field = self.field.resolve(context)
         for k, v in self.set_attrs:
-            bounded_field = set_attr(bounded_field, '%s:%s' % (k, v.resolve(context)))
+            bounded_field = set_attr(
+                bounded_field, '%s:%s' % (k, v.resolve(context)))
         for k, v in self.append_attrs:
-            bounded_field = append_attr(bounded_field, '%s:%s' % (k, v.resolve(context)))
+            bounded_field = append_attr(
+                bounded_field, '%s:%s' % (k, v.resolve(context)))
         return bounded_field
 
 
@@ -175,6 +180,8 @@ def widget_type(field):
     E.g. if field's widget is TextInput then {{ field|widget_type }} will
     return 'textinput'.
     '''
-    if hasattr(field, 'field') and hasattr(field.field, 'widget') and field.field.widget:
+    if hasattr(field, 'field') and \
+       hasattr(field.field, 'widget') and \
+       field.field.widget:
         return field.field.widget.__class__.__name__.lower()
     return ''

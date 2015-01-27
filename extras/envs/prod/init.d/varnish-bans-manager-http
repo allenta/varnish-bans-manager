@@ -19,8 +19,10 @@ HTTP_GROUP="www-data"
 HTTP_PID_DIR="/var/run/varnish-bans-manager"
 HTTP_PID_FILE="$HTTP_PID_DIR/http.pid"
 HTTP_LOG_DIR="/var/log/varnish-bans-manager"
+HTTP_LOG_FILE="$HTTP_LOG_DIR/http.log"
 HTTP_DAEMON_OPTS="\
     --pid="$HTTP_PID_FILE" \
+    --log-file="$HTTP_LOG_FILE" \
     --user="$HTTP_USER" \
     --group="$HTTP_GROUP" \
     --daemon"

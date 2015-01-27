@@ -33,16 +33,19 @@ class GeneralForm(forms.Form):
         required=False)
 
     notify_bans = forms.BooleanField(
-        help_text=_('Adjust VBM settings file to use a different e-mail address.'),
+        help_text=_(
+            'Adjust VBM settings file to use a different e-mail address.'),
         required=False)
 
     def __init__(self, *args, **kwargs):
         super(GeneralForm, self).__init__(*args, **kwargs)
         self.fields['host_matching_variable'].help_text = _(
-            'If not specified, defaults to <code>%s</code> for lurker friendly bans.'
+            'If not specified, defaults to <code>%s</code> for lurker '
+            'friendly bans.'
         ) % Setting.DEFAULT_HOST_MATCHING_VARIABLE
         self.fields['url_matching_variable'].help_text = _(
-            'If not specified, defaults to <code>%s</code> for lurker friendly bans.'
+            'If not specified, defaults to <code>%s</code> for lurker '
+            'friendly bans.'
         ) % Setting.DEFAULT_URL_MATCHING_VARIABLE
         self.fields['notify_bans'].label = _(
             'Deliver periodical ban submission reports to <code>%s</code>.'

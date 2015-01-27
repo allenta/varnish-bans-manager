@@ -28,7 +28,8 @@ ugettext = lambda s: s
 ## USER CONFIG.
 ###############################################################################
 
-_config_filename = os.environ.get('VARNISH_BANS_MANAGER_CONF', '/etc/varnish-bans-manager.conf')
+_config_filename = os.environ.get(
+    'VARNISH_BANS_MANAGER_CONF', '/etc/varnish-bans-manager.conf')
 _config = ConfigParser.ConfigParser()
 _config.readfp(StringIO(default_config()))
 try:
@@ -60,7 +61,6 @@ else:
 from varnish_bans_manager.core.patches.base_management_command import *
 
 from django.contrib.messages import constants as message_constants
-import djcelery
 from celery.schedules import crontab
 
 ###############################################################################
@@ -198,9 +198,6 @@ INSTALLED_APPS = (
     # See http://celeryproject.org.
     'djcelery',
     'kombu.transport.django',
-
-    # See http://south.aeracode.org.
-    'south',
 
     # VBM.
     'varnish_bans_manager.filesystem',
@@ -348,7 +345,7 @@ MEDIA_BUNDLES = (
         'varnish-bans-manager/js/plugins/jquery-ui/jquery.ui.js',
         'varnish-bans-manager/js/bootstrap.js',
     ),
- )
+)
 
 ROOT_MEDIA_FILTERS = {
     'js': 'mediagenerator.filters.yuicompressor.YUICompressor',
@@ -426,6 +423,12 @@ LOGGING = {
         },
     }
 }
+
+###############################################################################
+## TESTS.
+###############################################################################
+
+TEST_RUNNER = 'django.test.runner.DiscoverRunner'
 
 ###############################################################################
 ## I18N.
@@ -533,10 +536,9 @@ SEND_BROKEN_LINK_EMAILS = False
 ## CELERY (http://docs.celeryproject.org/en/latest/configuration.html).
 ###############################################################################
 
-djcelery.setup_loader()
-
 # See http://docs.celeryproject.org/en/latest/getting-started/brokers/django.html.
 BROKER_URL = 'django://'
+CELERY_RESULT_BACKEND = 'djcelery.backends.database:DatabaseBackend'
 CELERY_DISABLE_RATE_LIMITS = True
 CELERYD_TASK_SOFT_TIME_LIMIT = 3600  # 1 hour.
 CELERYD_TASK_TIME_LIMIT = None

@@ -23,8 +23,12 @@ class EditForm(forms.ModelForm):
         model = Node
         fields = ('name', 'host', 'port', 'secret', 'version', 'group',)
         widgets = {
-            'host': forms.TextInput(attrs={'placeholder': _('Host name or IP address')}),
-            'port': forms.TextInput(attrs={'placeholder': _('Port number')}),
+            'host': forms.TextInput(attrs={
+                'placeholder': _('Host name or IP address')
+            }),
+            'port': forms.TextInput(attrs={
+                'placeholder': _('Port number')
+            }),
         }
 
 

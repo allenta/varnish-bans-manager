@@ -47,6 +47,9 @@ class General(Base):
             return self._render(form=form)
 
     def _render(self, form=None):
-        return {'template': 'varnish-bans-manager/core/settings/general.html', 'context': {
-            'form': form,
-        }}
+        return {
+            'template': 'varnish-bans-manager/core/settings/general.html',
+            'context': {
+                'form': form,
+            },
+        }

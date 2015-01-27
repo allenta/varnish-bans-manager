@@ -26,9 +26,11 @@ class NotifySubmissions(SingleInstanceTask):
         # Recover current state to go on where we ended last time,
         # or start from the beginning.
         if Setting.notify_bans and settings.VBM_NOTIFICATIONS_EMAIL:
-            ban_submissions = BanSubmission.objects.filter(launched_at__isnull=False)
+            ban_submissions = BanSubmission.objects.filter(
+                launched_at__isnull=False)
             if Setting.notify_bans_task_status is not None:
-                ban_submissions = ban_submissions.filter(pk__gt=Setting.notify_bans_task_status)
+                ban_submissions = ban_submissions.filter(
+                    pk__gt=Setting.notify_bans_task_status)
             # Prepare data.
             submissions_log = [{
                     'id': ban_submission.id,
@@ -107,11 +109,13 @@ class Status(MonitoredTask):
 
         # Merge expressions.
         if bans:
-            shared = set.intersection(*[expressions for (node, expressions) in bans])
+            shared = set.intersection(*[
+                expressions for (node, expressions) in bans])
             for (node, expressions) in bans:
                 difference = expressions.difference(shared)
                 if difference:
-                    result['bans']['differences'].append((node.human_name, sorted(list(difference))))
+                    result['bans']['differences'].append(
+                        (node.human_name, sorted(list(difference))))
             result['bans']['shared'] = sorted(list(shared))
 
         # Done!

@@ -93,7 +93,8 @@ class SingleInstanceTask(InternationalizedTask):
 
     def __init__(self, *args, **kwargs):
         # Set default time limits if not provided.
-        self.soft_time_limit = self.soft_time_limit if self.soft_time_limit else 300
+        self.soft_time_limit = \
+            self.soft_time_limit if self.soft_time_limit else 300
         self.time_limit = None
 
         # Complete instantiation.

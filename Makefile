@@ -26,7 +26,7 @@ build: clone
 	rm -rf "$(VBM_ROOT)/build/varnish_bans_manager/static"
 	find "$(VBM_ROOT)/build" \
 		-name "*.pyc" -o \
-		-name "*.po" -o | xargs rm -f
+		-name "*.po" | xargs rm -f
 
 clone: clean
 	@echo

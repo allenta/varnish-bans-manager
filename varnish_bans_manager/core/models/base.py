@@ -6,7 +6,7 @@
 '''
 
 from __future__ import absolute_import
-import simplejson as json
+import json
 from django.core.exceptions import ValidationError
 from django.db import models
 from django.db.models import F, Q
@@ -14,7 +14,6 @@ from django.db.models.signals import post_delete
 from django.db.utils import DatabaseError
 from django.utils.translation import ugettext as _
 from django.forms.widgets import HiddenInput
-from south.modelsinspector import add_introspection_rules
 
 
 class RevisionedQuerySet(models.query.QuerySet):
@@ -25,13 +24,14 @@ class RevisionedQuerySet(models.query.QuerySet):
     class RecordModifiedError(DatabaseError):
         pass
 
-    def __init__(self, model=None, query=None, using=None):
-        super(RevisionedQuerySet, self).__init__(model=model, query=query, using=using)
-        self._revision_field = getattr(model, '_revision_field', None)
+    def __init__(self, *args, **kwargs):
+        super(RevisionedQuerySet, self).__init__(*args, **kwargs)
+        self._revision_field = getattr(self.model, '_revision_field', None)
 
     def _update(self, values):
         if self._revision_field:
-            # Get current revision value and increment it in the list of values to update.
+            # Get current revision value and increment it in the list of values
+            # to update.
             current_revision = None
             for i in range(0, len(values)):
                 (field, model, value) = values[i]
@@ -39,16 +39,20 @@ class RevisionedQuerySet(models.query.QuerySet):
                     current_revision = value
                     values[i] = (field, model, F(self._revision_field) + 1)
             if current_revision is not None:
-                # Ensure the revision value has not been changed and go on with the update.
+                # Ensure the revision value has not been changed and go on with
+                # the update.
                 self.query.add_q(Q(**{self._revision_field: current_revision}))
                 rows = super(RevisionedQuerySet, self)._update(values)
-                # If no rows have been updated, revision number must have changed: raise an error.
+                # If no rows have been updated, revision number must have
+                # changed: raise an error.
                 if rows == 0:
                     raise self.RecordModifiedError()
                 return rows
             else:
                 # No revision value has ben provided: raise an error.
-                raise ValueError("Can't update this model without providing a revision value")
+                raise ValueError(
+                    "Can't update this model without providing a revision "
+                    "value")
         else:
             return super(RevisionedQuerySet, self)._update(values)
 
@@ -103,7 +107,8 @@ class Options(object):
     def __init__(self, cls, meta):
         # Extract values for all options.
         for attr_name in self._valid_options:
-            setattr(self, attr_name, meta.__dict__.get(attr_name, getattr(meta, attr_name)))
+            setattr(self, attr_name, meta.__dict__.get(
+                attr_name, getattr(meta, attr_name)))
 
         # Autocomplete trackable fields option with all
         # FileFields present in the class and build up a
@@ -225,7 +230,6 @@ class Model(models.Model):
         self._complete_state()
 
     class Meta:
-        app_label = 'core'
         abstract = True
 
     class VBMMeta:
@@ -263,12 +267,15 @@ class RevisionField(models.IntegerField):
     def contribute_to_class(self, cls, name):
         super(RevisionField, self).contribute_to_class(cls, name)
         if getattr(cls, '_revision_field', None) is None:
-            cls.clean = self._clean_with_revision_method_factory(cls.clean, name)
+            cls.clean = self._clean_with_revision_method_factory(
+                cls.clean, name)
             cls._revision_field = name
 
-    def _clean_with_revision_method_factory(self, original_clean, revision_field):
+    def _clean_with_revision_method_factory(self, original_clean,
+                                            revision_field):
         def clean_with_revision(self, *args, **kwargs):
-            # Check the record's revision number has not been modified since last read.
+            # Check the record's revision number has not been modified since
+            # last read.
             if self.pk:
                 current_revision = getattr(self, revision_field)
                 filters = {'pk': self.pk, revision_field: current_revision}
@@ -277,9 +284,6 @@ class RevisionField(models.IntegerField):
             # Continue with all other cleaning.
             return original_clean(self, *args, **kwargs)
         return clean_with_revision
-
-
-add_introspection_rules([], ["^varnish_bans_manager\.core\.models\.base\.RevisionField"])
 
 
 ###############################################################################
@@ -311,6 +315,3 @@ class JSONField(models.Field):
 
     def get_internal_type(self):
         return 'TextField'
-
-
-add_introspection_rules([], ['^varnish_bans_manager\.core\.models\.base\.JSONField'])

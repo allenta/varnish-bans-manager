@@ -23,9 +23,13 @@ development environment.
 
     - Initialize database schema::
 
-        $ python varnish_bans_manager/runner.py syncdb
         $ python varnish_bans_manager/runner.py migrate
         $ python varnish_bans_manager/runner.py createcachetable cache
+
+    - Create the first VBM administrator. You'll be able to add extra
+      users later using the web UI::
+
+        $ python varnish_bans_manager/runner.py users --add --administrator --email "bob@domain.com" --password "s3cr3t" --firstname "Bob" --lastname "Brown"
 
 - Install `Sass <http://sass-lang.com>`_ and `Compass <http://compass-style.org>`_
   in your development box (required by ``django-mediagenerator`` asset manager)::
@@ -36,7 +40,7 @@ development environment.
 - Don't forget to manually launch celeryd/celerybeat in some available
   term/screen while developing::
 
-    $ python varnish_bans_manager/runner.py celery worker --beat -s ~/varnish-bans-manager-celerybeat-schedule --loglevel=info
+    $ celery -A varnish_bans_manager worker -B -s ~/varnish-bans-manager-celerybeat-schedule --loglevel=info
 
 - Remember to install the packages required by your relational database
   backend. For example, for MySQL::
@@ -49,7 +53,7 @@ development environment.
 - Remember .po files can be regenerated and compiled using the following
   commands::
 
-    $ python runner.py makemessages -l es -e "html,txt,email,py"
+    $ python varnish_bans_manager/runner.py makemessages -l es -e "html,txt,email,py"
     $ python varnish_bans_manager/runner.py compilemessages
 
 Source Distribution Package

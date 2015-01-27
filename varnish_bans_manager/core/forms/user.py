@@ -12,7 +12,7 @@ from django.conf import settings
 from django.utils.translation import ugettext_lazy as _
 from django.utils.http import int_to_base36
 from django.contrib.auth import authenticate
-from django.contrib.auth.hashers import UNUSABLE_PASSWORD
+from django.contrib.auth.hashers import UNUSABLE_PASSWORD_PREFIX
 from templated_email import send_templated_mail
 from django.contrib.auth.tokens import default_token_generator
 from varnish_bans_manager.core.models import User, UserProfile
@@ -48,9 +48,11 @@ class LoginForm(forms.Form):
         if email and password:
             self.user = authenticate(email=email, password=password)
             if self.user is None:
-                raise forms.ValidationError(self.error_messages['invalid_login'])
+                raise forms.ValidationError(
+                    self.error_messages['invalid_login'])
             elif not self.user.is_active:
-                raise forms.ValidationError(self.error_messages['inactive'])
+                raise forms.ValidationError(
+                    self.error_messages['inactive'])
         return self.cleaned_data
 
 
@@ -80,8 +82,10 @@ class PasswordResetForm(forms.Form):
         '''
         email = self.cleaned_data.get('email')
         try:
-            self.user = User.objects.filter(email__iexact=email, is_active=True).order_by('date_joined')[:1].get()
-            if self.user.password == UNUSABLE_PASSWORD:
+            self.user = User.objects.filter(
+                email__iexact=email,
+                is_active=True).order_by('date_joined')[:1].get()
+            if self.user.password.startswith(UNUSABLE_PASSWORD_PREFIX):
                 raise forms.ValidationError(self.error_messages['unusable'])
             else:
                 return email
@@ -116,10 +120,14 @@ class PasswordResetForm(forms.Form):
 class PasswordResetConfirmationForm(forms.Form):
     new_password1 = forms.CharField(
         label=_('new password'),
-        widget=forms.PasswordInput(attrs={'placeholder': _('new password')}))
+        widget=forms.PasswordInput(attrs={
+            'placeholder': _('new password'),
+        }))
     new_password2 = forms.CharField(
         label=_('new password confirmation'),
-        widget=forms.PasswordInput(attrs={'placeholder': _('new password confirmation')}))
+        widget=forms.PasswordInput(attrs={
+            'placeholder': _('new password confirmation'),
+        }))
 
     error_messages = {
         'password_mismatch': _(
@@ -164,7 +172,8 @@ class ProfilePreferencesForm():
 
     def __init__(self, user, data=None, files=None):
         self.user = self.UserForm(prefix='user', instance=user, data=data)
-        self.profile = self.ProfileForm(prefix='profile', instance=user.profile, data=data, files=files)
+        self.profile = self.ProfileForm(
+            prefix='profile', instance=user.profile, data=data, files=files)
 
     def is_valid(self):
         return self.user.is_valid() and self.profile.is_valid()
@@ -177,13 +186,19 @@ class ProfilePreferencesForm():
 class PasswordChangeForm(forms.Form):
     old_password = forms.CharField(
         label=_('Old password'),
-        widget=forms.PasswordInput(attrs={'placeholder': _('current password')}))
+        widget=forms.PasswordInput(attrs={
+            'placeholder': _('current password'),
+        }))
     new_password1 = forms.CharField(
         label=_('New password'),
-        widget=forms.PasswordInput(attrs={'placeholder': _('new password')}))
+        widget=forms.PasswordInput(attrs={
+            'placeholder': _('new password'),
+        }))
     new_password2 = forms.CharField(
         label=_('New password confirmation'),
-        widget=forms.PasswordInput(attrs={'placeholder': _('confirm new password')}))
+        widget=forms.PasswordInput(attrs={
+            'placeholder': _('confirm new password'),
+        }))
 
     error_messages = {
         'password_incorrect': _(

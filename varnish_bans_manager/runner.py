@@ -25,7 +25,6 @@ base_url: http://varnish-bans-manager.domain.com
 bind: 0.0.0.0:9000
 worker_class: eventlet
 forwarded_allow_ips: 127.0.0.1
-x_forwarded_for_header: X-FORWARDED-FOR
 
 # SSL settings. Enable SSL only for proxied VBM deployments.
 [ssl]
@@ -95,7 +94,8 @@ secret_key: %(secret_key)s
 development: false
     ''' % {
         'secret_key': ''.join(
-            random.choice(string.ascii_letters + string.digits) for i in range(64))
+            random.choice(string.ascii_letters + string.digits)
+            for i in range(64))
     }
 
 

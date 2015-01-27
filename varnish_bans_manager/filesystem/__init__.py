@@ -48,18 +48,22 @@ def _get_sendfile():
 
     backend = getattr(settings, 'FILESYSTEM_SENDFILE_BACKEND', None)
     if not backend:
-        raise ImproperlyConfigured('You must specify a valued for FILESYSTEM_SENDFILE_BACKEND')
+        raise ImproperlyConfigured(
+            'You must specify a valued for FILESYSTEM_SENDFILE_BACKEND')
     module = import_module(backend)
     return module.sendfile
 
 
-def sendfile(request, filename, attachment=False, attachment_filename=None, mimetype=None, encoding=None, strong_caching=True):
+def sendfile(request, filename, attachment=False, attachment_filename=None,
+             mimetype=None, encoding=None, strong_caching=True):
     '''
-    Create a response to send file using backend configured in FILESYSTEM_SENDFILE_BACKEND
+    Create a response to send file using backend configured in
+    FILESYSTEM_SENDFILE_BACKEND
 
-    If attachment is True the content-disposition header will be set with either
-    the filename given or else the attachment_filename (of specified).  This
-    will typically prompt the user to download the file, rather than view it.
+    If attachment is True the content-disposition header will be set with
+    either the filename given or else the attachment_filename (of specified).
+    This will typically prompt the user to download the file, rather than view
+    it.
 
     If no mimetype or encoding are specified, then they will be guessed via the
     filename (using the standard python mimetypes module)
@@ -77,7 +81,8 @@ def sendfile(request, filename, attachment=False, attachment_filename=None, mime
     response = _sendfile(request, filename, mimetype=mimetype)
     if attachment:
         attachment_filename = attachment_filename or os.path.basename(filename)
-        response['Content-Disposition'] = 'attachment; filename="%s"' % attachment_filename
+        response['Content-Disposition'] = \
+            'attachment; filename="%s"' % attachment_filename
 
     response['Content-length'] = os.path.getsize(filename)
     response['Content-Type'] = mimetype
@@ -101,8 +106,10 @@ def randomize_filename(filename, length=32, prefix=''):
     if isinstance(prefix, bool):
         prefix = (splitted[0] + '.') if prefix else ''
     return \
-        prefix +\
-        ''.join(random.choice(string.ascii_letters + string.digits) for x in range(length)) + \
+        prefix + \
+        ''.join(
+            random.choice(string.ascii_letters + string.digits)
+            for x in range(length)) + \
         splitted[1]
 
 
@@ -110,7 +117,10 @@ def open_public_file(name, mode='w', encoding='utf-8'):
     dir = secure_join(settings.MEDIA_ROOT, 'public', os.path.dirname(name))
     if not os.path.exists(dir):
         os.makedirs(dir)
-    return codecs.open(secure_join(settings.MEDIA_ROOT, 'public', name), mode=mode, encoding=encoding)
+    return codecs.open(
+        secure_join(settings.MEDIA_ROOT, 'public', name),
+        mode=mode,
+        encoding=encoding)
 
 
 def find_public_file(path):
@@ -130,7 +140,9 @@ def new_temporary_file(filename, mimetype, prefix=''):
     CleanupTemporary().apply_async((f.name,), countdown=TEMPORARY_FILE_TTL)
     signer = TimestampSigner(sep=':')
     url = reverse('filesystem-temporary-download', kwargs={
-        'token': signer.sign(b64_encode('%s,%s,%s' % (os.path.basename(f.name), filename, mimetype))),
+        'token': signer.sign(
+            b64_encode('%s,%s,%s' % (
+                os.path.basename(f.name), filename, mimetype))),
         'filename': filename,
     })
     return f, url
@@ -138,8 +150,13 @@ def new_temporary_file(filename, mimetype, prefix=''):
 
 def find_temporary_file(token):
     signer = TimestampSigner(sep=':')
-    filename, attachment_filename, mimetype = b64_decode(signer.unsign(token, max_age=TEMPORARY_FILE_TTL).encode('utf-8')).split(',')
-    return secure_join(settings.MEDIA_ROOT, 'temporary', filename), attachment_filename, mimetype
+    filename, attachment_filename, mimetype = b64_decode(signer.unsign(
+        token, max_age=TEMPORARY_FILE_TTL).encode('utf-8')).split(',')
+    return (
+        secure_join(settings.MEDIA_ROOT, 'temporary', filename),
+        attachment_filename,
+        mimetype,
+    )
 
 
 def find_static_file(path):

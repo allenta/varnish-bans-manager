@@ -27,7 +27,8 @@ class Varnish(Telnet):
     '''
     error_messages = {
         'missing_secret': _(
-            'Cache has requested authentication but a secret key was not provided.'),
+            'Cache has requested authentication but a secret key was not '
+            'provided.'),
         'failed_connection': _(
             'Connection to cache failed with status %(status)d.'),
         'failed_command': _(
@@ -49,9 +50,10 @@ class Varnish(Telnet):
                 raise Varnish.Exception(self.error_messages['missing_secret'])
         # Failed connection?
         elif status != 200:
-            raise Varnish.Exception(self.error_messages['failed_connection'] % {
-                'status': status,
-            })
+            raise Varnish.Exception(
+                self.error_messages['failed_connection'] % {
+                    'status': status,
+                })
 
     def ban(self, expression):
         '''
@@ -79,7 +81,8 @@ class Varnish(Telnet):
 
         # Parse bans & build result.
         result = []
-        parser = re.compile(r'^(?P<address>[^\s]+)\s+(?P<time>\d+\.\d+)\s+(?P<pointers>\d+G?)\s+(?P<ban>.*)$')
+        parser = re.compile(
+            r'^(?P<address>[^\s]+)\s+(?P<time>\d+\.\d+)\s+(?P<pointers>\d+G?)\s+(?P<ban>.*)$')
         for line in content.split('\n'):
             match = parser.match(line)
             if match:
@@ -135,4 +138,5 @@ class Varnish(Telnet):
 
     class Exception(Exception):
         def __init__(self, message, *args, **kwargs):
-            super(Varnish.Exception, self).__init__(force_unicode(message), *args, **kwargs)
+            super(Varnish.Exception, self).__init__(
+                force_unicode(message), *args, **kwargs)

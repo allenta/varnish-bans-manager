@@ -92,23 +92,23 @@ Prepare the environment
 3. Install the OS packages required by your preferred RDBM. For example,
    for MySQL and Ubuntu::
 
-    www-data:~$ sudo apt-get install python-dev libmysqlclient-dev
-    www-data:~$ pip install MySQL-python
+    $ sudo apt-get install python-dev libmysqlclient-dev
+    (varnish-bans-manager)www-data:~$ pip install MySQL-python
 
 4. VBM depends on the Python Image Library (Pillow) to perform some image
    manipulations. It will be installed as a dependency when installing
    VBM, but some OS packages need to be installed previously. For example,
    for Ubuntu::
 
-    www-data:~$ sudo apt-get install libjpeg8 libjpeg62-dev libfreetype6 libfreetype6-dev zlib1g-dev
+    $ sudo apt-get install libjpeg8 libjpeg62-dev libfreetype6 libfreetype6-dev zlib1g-dev
 
    Note that on Ubuntu 64 bits some symbolic links need to be created manually.
    If not, when installing Pillow, it will not include JPEG, ZLIB and FREETYPE2
    support::
 
-    sudo ln -s /usr/lib/x86_64-linux-gnu/libjpeg.so /usr/lib
-    sudo ln -s /usr/lib/x86_64-linux-gnu/libfreetype.so /usr/lib
-    sudo ln -s /usr/lib/x86_64-linux-gnu/libz.so /usr/lib
+    $ sudo ln -s /usr/lib/x86_64-linux-gnu/libjpeg.so /usr/lib
+    $ sudo ln -s /usr/lib/x86_64-linux-gnu/libfreetype.so /usr/lib
+    $ sudo ln -s /usr/lib/x86_64-linux-gnu/libz.so /usr/lib
 
 5. Create an empty database in your preferred RDBM and grant access to
    some existing or new user. You'll need it during VBM configuration.
@@ -134,20 +134,21 @@ created virtualenv active.
 
 1. Install VBM and all its dependencies::
 
-    www-data:~$ pip install varnish-bans-manager
+    (varnish-bans-manager)www-data:~$ pip install varnish-bans-manager
 
 2. Once everything is installed in your virtual environment, you should
    be able to execute the VBM CLI, via ``varnish-bans-manager``, and get
    something like the following::
 
-    www-data:~$ varnish-bans-manager
+    (varnish-bans-manager)www-data:~$ varnish-bans-manager
     Usage: varnish-bans-manager [command] [options]
 
 3. Adjust VBM configuration. Most important stuff is the configuration
    of the relational database and the HTTP frontend. Initialize your
    configuration from a template running the following command::
 
-    www-data:~$ varnish-bans-manager init > /etc/varnish-bans-manager.conf
+    (varnish-bans-manager)www-data:~$ varnish-bans-manager init > varnish-bans-manager.conf
+    $ sudo mv /var/www/varnish-bans-manager.conf /etc/varnish-bans-manager.conf
 
    Check out the next section for a detailed description of all available
    configuration options.
@@ -157,7 +158,7 @@ created virtualenv active.
    ``VARNISH_BANS_MANAGER_CONF`` environment variable to set its location).
    Lauch it using the following command::
 
-    www-data:~$ varnish-bans-manager start
+    (varnish-bans-manager)www-data:~$ varnish-bans-manager start
 
    VBM also depends on two additional services named celeryd and celerybeat
    for correct operation. For a quick test you can launch them manually
@@ -165,21 +166,17 @@ created virtualenv active.
    activate the same virtualenv environment in that terminal)::
 
     www-data:~$ source /var/www/varnish-bans-manager/bin/activate
-    www-data:~$ varnish-bans-manager celery worker --no-execv --beat -s /tmp/varnish-bans-manager-celerybeat-schedule --loglevel=info
-
-   Certain Celery versions include a bug that breaks execution of the previous
-   command. If so, you can use the following alternative command::
-
-    www-data:~$ python -mvarnish_bans_manager.runner celery worker --no-execv --beat -s /tmp/varnish-bans-manager-celerybeat-schedule --loglevel=info
+    (varnish-bans-manager)www-data:~$ varnish-bans-manager celery worker --no-execv --beat -s /tmp/varnish-bans-manager-celerybeat-schedule --loglevel=info
 
 5. If not changed in the configuration, VBM's server runs on port 9000.
    If locally installed, you should now be able to test the service by
    visiting ``http://localhost:9000``.
 
-6. Use the VBM CLI to create the first VBM administrator.
-   You'll be able to add extra users later using the web UI::
+6. Use the VBM CLI to create the first VBM administrator in yet another
+   terminal. You'll be able to add extra users later using the web UI::
 
-    www-data:~$ varnish-bans-manager users --add --administrator --email "bob@domain.com" --password "s3cr3t" --firstname "Bob" --lastname "Brown"
+    www-data:~$ source /var/www/varnish-bans-manager/bin/activate
+    (varnish-bans-manager)www-data:~$ varnish-bans-manager users --add --administrator --email "bob@domain.com" --password "s3cr3t" --firstname "Bob" --lastname "Brown"
 
 Final touches
 -------------
@@ -213,7 +210,6 @@ of a sample VBM configuration::
     bind: 0.0.0.0:9000
     worker_class: eventlet
     forwarded_allow_ips: 127.0.0.1
-    x_forwarded_for_header: X-FORWARDED-FOR
 
     # SSL settings. Enable SSL only for proxied VBM deployments.
     [ssl]
@@ -287,10 +283,10 @@ Upgrade
 
 Simply execute in a terminal with the proper active virtualenv::
 
-  www-data:~$ pip install --upgrade varnish-bans-manager
+  (varnish-bans-manager)www-data:~$ pip install --upgrade varnish-bans-manager
 
 VBM transparently supports migrations since version 0.4.1 by using
-`South <http://south.aeracode.org/>`_ so you don't need to do anything
-special to keep the database up to date. To upgrade from a previous version,
-the easiest solution is to clear the whole database prior to restarting
-VBM's webserver.
+`South <http://south.aeracode.org/>`_ or Django's own migration mechanism
+(depending on the version) so you don't need to do anything special to keep the
+database up to date. To upgrade from a previous version, the easiest solution
+is to clear the whole database prior to restarting VBM's webserver.

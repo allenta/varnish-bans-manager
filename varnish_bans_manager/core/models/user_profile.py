@@ -40,7 +40,8 @@ class UserProfile(Model):
     )
     photo = ImageField(
         _('Photo'),
-        help_text=_('Upload a photo. It will only be visible by administrators.'),
+        help_text=_(
+            'Upload a photo. It will only be visible by administrators.'),
         upload_to=_photo_upload_destination,
         null=True,
         blank=True,
@@ -52,6 +53,3 @@ class UserProfile(Model):
         max_height=128
     )
     revision = RevisionField()
-
-    class Meta:
-        app_label = 'core'

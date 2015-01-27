@@ -67,6 +67,8 @@ class Command(BaseCommand):
             try:
                 return model.objects.get(pk=pk)
             except:
-                raise CommandError('Failed to load %s instance with identifier %d.' % (model.__name__, pk,))
+                raise CommandError(
+                    'Failed to load %s instance with identifier %d.' % (
+                        model.__name__, pk,))
         else:
             return None

@@ -8,10 +8,9 @@
 from __future__ import absolute_import
 import time
 import logging
-import simplejson as json
+import json
 from time import gmtime, strftime
 from django.db import connection
-from django.utils.datastructures import SortedDict
 from django.conf import settings
 from django.views.debug import get_safe_settings
 from django.core.urlresolvers import resolve
@@ -59,7 +58,7 @@ def _append_script(response, script):
         response['Content-Length'] = len(response.content)
 
 
-class CustomizationsMiddleware:
+class CustomizationsMiddleware(object):
     def process_request(self, request):
         # Request-level initializations.
         core.initialize_request()
@@ -71,7 +70,8 @@ class CustomizationsMiddleware:
         if 'HTTP_X_FORWARDED_FOR' in request.META:
             # HTTP_X_FORWARDED_FOR can be a comma-separated list of IPs.
             # Take just the first one.
-            request.META['REMOTE_ADDR'] = request.META['HTTP_X_FORWARDED_FOR'].split(",")[0]
+            request.META['REMOTE_ADDR'] = \
+                request.META['HTTP_X_FORWARDED_FOR'].split(",")[0]
 
         # Add custom is_iframe_upload method.
         request.is_iframe_upload = lambda: \
@@ -97,21 +97,22 @@ class CustomizationsMiddleware:
         return None
 
 
-class SecurityMiddleware:
+class SecurityMiddleware(object):
     '''
-    Extra check to force authentication for all views by default. Therefore, 'login_required'
-    decorator is not required, but it's recommended (documentation, extra check if this
-    middleware is disabled, etc.).
+    Extra check to force authentication for all views by default. Therefore,
+    'login_required' decorator is not required, but it's recommended
+    (documentation, extra check if this middleware is disabled, etc.).
 
     '''
     def process_view(self, request, view_func, view_args, view_kwargs):
         is_login_required = view_kwargs.pop('login_required', True)
         if is_login_required and not request.user.is_authenticated():
-            return login_required(view_func)(request, *view_args, **view_kwargs)
+            return login_required(view_func)(
+                request, *view_args, **view_kwargs)
         return None
 
 
-class SSLRedirectMiddleware:
+class SSLRedirectMiddleware(object):
     def process_view(self, request, view_func, view_args, view_kwargs):
         if not settings.HTTPS_ENABLED == request.is_secure():
             return self._redirect(request, settings.HTTPS_ENABLED)
@@ -119,28 +120,30 @@ class SSLRedirectMiddleware:
 
     def _redirect(self, request, secure):
         protocol = secure and "https" or "http"
-        url = "%s://%s%s" % (protocol, request.get_host(), request.get_full_path())
+        url = "%s://%s%s" % (
+            protocol, request.get_host(), request.get_full_path())
         if settings.DEBUG and request.method == 'POST':
             raise RuntimeError(
                 '''Django can't perform a redirect while maintaining POST data.
-                Please structure your views so that redirects only occur during GETs.''')
+                Please structure your views so that redirects only occur during
+                GETs.''')
         if request.is_ajax():
             return HttpResponseAjax([commands.redirect(url)])
         else:
             return HttpResponseRedirect(url)
 
 
-class MessagingMiddleware:
+class MessagingMiddleware(object):
     def process_response(self, request, response):
         if isinstance(response, HttpResponseAjax):
-            if (not response.contains_redirection()):
+            if not response.contains_redirection():
                 messages = get_messages(request)
                 if len(messages) > 0:
                     response.add_command(commands.notify(messages))
         return response
 
 
-class PageIdMiddleware:
+class PageIdMiddleware(object):
     def process_response(self, request, response):
         if isinstance(response, HttpResponseAjax):
             if request.is_navigation():
@@ -148,14 +151,14 @@ class PageIdMiddleware:
         return response
 
 
-class VersionMiddleware:
+class VersionMiddleware(object):
     def process_response(self, request, response):
         if isinstance(response, HttpResponseAjax):
             response.add_command(commands.check_version())
         return response
 
 
-class DebugMiddleware:
+class DebugMiddleware(object):
 
     HEADER_FILTER = (
         'CONTENT_TYPE',
@@ -185,9 +188,12 @@ class DebugMiddleware:
             # Request report.
             req_report = {
                 'path': request.path_info,
-                'get': [(k, request.GET.getlist(k)) for k in request.GET],
-                'post': [(k, request.POST.getlist(k)) for k in request.POST],
-                'cookies': [(k, request.COOKIES.get(k)) for k in request.COOKIES],
+                'get': [
+                    (k, request.GET.getlist(k)) for k in request.GET],
+                'post': [
+                    (k, request.POST.getlist(k)) for k in request.POST],
+                'cookies': [
+                    (k, request.COOKIES.get(k)) for k in request.COOKIES],
                 'view': {
                     'func': '<no view>',
                     'args': 'None',
@@ -195,9 +201,11 @@ class DebugMiddleware:
                     'url': 'None',
                 },
                 'headers': dict(
-                    [(k, request.META[k]) for k in self.HEADER_FILTER if k in request.META]
+                    (k, request.META[k])
+                    for k in self.HEADER_FILTER if k in request.META
                 ),
-                'settings': SortedDict(sorted(get_safe_settings().items(), key=lambda s: s[0])),
+                'settings': sorted(
+                    get_safe_settings().items(), key=lambda s: s[0]),
             }
 
             try:
@@ -206,10 +214,10 @@ class DebugMiddleware:
                 req_report['view']['func'] = self._get_name_from_obj(func)
                 req_report['view']['args'] = args
                 req_report['view']['kwargs'] = kwargs
-                req_report['view']['url'] = getattr(match, 'url_name', '<unavailable>')
+                req_report['view']['url'] = \
+                    getattr(match, 'url_name', '<unavailable>')
             except Http404:
                 req_report['view']['func'] = request.path
-                pass
 
             if hasattr(request, 'session'):
                 req_report['session'] = [
@@ -220,20 +228,25 @@ class DebugMiddleware:
             # MySQL report.
             mysql_report = {
                 'time': sum([float(q['time']) for q in connection.queries]),
-                'log': [{'time': q['time'], 'sql': q['sql']} for q in connection.queries],
+                'log': [
+                    {'time': q['time'], 'sql': q['sql']}
+                    for q in connection.queries
+                ],
             }
 
             # Log.
             context = Context({'req': req_report, 'mysql': mysql_report})
             if settings.DEBUG:
-                logging.\
-                    getLogger('vbm').\
-                    debug(loader.get_template('varnish-bans-manager/partials/_debug.txt').render(context))
-            report = loader.get_template('varnish-bans-manager/partials/_debug.html').render(context)
+                text_report = loader.get_template(
+                    'varnish-bans-manager/partials/_debug.txt').render(context)
+                logging.getLogger('vbm').debug(text_report)
+            report = loader.get_template(
+                'varnish-bans-manager/partials/_debug.html').render(context)
             if isinstance(response, HttpResponseAjax):
                 response.add_command(commands.debug(report))
             elif _can_append_script(response):
-                script = '<script type="text/javascript">(function ($) { vbm.ready(function(context) { vbm.commands.debug(%s); });})(jQuery);</script>' % (json.dumps(report))
+                script = \
+                    '<script type="text/javascript">(function ($) { vbm.ready(function(context) { vbm.commands.debug(%s); });})(jQuery);</script>' % (json.dumps(report))
                 _append_script(response, script)
 
         return response
@@ -251,15 +264,20 @@ class DebugMiddleware:
         return name
 
 
-class TimerMiddleware:
+class TimerMiddleware(object):
     def process_request(self, request):
         if settings.DEBUG:
             # Save start time.
             request.start_time = time.time()
 
             # Console log.
-            template = Template('=' * 80 + '\n{{tst}}: {{method}} {{path|safe}}\n' + '=' * 80)
-            logging.getLogger('vbm').debug(template.render(Context({'tst': strftime('%Y/%m/%d @ %H:%M:%S', gmtime()), 'method': request.method, 'path': request.path})))
+            template = Template(
+                '=' * 80 + '\n{{tst}}: {{method}} {{path|safe}}\n' + '=' * 80)
+            logging.getLogger('vbm').debug(template.render(Context({
+                'tst': strftime('%Y/%m/%d @ %H:%M:%S', gmtime()),
+                'method': request.method,
+                'path': request.path,
+            })))
 
         # Done!
         return None
@@ -272,7 +290,9 @@ class TimerMiddleware:
 
             # Console log.
             template = Template('\n=> Total time: {{time}}s\n')
-            logging.getLogger('vbm').debug(template.render(Context({'time': total_time})))
+            logging.getLogger('vbm').debug(template.render(Context({
+                'time': total_time,
+            })))
 
             # Client output.
             if isinstance(response, HttpResponseAjax):
@@ -284,14 +304,16 @@ class TimerMiddleware:
         return response
 
 
-class AjaxRedirectMiddleware:
+class AjaxRedirectMiddleware(object):
     '''
-    Intercepts standard HTTP redirections replacing them by AJAX commands when required.
+    Intercepts standard HTTP redirections replacing them by AJAX commands when
+    required.
 
     '''
     def process_response(self, request, response):
         if request.is_ajax():
             if isinstance(response, HttpResponseRedirect) or \
                isinstance(response, HttpResponsePermanentRedirect):
-                return HttpResponseAjax([commands.redirect(response['Location'])])
+                return HttpResponseAjax([
+                    commands.redirect(response['Location'])])
         return response

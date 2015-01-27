@@ -13,7 +13,7 @@
 ## Configuration.
 ##
 CELERYBEAT_VIRTUALENV="/var/www/varnish-bans-manager"
-CELERYBEAT="python -mvarnish_bans_manager.runner celerybeat"
+CELERYBEAT="celery beat"
 CELERYBEAT_USER="www-data"
 CELERYBEAT_GROUP="www-data"
 CELERYBEAT_PID_DIR="/var/run/varnish-bans-manager"
@@ -23,12 +23,12 @@ CELERYBEAT_LOG_FILE="$CELERYBEAT_LOG_DIR/celerybeat.log"
 CELERYBEAT_LOG_LEVEL="WARNING"
 CELERYBEAT_SCHEDULE="/var/www/varnish-bans-manager/celerybeat-schedule"
 CELERYBEAT_DAEMON_OPTS="\
+    --uid="$CELERYBEAT_USER" \
+    --gid="$CELERYBEAT_GROUP" \
     --pidfile="$CELERYBEAT_PID_FILE" \
     --logfile="$CELERYBEAT_LOG_FILE" \
     --loglevel="$CELERYBEAT_LOG_LEVEL" \
     --schedule="$CELERYBEAT_SCHEDULE" \
-    --uid="$CELERYBEAT_USER" \
-    --gid="$CELERYBEAT_GROUP" \
     --detach"
 
 ##
@@ -62,7 +62,7 @@ wait_pid () {
 ##
 start_celerybeat () {
     echo "Starting celerybeat..."
-    $CELERYBEAT $CELERYBEAT_DAEMON_OPTS
+    $CELERYBEAT --app=varnish_bans_manager $CELERYBEAT_DAEMON_OPTS
 }
 
 ##

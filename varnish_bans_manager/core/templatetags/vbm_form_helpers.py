@@ -42,7 +42,8 @@ def form_ferrors(field, mode='block'):
 def form_cgroup(parser, token):
     nodelist = parser.parse(('endform_cgroup',))
     parser.delete_first_token()
-    p = re.compile(r'''^form_cgroup (?P<field_variables>[^"']*)(?: (?:["'](?P<classes>.*)["']))?$''')
+    p = re.compile(
+        r'''^form_cgroup (?P<field_variables>[^"']*)(?: (?:["'](?P<classes>.*)["']))?$''')
     m = p.search(token.contents)
     field_variables = m.group('field_variables').split()
     classes = m.group('classes')

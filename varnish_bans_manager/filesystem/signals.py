@@ -8,4 +8,5 @@
 from __future__ import absolute_import
 from django.dispatch import Signal
 
-pre_private_download = Signal(providing_args=['instance', 'field_name', 'request'])
+pre_private_download = Signal(
+    providing_args=['instance', 'field_name', 'request'])

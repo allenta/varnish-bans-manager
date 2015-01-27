@@ -59,8 +59,11 @@ class SortDirectionField(FallbackCharField):
 
 class BetterChoiceField(ChoiceField):
     def __init__(self, choices=(), placeholder=None, *args, **kwargs):
-        choices = tuple([(u'', string_concat('- ', placeholder, ' -') if placeholder else u'')] + list(choices))
-        super(BetterChoiceField, self).__init__(choices=choices, *args, **kwargs)
+        placeholder_with_decorations = \
+            string_concat('- ', placeholder, ' -') if placeholder else u''
+        choices = [(None, placeholder_with_decorations)] + list(choices)
+        super(BetterChoiceField, self).__init__(
+            choices=choices, *args, **kwargs)
 
     def clean(self, value):
         value = super(BetterChoiceField, self).clean(value)
@@ -93,6 +96,8 @@ class IntegerListField(Field):
             raise ValidationError(self.error_messages['required'])
         for val in value:
             if self.min_value is not None and val < self.min_value:
-                raise ValidationError(self.error_messages['min_value'] % self.min_value)
+                raise ValidationError(
+                    self.error_messages['min_value'] % self.min_value)
             elif self.max_value is not None and val > self.max_value:
-                raise ValidationError(self.error_messages['max_value'] % self.max_value)
+                raise ValidationError(
+                    self.error_messages['max_value'] % self.max_value)

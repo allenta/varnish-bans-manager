@@ -6,7 +6,7 @@
 '''
 
 from __future__ import absolute_import
-from ordereddict import OrderedDict
+from collections import OrderedDict
 from django.contrib.auth.models import AbstractBaseUser, PermissionsMixin, BaseUserManager
 from django.db import models
 from django.utils import timezone
@@ -74,15 +74,21 @@ class User(AbstractBaseUser, PermissionsMixin):
         return [PERMISSIONS[permission.codename] for permission in permissions]
 
     class Meta:
-        app_label = 'core'
         permissions = (
-            ('can_access_advanced_ban_submission', 'Access advanced ban submission form'),
-            ('can_access_expert_ban_submission', 'Access expert ban submission form'),
-            ('can_access_bans_submissions', 'Access bans submissions'),
-            ('can_access_bans_status', 'Access bans status'),
-            ('can_access_caches_management', 'Access caches management'),
-            ('can_access_users_management', 'Access users management'),
-            ('can_access_settings', 'Access settings'),
+            ('can_access_advanced_ban_submission',
+             'Access advanced ban submission form'),
+            ('can_access_expert_ban_submission',
+             'Access expert ban submission form'),
+            ('can_access_bans_submissions',
+             'Access bans submissions'),
+            ('can_access_bans_status',
+             'Access bans status'),
+            ('can_access_caches_management',
+             'Access caches management'),
+            ('can_access_users_management',
+             'Access users management'),
+            ('can_access_settings',
+             'Access settings'),
         )
         verbose_name = _('user')
         verbose_name_plural = _('users')

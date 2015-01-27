@@ -37,7 +37,8 @@ class AnonymousBase(Base):
 
     def dispatch(self, request, *args, **kwargs):
         if not request.user.is_authenticated():
-            return super(AnonymousBase, self).dispatch(request, *args, **kwargs)
+            return super(AnonymousBase, self).dispatch(
+                request, *args, **kwargs)
         else:
             return HttpResponseRedirect(reverse('home'))
 
@@ -47,13 +48,15 @@ class AuthenticatedBase(Base):
 
     @method_decorator(login_required)
     def dispatch(self, request, *args, **kwargs):
-        return super(AuthenticatedBase, self).dispatch(request, *args, **kwargs)
+        return super(AuthenticatedBase, self).dispatch(
+            request, *args, **kwargs)
 
 
 class Login(AnonymousBase):
     def get(self, request):
         # Destination?
-        destination = request.REQUEST.get(auth.REDIRECT_FIELD_NAME, reverse('home'))
+        destination = request.GET.get(
+            auth.REDIRECT_FIELD_NAME, reverse('home'))
 
         # Don't allow redirection to a different host.
         netloc = urlparse.urlparse(destination)[1]
@@ -79,15 +82,19 @@ class Login(AnonymousBase):
             return self._render(form)
 
     def _render(self, form):
-        return {'template': 'varnish-bans-manager/core/user/login.html', 'context': {
-            'form': form,
-        }}
+        return {
+            'template': 'varnish-bans-manager/core/user/login.html',
+            'context': {
+                'form': form,
+            },
+        }
 
 
 class Logout(Base):
     def get(self, request):
         auth.logout(request)
-        messages.success(request, _('You have been disconnected. See you soon!'))
+        messages.success(request, _(
+            'You have been disconnected. See you soon!'))
         return HttpResponseRedirect(reverse('index'))
 
 
@@ -103,9 +110,12 @@ class PasswordReset(AnonymousBase):
             form.save(request)
 
             # Done!
-            messages.success(request, _('An e-mail with password reset instructions has been '
-                'delivered to %(email)s. Please, check your inbox and follow the instructions.') %
-                {'email': form.user.email})
+            messages.success(request, _(
+                'An e-mail with password reset instructions has been '
+                'delivered to %(email)s. Please, check your inbox and '
+                'follow the instructions.') % {
+                    'email': form.user.email
+                })
             return HttpResponseAjax([
                 commands.navigate(reverse('user-login')),
             ], request)
@@ -113,9 +123,12 @@ class PasswordReset(AnonymousBase):
             return self._render(form)
 
     def _render(self, form):
-        return {'template': 'varnish-bans-manager/core/user/password_reset.html', 'context': {
-            'form': form,
-        }}
+        return {
+            'template': 'varnish-bans-manager/core/user/password_reset.html',
+            'context': {
+                'form': form,
+            },
+        }
 
 
 class PasswordResetConfirm(AnonymousBase):
@@ -131,11 +144,15 @@ class PasswordResetConfirm(AnonymousBase):
             user = None
 
         # Valid link?
-        if user is not None and default_token_generator.check_token(user, token):
+        if user is not None and \
+           default_token_generator.check_token(user, token):
             kwargs['user'] = user
-            return super(PasswordResetConfirm, self).dispatch(request, *args, **kwargs)
+            return super(PasswordResetConfirm, self).dispatch(
+                request, *args, **kwargs)
         else:
-            messages.error(request, _('The password reset link is not valid anymore. Please, request a new one.'))
+            messages.error(request, _(
+                'The password reset link is not valid anymore. Please, '
+                'request a new one.'))
             return HttpResponseRedirect(reverse('user-password-reset'))
 
     def get(self, request, user):
@@ -157,10 +174,14 @@ class PasswordResetConfirm(AnonymousBase):
             return self._render(form, request)
 
     def _render(self, form, request):
-        return {'template': 'varnish-bans-manager/core/user/password_reset_confirm.html', 'context': {
-            'form': form,
-            'url': request.path,
-        }}
+        return {
+            'template':
+                'varnish-bans-manager/core/user/password_reset_confirm.html',
+            'context': {
+                'form': form,
+                'url': request.path,
+            },
+        }
 
 
 class Profile(AuthenticatedBase):
@@ -169,7 +190,8 @@ class Profile(AuthenticatedBase):
         return self._render(form)
 
     def post(self, request):
-        form = ProfilePreferencesForm(request.user, data=request.POST, files=request.FILES)
+        form = ProfilePreferencesForm(
+            request.user, data=request.POST, files=request.FILES)
         if form.is_valid():
             form.save()
             messages.success(request, DEFAULT_SUCCESS_MESSAGE)
@@ -181,9 +203,12 @@ class Profile(AuthenticatedBase):
             return self._render(form)
 
     def _render(self, form):
-        return {'template': 'varnish-bans-manager/core/user/profile.html', 'context': {
-            'form': form,
-        }}
+        return {
+            'template': 'varnish-bans-manager/core/user/profile.html',
+            'context': {
+                'form': form,
+            },
+        }
 
 
 class Password(AuthenticatedBase):
@@ -204,6 +229,9 @@ class Password(AuthenticatedBase):
             return self._render(form)
 
     def _render(self, form):
-        return {'template': 'varnish-bans-manager/core/user/password.html', 'context': {
-            'form': form,
-        }}
+        return {
+            'template': 'varnish-bans-manager/core/user/password.html',
+            'context': {
+                'form': form,
+            },
+        }
