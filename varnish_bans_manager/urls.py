@@ -234,6 +234,6 @@ def _handler(default_handler, message):
                 return HttpResponseRedirect(reverse('user-login'))
     return fn
 
-handler403 = _handler(permission_denied, _('We are sorry, but you are not authorized to see the the requested contents.'))
+handler403 = _handler(permission_denied, _('We are sorry, but you are not authorized to see the requested contents.'))
 handler404 = _handler(page_not_found, _('We are sorry, but the requested content could not be found.'))
 handler500 = _handler(server_error, DEFAULT_ERROR_MESSAGE)
