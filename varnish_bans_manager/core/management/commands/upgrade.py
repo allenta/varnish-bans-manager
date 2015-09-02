@@ -23,15 +23,11 @@ class Command(NoArgsCommand):
         self._createcachetable()
 
     def _createcachetable(self):
-        # Check cache is enabled in settings.
-        if settings.CACHES and 'default' in settings.CACHES:
-            cache_settings = settings.CACHES['default']
-            cache_backend = cache_settings.get('BACKEND')
-            # Using DB backend?
-            if cache_backend == 'django.core.cache.backends.db.DatabaseCache':
-                tablename = cache_settings.get('LOCATION')
-                connection = connections[DEFAULT_DB_ALIAS]
-                # Make sure cache table exists.
-                if tablename not in connection.introspection.table_names():
-                    print 'Creating %s table ...' % tablename
-                    call_command('createcachetable', tablename)
+        # Check if any of the referenced DB tables in the CACHES setting does
+        # not exist. If so, call the "createcachetable" command.
+        tables = connections[DEFAULT_DB_ALIAS].introspection.table_names()
+        if any(cache for cache in settings.CACHES.itervalues()
+               if (cache.get('BACKEND') == 'django.core.cache.backends.db.DatabaseCache' and
+                   cache.get('LOCATION') not in tables)):
+            self.stdout.write('Creating missing cache tables')
+            call_command('createcachetable')

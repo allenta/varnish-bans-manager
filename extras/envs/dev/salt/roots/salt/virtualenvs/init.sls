@@ -13,7 +13,7 @@ virtualenvs.default:
     - require:
       - pip: virtualenvs.install-virtualenv
 
-{% for package in ['ipython', 'MySQL-python'] %}
+{% for package in ['ipython', 'MySQL-python', 'pyinotify'] %}
 virtualenvs.default.{{ package }}:
   pip.installed:
     - name: {{ package }}

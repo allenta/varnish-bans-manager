@@ -168,8 +168,6 @@ class FileFieldMixin(BaseFileField):
         return file
 
     def deconstruct(self):
-        # These args accept a callable and therefore aren't serializable:
-        # attachment_filename, condition, upload_to.
         name, path, args, kwargs = super(FileFieldMixin, self).deconstruct()
         kwargs['private'] = self.private
         kwargs['condition'] = self.condition
@@ -239,8 +237,6 @@ class ImageField(FileFieldMixin, BaseImageField):
         return super(ImageField, self).formfield(**kwargs)
 
     def deconstruct(self):
-        # These args accept a callable and therefore aren't serializable:
-        # attachment_filename, condition, upload_to.
         name, path, args, kwargs = super(ImageField, self).deconstruct()
         kwargs['max_width'] = self.max_width
         kwargs['max_height'] = self.max_height

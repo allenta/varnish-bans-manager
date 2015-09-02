@@ -43,7 +43,7 @@ def _lazy_load(fn):
 
 @_lazy_load
 def _get_sendfile():
-    from django.utils.importlib import import_module
+    from importlib import import_module
     from django.core.exceptions import ImproperlyConfigured
 
     backend = getattr(settings, 'FILESYSTEM_SENDFILE_BACKEND', None)

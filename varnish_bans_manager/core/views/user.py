@@ -165,6 +165,12 @@ class PasswordResetConfirm(AnonymousBase):
             # Save.
             form.save()
 
+            # Updating the password logs out all other sessions for the
+            # user except the current one if
+            # django.contrib.auth.middleware.SessionAuthenticationMiddleware
+            # is enabled.
+            auth.update_session_auth_hash(request, user)
+
             # Done!
             messages.success(request, _('Your password has been updated.'))
             return HttpResponseAjax([

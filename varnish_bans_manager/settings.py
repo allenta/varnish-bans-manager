@@ -158,6 +158,7 @@ MIDDLEWARE_CLASSES = (
     'django.middleware.common.CommonMiddleware',
     'django.middleware.csrf.CsrfViewMiddleware',
     'django.contrib.auth.middleware.AuthenticationMiddleware',
+    'django.contrib.auth.middleware.SessionAuthenticationMiddleware',
 
     # Custom messaging.
     'django.contrib.messages.middleware.MessageMiddleware',
@@ -544,12 +545,16 @@ CELERYD_TASK_SOFT_TIME_LIMIT = 3600  # 1 hour.
 CELERYD_TASK_TIME_LIMIT = None
 
 CELERY_IMPORTS = (
-    'varnish_bans_manager.filesystem.tasks',
     'varnish_bans_manager.core.tasks.bans',
     'varnish_bans_manager.core.tasks.kombu',
     'varnish_bans_manager.core.tasks.sessions',
     'varnish_bans_manager.core.tasks.users',
 )
+
+# Set serialization options: JSON would be more secure, but that requires
+# changes on the currently developed tasks.
+CELERY_TASK_SERIALIZER = 'pickle'
+CELERY_ACCEPT_CONTENT = ['pickle']
 
 CELERY_TIMEZONE = TIME_ZONE
 

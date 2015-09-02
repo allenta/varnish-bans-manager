@@ -30,7 +30,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         # Do any necessary upgrades in the DB.
-        print 'Doing any required upgrades before service startup...'
+        self.stdout.write('Doing any required upgrades before service startup...')
         call_command('upgrade')
 
         # Process options.

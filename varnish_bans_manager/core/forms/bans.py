@@ -65,7 +65,8 @@ class TargetField(BetterChoiceField):
         if value:
             cache = self._parse_choice_value(value)
             if cache is None:
-                raise ValidationError(self.error_messages['invalid'])
+                raise ValidationError(
+                    self.error_messages['invalid'], code='invalid')
             return cache
         else:
             return None

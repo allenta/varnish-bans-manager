@@ -75,8 +75,10 @@ class IntegerListField(Field):
 
     default_error_messages = {
         'invalid_list': _('Enter a list of integer values.'),
-        'min_value': _('Ensure all values are greater than or equal to %s.'),
-        'max_value': _('Ensure all values are less than or equal to %s.'),
+        'min_value': _(
+            'Ensure all values are greater than or equal to %(min)d.'),
+        'max_value': _(
+            'Ensure all values are less than or equal to %(max)d.'),
     }
 
     def __init__(self, min_value=None, max_value=None, *args, **kwargs):
@@ -88,16 +90,26 @@ class IntegerListField(Field):
         if not value:
             return []
         elif not isinstance(value, (list, tuple)):
-            raise ValidationError(self.error_messages['invalid_list'])
+            raise ValidationError(
+                self.error_messages['invalid_list'], code='invalid_list')
         return [int(val) for val in value]
 
     def validate(self, value):
         if self.required and not value:
-            raise ValidationError(self.error_messages['required'])
+            raise ValidationError(
+                self.error_messages['required'], code='required')
         for val in value:
             if self.min_value is not None and val < self.min_value:
                 raise ValidationError(
-                    self.error_messages['min_value'] % self.min_value)
+                    self.error_messages['min_value'],
+                    code='min_value',
+                    params={
+                        'min': self.min_value,
+                    })
             elif self.max_value is not None and val > self.max_value:
                 raise ValidationError(
-                    self.error_messages['max_value'] % self.max_value)
+                    self.error_messages['max_value'],
+                    code='max_value',
+                    params={
+                        'max': self.max_value,
+                    })

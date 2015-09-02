@@ -75,13 +75,13 @@ msgstr "Introduce una lista de valores enteros."
 
 #: varnish_bans_manager/core/forms/base.py:78
 #, python-format
-msgid "Ensure all values are greater than or equal to %s."
-msgstr "Asegúrate de que todos los valores sean mayores que o iguales a %s."
+msgid "Ensure all values are greater than or equal to %(min)d."
+msgstr "Asegúrate de que todos los valores sean mayores que o iguales a %(min)d."
 
 #: varnish_bans_manager/core/forms/base.py:79
 #, python-format
-msgid "Ensure all values are less than or equal to %s."
-msgstr "Asegúrate de que todos los valores sean menores que o iguales a %s."
+msgid "Ensure all values are less than or equal to %(max)d."
+msgstr "Asegúrate de que todos los valores sean menores que o iguales a %(max)d."
 
 #: varnish_bans_manager/core/forms/caches/nodes.py:17
 msgid "Group"

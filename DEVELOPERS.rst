@@ -24,7 +24,7 @@ development environment.
     - Initialize database schema::
 
         $ python varnish_bans_manager/runner.py migrate
-        $ python varnish_bans_manager/runner.py createcachetable cache
+        $ python varnish_bans_manager/runner.py createcachetable
 
     - Create the first VBM administrator. You'll be able to add extra
       users later using the web UI::
