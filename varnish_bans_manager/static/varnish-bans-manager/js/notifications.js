@@ -23,7 +23,7 @@
    */
   vbm.notifications.inline = function(type, text, expires, container) {
     // Build & insert new notification element.
-    var element = $(html + '<p><div class="notification inline-notification ' + type + '"><a class="close" href="#">&times;</a></p></div>');
+    var element = $('<div class="notification inline-notification ' + type + '"><a class="close" href="#">&times;</a><p>' + text + '</p></div>');
     $(container).append(element);
     vbm.attach_behaviors(element);
 
@@ -33,7 +33,7 @@
     }
 
     // Register element close event.
-    $('.inline-notification-close', element).click(function() {
+    $('a.close', element).click(function() {
       $(this).parent().slideUp('fast', function() { $(this).remove(); });
       return false;
     });
@@ -97,7 +97,7 @@
     $('#overlay .cool-notification').click();
 
     // Close inline notifications.
-    $('.inline-notifications-container .inline-notification-close').click();
+    $('.inline-notifications-container .inline-notification .close').click();
   };
 
 })(jQuery);
